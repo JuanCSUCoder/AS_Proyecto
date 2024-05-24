@@ -21,6 +21,7 @@ model Product {
   stock       Int
 
   inventory   Inventory?
+  reviews     Review[]
   orderItems  OrderItem[]
 }
 
@@ -69,4 +70,12 @@ model Address {
   country     String
   zip         String
   user        User      @relation(fields: [userId], references: [id])
+}
+
+model Review {
+  id          String    @id @default(uuid())
+  score       Int
+
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id])
 }
