@@ -19,13 +19,9 @@ model Product {
   desc        String
   price       Float
   stock       Int
-  categories  Category[] @relation(fields: [categoryId], references: [id])
-}
 
-model Category {
-  id          String   @id @default(uuid())
-  name        String
-  products    Product[]
+  inventory   Inventory?
+  orderItems  OrderItem[]
 }
 
 model Order {
@@ -34,6 +30,7 @@ model Order {
   status      String
   total       Float
   items       OrderItem[]
+  user        User        @relation(fields: [userId], references: [id])
 }
 
 model OrderItem {
@@ -46,8 +43,8 @@ model OrderItem {
 }
 
 model Inventory {
-  id          String   @id @default(uuid())
-  productId   String
+  id          String    @id @default(uuid())
+  productId   String    @unique
   location    String
   quantity    Int
   product     Product   @relation(fields: [productId], references: [id])
@@ -58,16 +55,18 @@ model User {
   email       String   @unique
   firstName   String
   lastName    String
+
+  address     Address?
   orders      Order[]
 }
 
 model Address {
-  id          String   @id @default(uuid())
-  userId      String
+  id          String    @id @default(uuid())
+  userId      String    @unique
   street      String
   city        String
   state       String
   country     String
   zip         String
-  user        User     @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
 }
