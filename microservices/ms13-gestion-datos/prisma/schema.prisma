@@ -12,3 +12,13 @@ datasource db {
   provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
+
+model Product {
+  id    String @id @default(uuid())
+  name  String
+  desc  String
+}
+
+model Inventory {
+  
+}
