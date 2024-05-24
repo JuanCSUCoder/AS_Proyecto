@@ -52,10 +52,9 @@ model Inventory {
 }
 
 model User {
-  id          String   @id @default(uuid())
-  email       String   @unique
-  firstName   String
-  lastName    String
+  id            String    @id @default(uuid())
+  userPod       String    @unique
+  providerUrl   String
 
   address     Address?
   orders      Order[]
@@ -75,7 +74,7 @@ model Address {
 model Review {
   id          String    @id @default(uuid())
   score       Int
-
+  
   productId   String
   product     Product   @relation(fields: [productId], references: [id])
 }
