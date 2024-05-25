@@ -1,7 +1,9 @@
 package com.pedidos.rest;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeoutException;
 
 import com.pedidos.modelo.Order;
 import com.pedidos.service.OrderService;
@@ -52,7 +54,7 @@ public class OrderController  {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Order> getAllOrders() {
+    public List<Order> getAllOrders() throws IOException, TimeoutException {
         List<Order> orders = orderService.getAll();
         return orders;
     }

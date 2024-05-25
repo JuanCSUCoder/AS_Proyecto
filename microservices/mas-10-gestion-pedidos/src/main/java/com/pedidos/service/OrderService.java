@@ -1,9 +1,11 @@
 package com.pedidos.service;
 
+import java.io.IOException;
 import java.util.List;
-
+import java.util.concurrent.TimeoutException;
 
 import com.pedidos.Respositoy.OrderRepository;
+import com.pedidos.Respositoy.rabbit;
 import com.pedidos.modelo.Order;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -14,6 +16,9 @@ public class OrderService {
 
     @Inject
     private OrderRepository orderRepository;
+
+    @Inject
+    private rabbit ra;
 
      public Order createOrder(Order order) {
         
@@ -37,7 +42,8 @@ public class OrderService {
         return null; // O manejar el caso de que no se encuentre el pedido
     }
 
-    public List<Order> getAll(){
+    public List<Order> getAll() throws IOException, TimeoutException{
+        ra.sendMessage("Hola");
         return orderRepository.getAllOrders();
     }
 
