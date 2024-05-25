@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  pedidos:
+  compras:
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,7 +10,7 @@ services:
     networks:
       - miportal
     labels:
-      - "traefik.http.routers.pedidos.rule=Host(`Miportal.compras.localhost`)"
+      - "traefik.http.routers.compras.rule=Host(`Miportal.compras.localhost`)"
 
 networks:
   miportal:
