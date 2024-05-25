@@ -5,12 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "9080"
     networks:
       - miportal
     labels:
       - "traefik.http.routers.compras.rule=Host(`Miportal.compras.localhost`)"
+      - "traefik.http.services.compras.loadbalancer.server.port=9080"
 
 networks:
   miportal:

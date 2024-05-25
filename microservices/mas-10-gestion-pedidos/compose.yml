@@ -6,12 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 9080
-    networks:
-      - miportal
-    labels:
-      - "traefik.http.routers.pedidos.rule=Host(`Miportal.pedidos.localhost`)"
+    - "9080:9080"
+    
+      
 
-networks:
-  miportal:
-    external: true
