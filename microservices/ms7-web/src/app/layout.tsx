@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeRegistry from "@/providers/ThemeRegistry";
+import { NavBar } from "@/components/NavBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <ThemeRegistry options={{key: 'joy'}}>
-        <body className={inter.className}>{children}</body>
+      <ThemeRegistry options={{ key: "joy" }}>
+        <body className={inter.className + "flex flex-col items-center justify-start p-5"}>
+          <h1 className="text-center mt-0">SuperStore - Tu tienda descentralizada</h1>
+          <NavBar />
+          {children}
+        </body>
       </ThemeRegistry>
     </html>
   );
