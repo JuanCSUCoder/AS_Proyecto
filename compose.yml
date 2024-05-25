@@ -1,19 +1,6 @@
 version: '3'
 
 services:
-  reverse-proxy:
-    # The official v3 Traefik docker image
-    image: traefik:v3.0
-    # Enables the web UI and tells Traefik to listen to docker
-    ports:
-      # The HTTP port
-      - "80:80"
-      # The Web UI (enabled by --api.insecure=true)
-      - "8080:8080"
-    volumes:
-      # So that Traefik can listen to the Docker events
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik.yml:/etc/traefik/traefik.yml
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -27,17 +14,20 @@ services:
     restart:  always
     volumes:
       - grafana_data:/var/lib/grafana
-    labels:
-      - "traefik.http.routers.grafana.rule=Host(`Miportal.grafana.localhost`)"
-      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+    ports:
+      - 3000:3000
   pedidos:
+    ports:
+      - 5010:9080
     build:
       context: ./microservices/mas-10-gestion-pedidos/
       dockerfile: Dockerfile
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.pedidos.rule=Path(`/pedidos`)'
-      - 'traefik.http.services.pedidos.loadbalancer.server.port=9080'
+  compras:
+    ports:
+      - 5011:9080
+    build:
+      context: ./microservices/ms9-gestioncompras/
+      dockerfile: Dockerfile
     
 
 volumes:

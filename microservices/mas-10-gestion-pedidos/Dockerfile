@@ -7,4 +7,6 @@ RUN features.sh
 
 COPY --chown=1001:0 target/*.war /config/apps
 
+EXPOSE 9080
+
 RUN configure.sh
