@@ -1,12 +1,18 @@
 version: '3.8'
 services:
-  db:
+  cockroachdb:
     image: cockroachdb/cockroach
     ports:
       - "26257:26257"
       - "8080:8080"
+    expose:
+      - 26257
     command: start-single-node --insecure
   db_init:
     build:
       context: ./data_init
       dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://root@cockroachdb:26257/db
+    depends_on:
+      - cockroachdb

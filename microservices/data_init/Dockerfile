@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY . .
 
+RUN rm .env
 RUN npm install
 
-CMD [ "npx", "prisma", "migrate", "dev", "--name", "init" ]
+CMD [ "sleep", "15", "&&", "npx", "prisma", "migrate", "dev", "--name", "init" ]
