@@ -1,15 +1,19 @@
 version: '3.7'
 
 services:
+  # Servicio para la base de datos CockroachDB
   cockroachdb:
     image: cockroachdb/cockroach:v21.2.8
     container_name: cockroachdb
     command: start-single-node --insecure
     ports:
       - "26257:26257"
-      - "8080:8080"
-    volumes:
-      - cockroach-data:/cockroach/cockroach-data
+      - "8080:8080" # Usar 8080 para administrar la BD.
 
-volumes:
-  cockroach-data:
+  # Creacion de tablas
+  orm_db_create-app:
+    build:
+      context: .
+      dockerfile: ms_db_config/Dockerfile  # Ruta al Dockerfile
+    depends_on:
+      - cockroachdb
