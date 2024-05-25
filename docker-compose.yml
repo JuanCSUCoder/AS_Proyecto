@@ -11,9 +11,3 @@ services:
       - "8080:8080" # Usar 8080 para administrar la BD.
 
   # Creacion de tablas
-  orm_db_create-app:
-    build:
-      context: .
-      dockerfile: ms_db_config/Dockerfile  # Ruta al Dockerfile
-    depends_on:
-      - cockroachdb
