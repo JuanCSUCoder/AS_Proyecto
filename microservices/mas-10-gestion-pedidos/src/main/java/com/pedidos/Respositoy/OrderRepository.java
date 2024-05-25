@@ -88,6 +88,22 @@ public class OrderRepository {
         return order;
     }
 
+    public Order update(Order order, Integer orderId){
+        System.out.println(orderId);
+        Order orderchange = findById(orderId);
+        if(orderchange != null){
+            for (int i = 0 ; i < orders.size();i++){
+                if (orders.get(i).getId().equals(orderId)){
+                    orders.set(i, order);
+                    return order;
+                }
+            }
+        }
+        
+
+        return null;
+    }
+
     public Order findById(Integer id) {
         
         for (int i = 0 ; i < orders.size();i++){

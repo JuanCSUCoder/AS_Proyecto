@@ -16,8 +16,7 @@ public class OrderService {
     private OrderRepository orderRepository;
 
      public Order createOrder(Order order) {
-        // Lógica para crear un nuevo pedido
-        // Esto podría incluir validación de productos y cálculo del total
+        
         return orderRepository.save(order);
     }
 
@@ -30,15 +29,13 @@ public class OrderService {
         return orderRepository.findByUserId(userId);
     }
 
-    // public Order updateOrderStatus(String orderId, String status) {
-    //     //Optional<Order> orderOpt = orderRepository.findById(orderId);
-    //     if (orderOpt.isPresent()) {
-    //         Order order = orderOpt.get();
-    //         order.setStatus(status);
-    //         return orderRepository.save(order);
-    //     }
-    //     return null; // O manejar el caso de que no se encuentre el pedido
-    // }
+    public Order updateOrderStatus(Order order, Integer orderId) {
+        //Optional<Order> orderOpt = orderRepository.findById(orderId);
+        if (order != null) {
+            return orderRepository.update(order, orderId);
+        }
+        return null; // O manejar el caso de que no se encuentre el pedido
+    }
 
     public List<Order> getAll(){
         return orderRepository.getAllOrders();
