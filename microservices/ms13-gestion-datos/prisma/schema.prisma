@@ -17,6 +17,7 @@ model Product {
   id          String   @id @default(uuid())
   name        String
   desc        String
+  imageURL    String
   price       Float
   stock       Int
 
