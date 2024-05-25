@@ -6,4 +6,7 @@ services:
       - "26257:26257"
       - "8080:8080"
     command: start-single-node --insecure
-  
+  db_init:
+    build:
+      context: ./data_init
+      dockerfile: Dockerfile
