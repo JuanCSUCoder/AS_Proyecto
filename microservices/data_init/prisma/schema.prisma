@@ -16,7 +16,8 @@ datasource db {
 model Product {
   id          String   @id @default(uuid())
   name        String
-  desc        String
+  descr       String
+  imageURL    String
   price       Float
 
   inventory   Inventory?
@@ -55,19 +56,7 @@ model User {
   userPod       String    @unique
   providerUrl   String
 
-  address     Address?
   orders      Order[]
-}
-
-model Address {
-  id          String    @id @default(uuid())
-  userId      String    @unique
-  street      String
-  city        String
-  state       String
-  country     String
-  zip         String
-  user        User      @relation(fields: [userId], references: [id])
 }
 
 model Review {
