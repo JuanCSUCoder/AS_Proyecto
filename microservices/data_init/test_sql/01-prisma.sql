@@ -1,5 +1,3 @@
--- NO MODIFICAR, GENERADO POR PRISMA
-
 -- CreateTable
 CREATE TABLE "Product" (
   "id" STRING NOT NULL,
@@ -66,7 +64,3 @@ ADD CONSTRAINT "Inventory_productId_fkey" FOREIGN KEY ("productId") REFERENCES "
 -- AddForeignKey
 ALTER TABLE "Review"
 ADD CONSTRAINT "Review_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- FIN DE LO GENERADO POR PRISMA
-
-INSERT INTO Product(name, "desc", price) VALUES ('Producto Prueba', 'Descripcion del producto', 10.23);
