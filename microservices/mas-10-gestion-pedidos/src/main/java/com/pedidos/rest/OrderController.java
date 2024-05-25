@@ -15,6 +15,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import lombok.Getter;
 @Path("/orders")
 
 public class OrderController  {
@@ -63,6 +64,15 @@ public class OrderController  {
     public Order cambiarEstado(Order order, @PathParam("orderId") Integer orderId){
         return orderService.updateOrderStatus(order, orderId);
         
+    }
+
+    @GET
+    @Path("/productos/cliente/{clienteId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Order> getAllClientesOrdenes(@PathParam("clienteId") String clientID){
+
+        return orderService.ordenesDeCliente(clientID);
     }
 
 }

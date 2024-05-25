@@ -6,7 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 
@@ -123,5 +123,17 @@ public class OrderRepository {
 
     public List<Order> getAllOrders(){
         return orders;
+    }
+
+    public List<Order> getOrdenClient(String clientID) {
+        List<Order> clientOrders = new ArrayList<>();
+        for (int i = 0 ; i < orders.size();i++){
+            String user = orders.get(i).getUserId();
+            if ( user.equals(clientID)){
+                clientOrders.add(orders.get(i));
+            }
+        }
+
+        return clientOrders;
     }
 }

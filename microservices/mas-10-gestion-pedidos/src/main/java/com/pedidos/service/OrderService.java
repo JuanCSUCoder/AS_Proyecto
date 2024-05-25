@@ -40,5 +40,10 @@ public class OrderService {
     public List<Order> getAll(){
         return orderRepository.getAllOrders();
     }
+
+    public List<Order> ordenesDeCliente(String clientID) {
+        // TODO Auto-generated method stub
+        return orderRepository.getOrdenClient(clientID);
+    }
     
 }
