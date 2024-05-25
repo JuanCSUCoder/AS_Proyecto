@@ -10,7 +10,7 @@ services:
       - 26257
     command: start-single-node --insecure
     volumes:
-      - ./data_init/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data_init/test_sql:/docker-entrypoint-initdb.d
   # db_init:
   #   build:
   #     context: ./data_init
