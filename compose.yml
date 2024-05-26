@@ -68,6 +68,15 @@ services:
     ports:
       - 8081:8080
     restart: always
+  inventarios:
+    build:
+      context: ./microservices/ms13_gestion-inventarios
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5014:8080
+    depends_on:
+      - cockroachdb
+      - adminer
 
 volumes:
   grafana_data:
