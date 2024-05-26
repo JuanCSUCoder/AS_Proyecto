@@ -11,7 +11,7 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
-    restart:  always
+    restart: always
     volumes:
       - grafana_data:/var/lib/grafana
     ports:
@@ -54,15 +54,15 @@ services:
     command: start-single-node --insecure
     # volumes:
     #   - ./microservices/data_init/test_sql:/docker-entrypoint-initdb.d
-  # db_init:
-  #   build:
-  #     context: ./data_init
-  #     dockerfile: Dockerfile
-  #   restart: on-failure
-  #   environment:
-  #     - DATABASE_URL=postgresql://root@cockroachdb:26257/db
-  #   depends_on:
-  #     - cockroachdb
+    # db_init:
+    #   build:
+    #     context: ./data_init
+    #     dockerfile: Dockerfile
+    #   restart: on-failure
+    #   environment:
+    #     - DATABASE_URL=postgresql://root@cockroachdb:26257/db
+    #   depends_on:
+    #     - cockroachdb
   adminer:
     image: adminer
     ports:
@@ -82,6 +82,14 @@ services:
       dockerfile: ./src/main/docker/Dockerfile.jvm
     ports:
       - 5015:8080
+    expose:
+      - 8080
+  ms3_servcio_transporte:
+    build:
+      context: ./microservices/ms3_servicio_transporte
+      dockerfile: dockerfile
+    ports:
+      - 5003:5002
     expose:
       - 8080
 
