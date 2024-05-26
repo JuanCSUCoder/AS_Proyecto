@@ -2,13 +2,14 @@ package com.pedidos.rest;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+
 import java.util.concurrent.TimeoutException;
 
-import com.pedidos.modelo.Order;
+import com.pedidos.modelo.OrderEntity;
 import com.pedidos.service.OrderService;
 
 import jakarta.inject.Inject;
+import jakarta.persistence.criteria.Order;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -30,7 +31,7 @@ public class OrderController  {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Order createOrder(Order order){
+    public OrderEntity createOrder(OrderEntity order){
         return orderService.createOrder(order);
         
     }
@@ -38,9 +39,9 @@ public class OrderController  {
     @GET
     @Path("/{orderId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Order getOrder(@PathParam("orderId") Integer orderId) {
+    public OrderEntity getOrder(@PathParam("orderId") String orderId) {
         
-        Order order = orderService.getOrderById(orderId);
+        OrderEntity order = orderService.getOrderById(orderId);
         
         if (order != null) {
             
@@ -54,8 +55,8 @@ public class OrderController  {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Order> getAllOrders() throws IOException, TimeoutException {
-        List<Order> orders = orderService.getAll();
+    public List<OrderEntity> getAllOrders() throws IOException, TimeoutException {
+        List<OrderEntity> orders = orderService.getAll();
         return orders;
     }
 
@@ -63,7 +64,7 @@ public class OrderController  {
     @Path("/update/{orderId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Order cambiarEstado(Order order, @PathParam("orderId") Integer orderId){
+    public OrderEntity cambiarEstado(OrderEntity order, @PathParam("orderId") String orderId){
         return orderService.updateOrderStatus(order, orderId);
         
     }
@@ -72,7 +73,7 @@ public class OrderController  {
     @Path("/productos/cliente/{clienteId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Order> getAllClientesOrdenes(@PathParam("clienteId") String clientID){
+    public List<OrderEntity> getAllClientesOrdenes(@PathParam("clienteId") String clientID){
 
         return orderService.ordenesDeCliente(clientID);
     }
