@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   prometheus:
@@ -43,7 +43,31 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-    
+  cockroachdb:
+    image: cockroachdb/cockroach
+    restart: always
+    ports:
+      - "26257:26257"
+      - "8070:8080"
+    expose:
+      - 26257
+    command: start-single-node --insecure
+    # volumes:
+    #   - ./microservices/data_init/test_sql:/docker-entrypoint-initdb.d
+  # db_init:
+  #   build:
+  #     context: ./data_init
+  #     dockerfile: Dockerfile
+  #   restart: on-failure
+  #   environment:
+  #     - DATABASE_URL=postgresql://root@cockroachdb:26257/db
+  #   depends_on:
+  #     - cockroachdb
+  adminer:
+    image: adminer
+    ports:
+      - 8081:8080
+    restart: always
 
 volumes:
   grafana_data:
