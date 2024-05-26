@@ -1,0 +1,14 @@
+// Algunos elementos pueden no estar presentes si nunca se han creado
+
+{
+  "name": "Juan Camilo Sánchez Urrego",
+  "email": "juancsucoder@gmail.com",
+  "location": {
+    "description": {
+      "address": "Cll 123 #12-12",
+      // Por ejemplo, puede no tener un nombre de ciudad
+      "countryCode": "COL" // ISO 3 digit code
+    }
+    // O incluso no tener coordenadas exactas
+  }
+}
