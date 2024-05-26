@@ -1,4 +1,5 @@
-package com.compras.model;
+package  com.usuarios.model;
+
 
 import java.util.List;
 
@@ -9,35 +10,38 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
-@Table(name = "\"User\"")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   String id;
 
-  String userPod;
-  String providerUrl;
+  String name;
+  String descr;
+
+  String imageURL;
   
-  // @JsonbTransient
-  // @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-  // @ToString.Exclude
-  // List<Order> orders;
-
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+  double price;
+  
   @JsonbTransient
-  @ToString.Exclude
-  List<Review> reviews;
-}
+  @OneToOne(mappedBy = "product")
+  Inventory inventory;
 
+  @JsonbTransient
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+  List<Review> reviews;
+
+  @JsonbTransient
+  @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+  List<OrderItem> orderItems;
+}

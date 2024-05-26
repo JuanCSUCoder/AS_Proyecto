@@ -9,7 +9,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 public class Createorder {
-        private static final String ORDER_SERVICE_URL = "http://localhost:5010/gestionpedidos/api/orders/create";
+    
+    private static final String ORDER_SERVICE_URL = "http://localhost:5010/gestionpedidos/api/orders/create";
 
     public Response createOrder(Order order) {
         Client client = ClientBuilder.newClient();

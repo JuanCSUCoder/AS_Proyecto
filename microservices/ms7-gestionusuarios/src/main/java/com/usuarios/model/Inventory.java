@@ -1,4 +1,4 @@
-package com.compras.model;
+package  com.usuarios.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
