@@ -84,6 +84,12 @@ services:
       - 5015:8080
     expose:
       - 8080
+  ms4_recomendaciones_ia:
+    build:
+      context: ./microservices/ms4-recomendaciones-IA
+      dockerfile: Dockerfile
+    ports:
+      - 5004:5004
 
 volumes:
   grafana_data:
