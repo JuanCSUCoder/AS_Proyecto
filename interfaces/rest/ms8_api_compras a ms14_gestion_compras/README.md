@@ -8,24 +8,18 @@
 
 ```json
 {
-  "userId": "UUID",
-  "products": [
+  "user": {
+    "id": "string"
+  },
+  "items": [
     {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
+      "id": "string",
+      "quantity": 0,
+      "order": "string",
+      "product": {
+        "id": "string"
+      }
+    }
   ]
 }
 ```
@@ -60,15 +54,11 @@
 
 ## Registrar Pago de la Orden
 
-**Endpoint:** POST /payorder/{uuid}
+**Endpoint:** POST /payorder?orderid={uuid}
 
 ### Cuerpo de Solicitud
 
-```json
-{
-  "paid": true
-}
-```
+No requiere cuerpo
 
 ### Cuerpo de Respuesta
 
