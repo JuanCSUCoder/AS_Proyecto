@@ -28,6 +28,7 @@ export function CartList() {
             <td>Nombre</td>
             <td>Cantidad</td>
             <td>Precio</td>
+            <td></td>
           </tr>
         </thead>
         <tbody>
