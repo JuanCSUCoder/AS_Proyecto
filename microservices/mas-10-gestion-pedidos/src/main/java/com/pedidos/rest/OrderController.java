@@ -5,6 +5,9 @@ import java.util.List;
 
 import java.util.concurrent.TimeoutException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.pedidos.model.Order;
 import com.pedidos.service.OrderService;
 
@@ -26,12 +29,14 @@ public class OrderController  {
     @Inject
     private OrderService orderService;
     
-
+    private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
     @POST
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Order createOrder(Order order){
+        logger.info("Creating order: ");
+        logger.info("Creating order: {}", order);
         return orderService.createOrder(order);
         
     }

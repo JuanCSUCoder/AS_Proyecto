@@ -11,19 +11,22 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.compras.model.Order;
 import com.compras.model.Product;
 
 @Stateless
 public class OrderService {
 
-    private static final String ORDER_SERVICE_URL = "http://localhost:5010/gestionpedidos/api/orders/create";
+    private static final String ORDER_SERVICE_URL = "http://pedidos:9080/gestionpedidos/api/orders/create";
     private static final String VERIFY_PRODUCTS_URL = "http://localhost:5010/gestionproductos/api/products/verify";
     private static final String UPDATE_INVENTORY_URL = "http://localhost:5010/gestioninventario/api/inventory/update";
-
+    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
     public Response createOrder(Order order) {
         Client client = ClientBuilder.newClient();
-
+        logger.info("try resonese rder: ");
         try {
             Response response = client
                 .target(ORDER_SERVICE_URL)
