@@ -1,7 +1,8 @@
-package co.edu.javeriana.model;
+package  com.pedidos.model;
 
 import java.util.List;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,13 +30,16 @@ public class Product {
   String imageURL;
   
   double price;
-
+  
+  @JsonbTransient
   @OneToOne
   Inventory inventory;
 
+  @JsonbTransient
   @OneToMany
   List<Review> reviews;
 
+  @JsonbTransient
   @OneToMany
   List<OrderItem> orderItems;
 }
