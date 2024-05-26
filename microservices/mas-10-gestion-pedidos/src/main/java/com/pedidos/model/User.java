@@ -2,6 +2,8 @@ package  com.pedidos.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,13 +32,13 @@ public class User {
   String userPod;
   String providerUrl;
   
-  @JsonbTransient
+  @JsonIgnore
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
   @ToString.Exclude
   List<Order> orders;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-  @JsonbTransient
+  @JsonIgnore
   @ToString.Exclude
   List<Review> reviews;
 }

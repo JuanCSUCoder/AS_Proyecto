@@ -1,5 +1,7 @@
 package com.compras.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +26,7 @@ public class OrderItem {
 
   int quantity;
   
-  @JsonbTransient
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "orderId", referencedColumnName = "id")
   Order order;
