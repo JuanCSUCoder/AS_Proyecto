@@ -1,9 +1,9 @@
 package com.compras.rest;
 
-import com.compras.modelo.Order;
-import com.compras.modelo.OrderItem;
-import com.compras.modelo.Product;
-import com.compras.modelo.User;
+import com.compras.modelo.OrderEntity;
+import com.compras.modelo.OrderItemEntity;
+import com.compras.modelo.ProductEntity;
+import com.compras.modelo.UserEntity;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,7 +17,7 @@ public class ComprasController {
     @Path("/realizar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response realizarCompra(User user, List<Product> products) {
+    public Response realizarCompra(UserEntity user, List<ProductEntity> products) {
         // Verificar los productos de la compra
         boolean productosDisponibles = verificarProductosDisponibles(products);
         
@@ -31,7 +31,7 @@ public class ComprasController {
         actualizarInventario(products);
 
         // Crear la orden
-        Order order = crearOrden(user, products);
+        OrderEntity order = crearOrden(user, products);
 
         // Aquí podrías almacenar la orden en la base de datos u otro sistema de almacenamiento
 
@@ -40,18 +40,18 @@ public class ComprasController {
                 .build();
     }
 
-    private boolean verificarProductosDisponibles(List<Product> products) {
+    private boolean verificarProductosDisponibles(List<ProductEntity> products) {
         // Lógica para verificar si todos los productos están disponibles en el inventario
         return true; // Aquí deberías implementar la lógica adecuada
     }
 
-    private void actualizarInventario(List<Product> products) {
+    private void actualizarInventario(List<ProductEntity> products) {
         // Lógica para actualizar el inventario después de una compra
     }
 
-    private Order crearOrden(User user, List<Product> products) {
+    private OrderEntity crearOrden(UserEntity user, List<ProductEntity> products) {
         // Lógica para crear una nueva orden
-        Order order = new Order();
+        OrderEntity order = new OrderEntity();
         // Configurar la orden con los datos del usuario y los productos
         return order;
     }
