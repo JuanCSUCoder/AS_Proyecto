@@ -8,6 +8,7 @@ import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.compras.Services.Createorder;
 import com.compras.model.CompraRequest;
 import com.compras.model.Order;
 import com.compras.model.OrderItem;
@@ -22,24 +23,28 @@ public class ComprasController {
     @Path("/realizar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Order realizarCompra(@QueryParam("userId") String userId, List<Product> products) {
+    public Response  realizarCompra(@QueryParam("userId") String userId, List<Product> products) {
         // Verificar los productos de la compra
         boolean productosDisponibles = verificarProductosDisponibles(products);
         
-        // if (!productosDisponibles) {
-        //     return null;
-        // }
+        if (!productosDisponibles) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Algunos productos no están disponibles en el inventario.")
+                    .build();
+        }
 
-        // Actualizar el inventario
-        // actualizarInventario(products);
+        //Actualizar el inventario
+        actualizarInventario(products);
 
         //Crear la orden
         Order order = crearOrden(userId, products);
-
+        Createorder serviceCreateOrder = new Createorder();
+        Response orderResp =serviceCreateOrder.createOrder(order);
         // Aquí podrías almacenar la orden en la base de datos u otro sistema de almacenamiento
- 
+        return Response.status(Response.Status.OK)
+        .entity(orderResp)
+        .build();
 
-        return order;
     }
 
     private boolean verificarProductosDisponibles(List<Product> products) {
@@ -55,6 +60,8 @@ public class ComprasController {
         Order order = new Order();
         User user = new User();
         user.setUserPod(userId);
+        user.setId(userId);
+        user.setProviderUrl("holaquetal");
         order.setUser(user);
         order.setStatus("En Proceso");
         
