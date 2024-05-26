@@ -76,6 +76,7 @@ services:
       - 5014:8080
     depends_on:
       - cockroachdb
+      - adminer
 
 volumes:
   grafana_data:

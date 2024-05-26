@@ -17,9 +17,9 @@
 
     <properties>
       <property name="jakarta.persistence.jdbc.url"
-        value="jdbc:postgresql://localhost:26257/defaultdb" />
+        value="jdbc:postgresql://cockroachdb:26257/defaultdb" />
       <property name="jakarta.persistence.jdbc.user" value="root" />
-      <property name="jakarta.persistence.jdbc.password" value="" />
+      <property name="jakarta.persistence.jdbc.password" value=" " />
 
       <!-- Automatically export the schema -->
       <property name="jakarta.persistence.schema-generation.database.action" value="create" />

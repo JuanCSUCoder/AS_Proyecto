@@ -1,12 +1,3 @@
-
-FROM maven AS buildjar
-
-WORKDIR /opt/app
-
-COPY . /opt/app
-
-RUN mvn clean package
-
 FROM icr.io/appcafe/open-liberty:kernel-slim-java17-openj9-ubi
 
 COPY --chown=1001:0 /src/main/liberty/config /config
