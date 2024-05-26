@@ -31,7 +31,7 @@ public class User {
   String userPod;
   String providerUrl;
   
-  @OneToMany
+  @OneToMany(mappedBy = "user")
   List<Order> orders;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

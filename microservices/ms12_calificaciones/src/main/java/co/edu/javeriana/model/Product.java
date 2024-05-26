@@ -38,11 +38,11 @@ public class Product {
   @JsonIgnore
   Inventory inventory;
 
-  @OneToMany(fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
   @JsonIgnore
   @ToString.Exclude
   List<Review> reviews;
 
-  @OneToMany
+  @OneToMany(mappedBy = "product")
   List<OrderItem> orderItems;
 }

@@ -6,6 +6,7 @@ import co.edu.javeriana.model.Review;
 import co.edu.javeriana.repositories.ReviewRepository;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
@@ -23,5 +24,12 @@ public class ReviewsResource {
     public List<Review> getScores(@QueryParam("prodId") String prodId) {
         List<Review> reviews = repo.findByProductId(prodId);
         return reviews;
+    }
+
+    @PUT
+    @Path("/score")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Review putScore(Review review) {
+        return repo.save(review);
     }
 }
