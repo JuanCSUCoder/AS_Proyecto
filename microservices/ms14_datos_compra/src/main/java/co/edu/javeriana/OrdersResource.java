@@ -38,6 +38,13 @@ public class OrdersResource {
         return repo.findByUserId(userId);
     }
 
+    @GET
+    @Path("/order")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Order getOrder(@QueryParam("orderId") String orderId) {
+        return repo.findById(orderId).get();
+    }
+
     @POST
     @Path("/order")
     @Produces(MediaType.APPLICATION_JSON)
