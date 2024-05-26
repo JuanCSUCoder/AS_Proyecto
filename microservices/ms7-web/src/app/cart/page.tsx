@@ -1,5 +1,6 @@
 import { CartList } from "@/components/cart/CartList";
 import { Button } from "@mui/joy";
+import Link from "next/link";
 
 export default function CartPage() {
   return (
@@ -7,7 +8,11 @@ export default function CartPage() {
       <h2>Lista de Compras</h2>
       <CartList />
       <div className="my-5">
-        <Button size="lg" variant="soft" color="success">Realizar Pedido</Button>
+        <Link href="/order/login">
+          <Button size="lg" variant="soft" color="success">
+            Realizar Pedido
+          </Button>
+        </Link>
       </div>
     </main>
   );
