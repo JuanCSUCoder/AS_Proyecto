@@ -1,36 +1,45 @@
-package  com.pedidos.model;
+package com.compras.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Inventory {
+public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   String id;
 
-  String location;
-  int stock;
+  String name;
+  String descr;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JsonIgnore
-  @ToString.Exclude
-  @JoinColumn(name = "productId", referencedColumnName = "id")
-  Product product;
+  String imageURL;
+  
+  double price;
+  
+  @JsonbTransient
+  @OneToOne
+  Inventory inventory;
+
+  @JsonbTransient
+  @OneToMany
+  List<Review> reviews;
+
+  @JsonbTransient
+  @OneToMany
+  List<OrderItem> orderItems;
 }

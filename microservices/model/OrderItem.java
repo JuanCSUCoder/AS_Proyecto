@@ -1,4 +1,4 @@
-package co.edu.javeriana.model;
+package  com.pedidos.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,13 +25,14 @@ public class OrderItem {
   String id;
 
   int quantity;
-
+  
   @ManyToOne
   @JoinColumn(name = "orderId", referencedColumnName = "id")
   @JsonIgnore
   @ToString.Exclude
   Order order;
 
+  
   @ManyToOne
   @JoinColumn(name = "productId", referencedColumnName = "id")
   Product product;

@@ -1,4 +1,4 @@
-package co.edu.javeriana.model;
+package  com.pedidos.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
