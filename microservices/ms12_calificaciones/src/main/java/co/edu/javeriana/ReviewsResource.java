@@ -3,7 +3,9 @@ package co.edu.javeriana;
 import java.util.List;
 
 import co.edu.javeriana.model.Review;
+import co.edu.javeriana.repositories.ProductRepository;
 import co.edu.javeriana.repositories.ReviewRepository;
+import co.edu.javeriana.repositories.UserRepository;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
@@ -18,6 +20,12 @@ public class ReviewsResource {
     @Inject
     ReviewRepository repo;
 
+    @Inject
+    ProductRepository prodrepo;
+
+    @Inject
+    UserRepository userrepo;
+
     @GET
     @Path("/scores")
     @Produces(MediaType.APPLICATION_JSON)
@@ -30,6 +38,8 @@ public class ReviewsResource {
     @Path("/score")
     @Produces(MediaType.APPLICATION_JSON)
     public Review putScore(Review review) {
+        review.setProduct(prodrepo.findById(review.getProduct().getId()).get());
+        review.setUser(userrepo.findById(review.getUser().getId()).get());
         return repo.save(review);
     }
 }
