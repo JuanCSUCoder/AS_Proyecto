@@ -1,11 +1,15 @@
 package  com.pedidos.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,16 +22,29 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Inventory {
+public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   String id;
 
-  String location;
-  int stock;
+  String name;
+  String descr;
 
-  @OneToOne(fetch = FetchType.LAZY)
+  String imageURL;
+  
+  double price;
+
+  @OneToOne(mappedBy = "product")
+  @JsonIgnore
+  Inventory inventory;
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+  @JsonIgnore
   @ToString.Exclude
-  @JoinColumn(name = "productId", referencedColumnName = "id")
-  Product product;
+  List<Review> reviews;
+
+  @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+  @JsonIgnore
+  @ToString.Exclude
+  List<OrderItem> orderItems;
 }

@@ -1,5 +1,7 @@
 package  com.pedidos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,7 @@ public class Inventory {
   int stock;
 
   @OneToOne(fetch = FetchType.LAZY)
+  @JsonIgnore
   @ToString.Exclude
   @JoinColumn(name = "productId", referencedColumnName = "id")
   Product product;
