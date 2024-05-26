@@ -5,11 +5,11 @@ import java.util.List;
 
 import java.util.concurrent.TimeoutException;
 
-import com.pedidos.modelo.OrderEntity;
+import com.pedidos.model.Order;
 import com.pedidos.service.OrderService;
 
 import jakarta.inject.Inject;
-import jakarta.persistence.criteria.Order;
+
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -18,7 +18,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import lombok.Getter;
+
 @Path("/orders")
 
 public class OrderController  {
@@ -31,7 +31,7 @@ public class OrderController  {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public OrderEntity createOrder(OrderEntity order){
+    public Order createOrder(Order order){
         return orderService.createOrder(order);
         
     }
@@ -39,9 +39,9 @@ public class OrderController  {
     @GET
     @Path("/{orderId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public OrderEntity getOrder(@PathParam("orderId") String orderId) {
+    public Order getOrder(@PathParam("orderId") String orderId) {
         
-        OrderEntity order = orderService.getOrderById(orderId);
+        Order order = orderService.getOrderById(orderId);
         
         if (order != null) {
             
@@ -55,8 +55,8 @@ public class OrderController  {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<OrderEntity> getAllOrders() throws IOException, TimeoutException {
-        List<OrderEntity> orders = orderService.getAll();
+    public List<Order> getAllOrders() throws IOException, TimeoutException {
+        List<Order> orders = orderService.getAll();
         return orders;
     }
 
@@ -64,16 +64,15 @@ public class OrderController  {
     @Path("/update/{orderId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public OrderEntity cambiarEstado(OrderEntity order, @PathParam("orderId") String orderId){
+    public Order cambiarEstado(Order order, @PathParam("orderId") String orderId){
         return orderService.updateOrderStatus(order, orderId);
         
     }
 
     @GET
     @Path("/productos/cliente/{clienteId}")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<OrderEntity> getAllClientesOrdenes(@PathParam("clienteId") String clientID){
+    public List<Order> getAllClientesOrdenes(@PathParam("clienteId") String clientID){
 
         return orderService.ordenesDeCliente(clientID);
     }
