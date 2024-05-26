@@ -1,6 +1,4 @@
-package  com.pedidos.model;
-
-import java.util.List;
+package co.edu.javeriana.model;
 
 import java.util.List;
 

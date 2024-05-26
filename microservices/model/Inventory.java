@@ -1,4 +1,4 @@
-package  com.pedidos.model;
+package co.edu.javeriana.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
