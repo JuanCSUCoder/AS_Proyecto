@@ -2,7 +2,7 @@
 
 ## Obtener Calificaciones
 
-**Endpoint:** GET /scores
+**Endpoint:** GET /scores?prodId=12
 
 ### Cuerpo de la Respuesta
 
