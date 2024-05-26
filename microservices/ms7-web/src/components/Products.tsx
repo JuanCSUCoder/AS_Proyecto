@@ -5,82 +5,84 @@ export function Products() {
   const products: Product[] = [
     {
       name: "Producto 1",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
+      imageURL:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Arduino_ftdi_chip-1.jpg/1200px-Arduino_ftdi_chip-1.jpg",
     },
     {
       name: "Producto 2",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 3",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 3",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 1",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 2",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 3",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 3",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 1",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 2",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 3",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 3",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 1",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 2",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 3",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
     {
       name: "Producto 3",
-      desc: "Descripcion del producto 1",
+      descr: "Descrripcion del producto 1",
       price: 1120.0,
     },
   ];
