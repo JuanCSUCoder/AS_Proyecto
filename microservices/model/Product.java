@@ -2,7 +2,10 @@ package co.edu.javeriana.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -30,12 +34,15 @@ public class Product {
   
   double price;
 
-  @OneToOne
+  @OneToOne(mappedBy = "product")
+  @JsonIgnore
   Inventory inventory;
 
-  @OneToMany
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+  @JsonIgnore
+  @ToString.Exclude
   List<Review> reviews;
 
-  @OneToMany
+  @OneToMany(mappedBy = "product")
   List<OrderItem> orderItems;
 }
