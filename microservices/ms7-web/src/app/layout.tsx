@@ -21,7 +21,8 @@ export default function RootLayout({
       <ThemeRegistry options={{ key: "joy" }}>
         <body
           className={
-            inter.className + "flex flex-col items-center justify-start p-5"
+            inter.className +
+            "flex flex-col items-center justify-start p-5 min-h-screen"
           }
         >
           <h1 className="text-center mt-0">SuperStore</h1>
