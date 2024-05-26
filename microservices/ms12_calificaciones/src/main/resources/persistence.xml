@@ -8,12 +8,12 @@
       Descripcion
     </description>
 
-    <class>co.edu.javeriana.model.Inventory</class>
-    <class>co.edu.javeriana.model.Order</class>
-    <class>co.edu.javeriana.model.OrderItem</class>
-    <class>co.edu.javeriana.model.Product</class>
-    <class>co.edu.javeriana.model.Review</class>
-    <class>co.edu.javeriana.model.User</class>
+    <class>co.edu.javeriana.model.InventoryEntity</class>
+    <class>co.edu.javeriana.model.OrderEntity</class>
+    <class>co.edu.javeriana.model.OrderItemEntity</class>
+    <class>co.edu.javeriana.model.ProductEntity</class>
+    <class>co.edu.javeriana.model.ReviewEntity</class>
+    <class>co.edu.javeriana.model.UserEntity</class>
 
     <properties>
       <property name="jakarta.persistence.jdbc.url"
