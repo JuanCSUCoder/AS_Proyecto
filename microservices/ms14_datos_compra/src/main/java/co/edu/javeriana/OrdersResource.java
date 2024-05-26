@@ -1,5 +1,7 @@
 package co.edu.javeriana;
 
+import java.util.List;
+
 import co.edu.javeriana.model.Order;
 import co.edu.javeriana.model.OrderItem;
 import co.edu.javeriana.repositories.OrderItemRepository;
@@ -7,6 +9,7 @@ import co.edu.javeriana.repositories.OrderRepository;
 import co.edu.javeriana.repositories.ProductRepository;
 import co.edu.javeriana.repositories.UserRepository;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -27,6 +30,13 @@ public class OrdersResource {
 
     @Inject
     UserRepository userRepo;
+
+    @GET
+    @Path("/orders")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Order> getUserOrders(@QueryParam("userId") String userId) {
+        return repo.findByUserId(userId);
+    }
 
     @POST
     @Path("/order")
