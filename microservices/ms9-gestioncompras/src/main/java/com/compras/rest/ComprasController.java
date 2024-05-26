@@ -1,6 +1,7 @@
 package com.compras.rest;
 
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -8,7 +9,7 @@ import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.compras.Services.Createorder;
+import com.compras.Services.OrderService;
 import com.compras.model.CompraRequest;
 import com.compras.model.Order;
 import com.compras.model.OrderItem;
@@ -18,6 +19,8 @@ import com.compras.model.User;
 @Path("/compras")
 public class ComprasController {
 
+    @Inject
+    private OrderService orderService;
 
     @POST
     @Path("/realizar")
@@ -38,8 +41,8 @@ public class ComprasController {
 
         //Crear la orden
         Order order = crearOrden(userId, products);
-        Createorder serviceCreateOrder = new Createorder();
-        Response orderResp =serviceCreateOrder.createOrder(order);
+
+        Response orderResp =orderService.createOrder(order);
         // Aquí podrías almacenar la orden en la base de datos u otro sistema de almacenamiento
         return Response.status(Response.Status.OK)
         .entity(orderResp)
