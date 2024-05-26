@@ -9,28 +9,36 @@
 ```json
 [
   {
-    "productId": "UUID",
-    "userId": "UUID",
-    "score": 4, // Numero de estrellas de 1-5
-    "comment": "Comentario"
+    "id": "1",
+    "score": 3,
+    "product": {
+      "id": "1",
+      "name": "Producto",
+      "descr": "Descripcion",
+      "imageURL": "https://image.png",
+      "price": 12.34
+    },
+    "user": {
+      "id": "1",
+      "userPod": "pod",
+      "providerUrl": "prov"
+    }
   },
   {
-    "productId": "UUID",
-    "userId": "UUID",
-    "score": 4, // Numero de estrellas de 1-5
-    "comment": "Comentario"
-  },
-  {
-    "productId": "UUID",
-    "userId": "UUID",
-    "score": 4, // Numero de estrellas de 1-5
-    "comment": "Comentario"
-  },
-  {
-    "productId": "UUID",
-    "userId": "UUID",
-    "score": 4, // Numero de estrellas de 1-5
-    "comment": "Comentario"
+    "id": "d80c2c74-8806-46b4-9189-612b02f90613",
+    "score": 4,
+    "product": {
+      "id": "1",
+      "name": "Producto",
+      "descr": "Descripcion",
+      "imageURL": "https://image.png",
+      "price": 12.34
+    },
+    "user": {
+      "id": "1",
+      "userPod": "pod",
+      "providerUrl": "prov"
+    }
   }
 ]
 ```
@@ -43,9 +51,33 @@
 
 ```json
 {
-  "productId": "UUID",
-  "userId": "UUID",
-  "score": 4, // Numero de estrellas de 1-5
-  "comment": "Comentario"
+  "score": 4,
+  "product": {
+    "id": "1"
+  },
+  "user": {
+    "id": "1"
+  }
+}
+```
+
+### Ejemplo Respuesta
+
+```json
+{
+  "id": "d80c2c74-8806-46b4-9189-612b02f90613",
+  "score": 4,
+  "product": {
+    "id": "1",
+    "name": "Producto",
+    "descr": "Descripcion",
+    "imageURL": "https://image.png",
+    "price": 12.34
+  },
+  "user": {
+    "id": "1",
+    "userPod": "pod",
+    "providerUrl": "prov"
+  }
 }
 ```
