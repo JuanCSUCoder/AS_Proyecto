@@ -9,13 +9,12 @@
 ```json
 {
   "user": {
-    "id": "string"
+    "id": "1"
   },
   "items": [
     {
       "id": "string",
       "quantity": 0,
-      "order": "string",
       "product": {
         "id": "string"
       }
