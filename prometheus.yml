@@ -14,5 +14,9 @@ scrape_configs:
   - job_name: 'usuarios'
     static_configs:
       - targets: ['host.docker.internal:5007']
+  - job_name: 'inventario'
+    metrics_path: '/q/metrics'
+    static_configs:
+      - targets: ['host.docker.internal:5014']
 
   

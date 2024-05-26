@@ -43,12 +43,12 @@ public class OrderService {
     }
 
     public List<Order> getAll() throws IOException, TimeoutException{
-        ra.sendMessage("Hola");
+        //ra.sendMessage("Hola");
         return orderRepository.getAllOrders();
     }
 
     public List<Order> ordenesDeCliente(String clientID) {
-        // TODO Auto-generated method stub
+        
         return orderRepository.getOrdenClient(clientID);
     }
     

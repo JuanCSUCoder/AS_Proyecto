@@ -5,6 +5,9 @@ import java.util.List;
 
 import java.util.concurrent.TimeoutException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.pedidos.model.Order;
 import com.pedidos.service.OrderService;
 
@@ -18,6 +21,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/orders")
 
@@ -26,13 +30,25 @@ public class OrderController  {
     @Inject
     private OrderService orderService;
     
-
+    private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
     @POST
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Order createOrder(Order order){
-        return orderService.createOrder(order);
+    public Response createOrder(Order order){
+        logger.info("Creating order: ");
+        logger.info("Creating order: {}", order);
+
+        Order order2= orderService.createOrder(order);
+        if(order2 == null){
+            return Response.status(Response.Status.BAD_REQUEST)
+            .entity("Algunos productos no están disponibles en el inventario.")
+            .build();
+        }
+
+        return Response.status(Response.Status.OK)
+        .entity(order2)
+        .build();
         
     }
 

@@ -91,5 +91,16 @@ services:
     ports:
       - 5004:5004
 
+  inventarios:
+    build:
+      context: ./microservices/ms13_gestion-inventarios
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5014:8080
+    depends_on:
+      - cockroachdb
+      - adminer
+
+
 volumes:
   grafana_data:

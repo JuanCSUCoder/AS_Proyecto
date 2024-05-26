@@ -2,8 +2,11 @@ package com.compras.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,15 +34,15 @@ public class Product {
   
   double price;
   
-  @JsonbTransient
-  @OneToOne
+  @JsonIgnore
+  @OneToOne(mappedBy = "product")
   Inventory inventory;
 
-  @JsonbTransient
-  @OneToMany
+  @JsonIgnore
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
   List<Review> reviews;
 
-  @JsonbTransient
-  @OneToMany
+  @JsonIgnore
+  @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
   List<OrderItem> orderItems;
 }
