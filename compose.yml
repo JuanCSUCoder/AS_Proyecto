@@ -68,6 +68,29 @@ services:
     ports:
       - 8081:8080
     restart: always
+  ms12_datos_calificaciones:
+    build:
+      context: ./microservices/ms12_calificaciones
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5013:8080
+    expose:
+      - 8080
+  ms14_datos_compra:
+    build:
+      context: ./microservices/ms14_datos_compra
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5015:8080
+    expose:
+      - 8080
+  ms4_recomendaciones_ia:
+    build:
+      context: ./microservices/ms4-recomendaciones-IA
+      dockerfile: Dockerfile
+    ports:
+      - 5004:5004
+
   inventarios:
     build:
       context: ./microservices/ms13_gestion-inventarios
@@ -77,6 +100,7 @@ services:
     depends_on:
       - cockroachdb
       - adminer
+
 
 volumes:
   grafana_data:
