@@ -5,7 +5,7 @@ import { Order } from "@/model/Order";
 
 export function CartList() {
   const order: Order = {
-
+    id: "dsjuvbkj"
   }
 
   return (
@@ -31,7 +31,7 @@ export function CartList() {
           </tr>
         </thead>
         <tbody>
-          <CartItem orderItem={{}} />
+          <CartItem orderItem={{id:"dvs"}} />
         </tbody>
       </Table>
     </Sheet>
