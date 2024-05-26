@@ -8,24 +8,16 @@
 
 ```json
 {
-  "userId": "UUID",
-  "products": [
+  "user": {
+    "id": "1"
+  },
+  "items": [
     {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
+      "quantity": 0,
+      "product": {
+        "id": "string"
+      }
+    }
   ]
 }
 ```
@@ -34,66 +26,62 @@
 
 ```json
 {
-  "id": "UUID Generado para la Orden",
-  "userId": "UUID",
+  "id": "62fc4fe8-4a23-4793-bbf8-b24ba1b95496",
   "status": "PENDING",
-  "products": [
+  "total": 37.019999999999996,
+  "user": {
+    "id": "1",
+    "userPod": "pod",
+    "providerUrl": "prov"
+  },
+  "items": [
     {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
+      "id": "6ccd1674-eced-47ac-8ce2-adf38eaa13e3",
+      "quantity": 3,
+      "product": {
+        "id": "1",
+        "name": "Producto",
+        "descr": "Descripcion",
+        "imageURL": "https://image.png",
+        "price": 12.34
+      }
+    }
   ]
 }
 ```
 
 ## Registrar Pago de la Orden
 
-**Endpoint:** POST /payorder/{uuid}
+**Endpoint:** POST /payorder?orderid={uuid}
 
 ### Cuerpo de Solicitud
 
-```json
-{
-  "paid": true
-}
-```
+No requiere cuerpo
 
 ### Cuerpo de Respuesta
 
 ```json
 {
-  "id": "UUID Generado para la Orden",
-  "userId": "UUID",
-  "status": "PAID", // Se actualiza este campo
-  "products": [
+  "id": "62fc4fe8-4a23-4793-bbf8-b24ba1b95496",
+  "status": "PAID",
+  "total": 37.019999999999996,
+  "user": {
+    "id": "1",
+    "userPod": "pod",
+    "providerUrl": "prov"
+  },
+  "items": [
     {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
-    {
-      "productId": "UUID",
-      "quantity": 3
-    },
+      "id": "6ccd1674-eced-47ac-8ce2-adf38eaa13e3",
+      "quantity": 3,
+      "product": {
+        "id": "1",
+        "name": "Producto",
+        "descr": "Descripcion",
+        "imageURL": "https://image.png",
+        "price": 12.34
+      }
+    }
   ]
 }
 ```
