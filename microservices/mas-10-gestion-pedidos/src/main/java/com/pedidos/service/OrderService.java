@@ -6,7 +6,7 @@ import java.util.concurrent.TimeoutException;
 
 import com.pedidos.Respositoy.OrderRepository;
 import com.pedidos.Respositoy.rabbit;
-import com.pedidos.modelo.OrderEntity;
+import com.pedidos.model.Order;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -20,21 +20,21 @@ public class OrderService {
     @Inject
     private rabbit ra;
 
-     public OrderEntity createOrder(OrderEntity order) {
+    public Order createOrder(Order order) {
         
         return orderRepository.save(order);
     }
 
-    public OrderEntity getOrderById(String orderId) {
+    public Order getOrderById(String orderId) {
         System.out.println(orderId);
         return orderRepository.findById(orderId);
     }
 
-    public List<OrderEntity> getOrdersByUserId(String userId) {
+    public List<Order> getOrdersByUserId(String userId) {
         return orderRepository.findByUserId(userId);
     }
 
-    public OrderEntity updateOrderStatus(OrderEntity order, String orderId) {
+    public Order updateOrderStatus(Order order, String orderId) {
         //Optional<Order> orderOpt = orderRepository.findById(orderId);
         if (order != null) {
             return orderRepository.update(order, orderId);
@@ -42,12 +42,12 @@ public class OrderService {
         return null; // O manejar el caso de que no se encuentre el pedido
     }
 
-    public List<OrderEntity> getAll() throws IOException, TimeoutException{
+    public List<Order> getAll() throws IOException, TimeoutException{
         ra.sendMessage("Hola");
         return orderRepository.getAllOrders();
     }
 
-    public List<OrderEntity> ordenesDeCliente(String clientID) {
+    public List<Order> ordenesDeCliente(String clientID) {
         // TODO Auto-generated method stub
         return orderRepository.getOrdenClient(clientID);
     }
