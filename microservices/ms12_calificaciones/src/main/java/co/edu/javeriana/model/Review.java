@@ -26,4 +26,7 @@ public class Review {
   @ManyToOne
   @JoinColumn(name = "productId", referencedColumnName = "id")
   Product product;
+
+  @ManyToOne
+  User user;
 }
