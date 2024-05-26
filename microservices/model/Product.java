@@ -2,8 +2,10 @@ package  com.pedidos.model;
 
 import java.util.List;
 
-import jakarta.json.bind.annotation.JsonbTransient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -30,16 +33,18 @@ public class Product {
   String imageURL;
   
   double price;
-  
-  @JsonbTransient
-  @OneToOne
+
+  @OneToOne(mappedBy = "product")
+  @JsonIgnore
   Inventory inventory;
 
-  @JsonbTransient
-  @OneToMany
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+  @JsonIgnore
+  @ToString.Exclude
   List<Review> reviews;
 
-  @JsonbTransient
-  @OneToMany
+  @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+  @JsonIgnore
+  @ToString.Exclude
   List<OrderItem> orderItems;
 }
