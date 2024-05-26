@@ -23,15 +23,11 @@ public class OrderItem {
 
   int quantity;
 
-  String orderId;
-
   @ManyToOne
-  @JoinColumn(name = "orderId", columnDefinition = "id")
+  @JoinColumn(name = "orderId", referencedColumnName = "id")
   Order order;
 
-  String productId;
-
   @ManyToOne
-  @JoinColumn(name = "productId", columnDefinition = "id")
+  @JoinColumn(name = "productId", referencedColumnName = "id")
   Product product;
 }

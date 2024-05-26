@@ -23,8 +23,7 @@ public class Review {
 
   int score;
 
-  String productId;
   @ManyToOne
-  @JoinColumn(name = "productId", columnDefinition = "id")
+  @JoinColumn(name = "productId", referencedColumnName = "id")
   Product product;
 }

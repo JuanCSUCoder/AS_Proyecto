@@ -6,12 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "\"Order\"")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,8 +25,6 @@ public class Order {
 
   String status;
   double total;
-
-  String userId;
 
   @OneToOne
   @JoinColumn(name = "userId", referencedColumnName = "id")

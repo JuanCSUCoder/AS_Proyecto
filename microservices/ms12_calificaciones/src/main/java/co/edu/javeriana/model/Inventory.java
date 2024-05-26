@@ -24,8 +24,6 @@ public class Inventory {
   String location;
   int stock;
 
-  String productId;
-
   @OneToOne
   @JoinColumn(name = "productId", referencedColumnName = "id")
   Product product;
