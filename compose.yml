@@ -42,7 +42,7 @@ services:
     restart: always
     ports:
       - "26257:26257"
-      - "8080:8080"
+      - "8072:8080"
     expose:
       - 26257
     command: start-single-node --insecure
