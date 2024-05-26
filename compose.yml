@@ -16,18 +16,24 @@ services:
       - grafana_data:/var/lib/grafana
     ports:
       - 3000:3000
-  # pedidos:
-  #   ports:
-  #     - 5010:9080
-  #   build:
-  #     context: ./microservices/mas-10-gestion-pedidos/
-  #     dockerfile: Dockerfile
-  # compras:
-  #   ports:
-  #     - 5011:9080
-  #   build:
-  #     context: ./microservices/ms9-gestioncompras/
-  #     dockerfile: Dockerfile
+  pedidos:
+    ports:
+      - 5010:9080
+    build:
+      context: ./microservices/mas-10-gestion-pedidos/
+      dockerfile: Dockerfile
+  compras:
+    ports:
+      - 5011:9080
+    build:
+      context: ./microservices/ms9-gestioncompras/
+      dockerfile: Dockerfile
+  usuarios:
+    ports:
+      - 5007:9080
+    build:
+      context: ./microservices/ms7-gestionusuarios/
+      dockerfile: Dockerfile
   rabbitmq:
     image: rabbitmq:3-management
     restart: always
