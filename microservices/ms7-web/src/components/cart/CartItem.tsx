@@ -1,4 +1,4 @@
-import { OrderItem } from "../model/OrderItem";
+import { OrderItem } from "@/model/OrderItem";
 
 export function CartItem({ orderItem }: {
   orderItem: OrderItem

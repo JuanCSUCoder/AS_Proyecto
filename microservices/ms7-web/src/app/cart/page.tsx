@@ -1,4 +1,4 @@
-import { CartList } from "@/components/CartList";
+import { CartList } from "@/components/cart/CartList";
 import { Button } from "@mui/joy";
 
 export default function CartPage() {

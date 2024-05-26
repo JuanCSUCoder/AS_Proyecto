@@ -1,5 +1,5 @@
 import { NavBar } from "@/components/NavBar";
-import { Products } from "@/components/Products";
+import { Products } from "@/components/products/Products";
 import Image from "next/image";
 
 export default function Home() {
