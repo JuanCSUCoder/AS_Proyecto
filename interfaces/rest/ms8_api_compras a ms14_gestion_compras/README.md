@@ -13,7 +13,6 @@
   },
   "items": [
     {
-      "id": "string",
       "quantity": 0,
       "product": {
         "id": "string"
