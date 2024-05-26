@@ -31,7 +31,9 @@ public class User {
   String userPod;
   String providerUrl;
   
-  @OneToMany(mappedBy = "user")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+  @JsonIgnore
+  @ToString.Exclude
   List<Order> orders;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
