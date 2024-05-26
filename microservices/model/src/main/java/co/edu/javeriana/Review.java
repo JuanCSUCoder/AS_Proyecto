@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Review {
@@ -14,4 +16,7 @@ public class Review {
   int score;
 
   String productId;
+  @ManyToOne
+  @JoinColumn(name = "productId", columnDefinition = "id")
+  Product product;
 }

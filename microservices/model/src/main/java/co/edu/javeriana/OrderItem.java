@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class OrderItem {
@@ -14,5 +16,14 @@ public class OrderItem {
   int quantity;
 
   String orderId;
+
+  @ManyToOne
+  @JoinColumn(name = "orderId", columnDefinition = "id")
+  Order order;
+
   String productId;
+
+  @ManyToOne
+  @JoinColumn(name = "productId", columnDefinition = "id")
+  Product product;
 }
