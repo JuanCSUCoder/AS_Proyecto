@@ -63,4 +63,28 @@ public class OrdersResource {
         repo.save(order);
         return order;
     }
+
+    @POST
+    @Path("/ondeliver")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Order registerOrderOnDelivery(@QueryParam("orderid") String orderid) {
+        Order order = repo.findById(orderid).get();
+
+        order.setStatus("ON_DELIVERY");
+
+        repo.save(order);
+        return order;
+    }
+
+    @POST
+    @Path("/delivered")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Order registerOrderDelivered(@QueryParam("orderid") String orderid) {
+        Order order = repo.findById(orderid).get();
+
+        order.setStatus("FINISHED");
+
+        repo.save(order);
+        return order;
+    }
 }
