@@ -43,6 +43,8 @@ public class Product {
   @ToString.Exclude
   List<Review> reviews;
 
-  @OneToMany(mappedBy = "product")
+  @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+  @JsonIgnore
+  @ToString.Exclude
   List<OrderItem> orderItems;
 }
