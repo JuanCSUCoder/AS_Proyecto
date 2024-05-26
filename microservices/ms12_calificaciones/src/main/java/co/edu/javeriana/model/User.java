@@ -1,4 +1,4 @@
-package co.edu.javeriana;
+package co.edu.javeriana.model;
 
 import java.util.List;
 
