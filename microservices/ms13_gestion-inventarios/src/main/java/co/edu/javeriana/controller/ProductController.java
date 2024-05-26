@@ -37,6 +37,12 @@ public class ProductController {
         productService.deleteProduct(productId);
     }
 
+    @GET
+    @Path("/{userId}/products")
+    public List<Product> getProductsByUserId(@PathParam("userId") String userId) {
+        return productService.getProductsByUserId(userId);
+    }
+
     
 
     // Agrega más endpoints según sea necesario para la gestión de productos
