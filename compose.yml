@@ -28,6 +28,12 @@ services:
     build:
       context: ./microservices/ms9-gestioncompras/
       dockerfile: Dockerfile
+  usuarios:
+    ports:
+      - 5007:9080
+    build:
+      context: ./microservices/ms7-gestionusuarios/
+      dockerfile: Dockerfile
   rabbitmq:
     image: rabbitmq:3-management
     restart: always
