@@ -19,7 +19,7 @@ public class ReviewsResource {
 
     @GET
     @Path("/scores")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Review> getScores(@QueryParam("prodId") String prodId) {
         List<Review> reviews = repo.findByProductId(prodId);
         return reviews;
