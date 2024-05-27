@@ -10,12 +10,10 @@ export function MainButton({
     children: ReactNode
 }) {
   return (
-    <div className="my-5">
-      <Link href={href}>
-        <Button size="lg" variant="soft" color="success">
-          {children}
-        </Button>
-      </Link>
-    </div>
+    <Link href={href}>
+      <Button size="lg" variant="soft" color="success">
+        {children}
+      </Button>
+    </Link>
   );
 }
