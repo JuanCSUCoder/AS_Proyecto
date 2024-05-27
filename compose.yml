@@ -24,9 +24,9 @@ services:
       dockerfile: Dockerfile
   compras:
     ports:
-      - 5011:9080
+      - 5009:9080
     build:
-      context: ./microservices/ms9-gestioncompras/
+      context: ./microservices/ms8-gestioncompras/
       dockerfile: Dockerfile
   usuarios:
     ports:
