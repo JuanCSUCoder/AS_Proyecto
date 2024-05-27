@@ -118,10 +118,12 @@ app.get("/redirect/:callback", async (req, res) => {
   res.end();
 });
 
-app.get('/view', (req, res) => {
+app.get('/session', async (req, res) => {
   const cookies = new Cookies(req, res, cookiesOptions);
   const sessionId = cookies.get("sessionId");
-  res.write(JSON.stringify(sessionId));
+  const session = await getSessionFromStorage(sessionId);
+
+  res.write(JSON.stringify(session.info));
   res.end();
 });
 
@@ -232,6 +234,15 @@ app.get("/verify", async (req, res) => {
     res.status(401).end();
   }
 })
+
+// /sessionid?token=dsubfsdiu
+app.get("/sessionid", async (req, res) => {
+  const sessionId = req.query.token;
+  const session = await getSessionFromStorage(sessionId);
+
+  res.write(JSON.stringify(session));
+  res.end();
+});
 
 app.listen(PORT, async () => {
   console.log(`Listening on [${PORT}]...`);
