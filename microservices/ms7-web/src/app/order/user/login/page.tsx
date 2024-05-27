@@ -11,12 +11,17 @@ import { redirect } from "next/navigation";
 import { FormEventHandler } from "react";
 
 export default function LoginPage() {
+  const test = {
+    api: "http://localhost:5006",
+    callback: "http://localhost:3000/order/user/verify",
+  };
+
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries((formData as any).entries());
     // alert(JSON.stringify(formJson));
-    window.location.href = formJson.idp;
+    window.location.href = `${test.api}/?idp=${formJson.idp}&&callback=${test.callback}`;
   }
 
   return (
