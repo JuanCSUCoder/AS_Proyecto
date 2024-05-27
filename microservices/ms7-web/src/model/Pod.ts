@@ -14,7 +14,7 @@ export interface Pod {
   },
   private: {
     cardNumber?: string,
-    ccv?: number
+    cvv?: number
   } 
 }
 

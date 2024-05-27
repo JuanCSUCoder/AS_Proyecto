@@ -1,15 +1,17 @@
 import { Input } from "@mui/joy";
-import { ReactNode } from "react";
+import { HTMLInputTypeAttribute, ReactNode } from "react";
 
 export function FormField({
   name,
   children,
   required,
+  type,
   disabled
 }: {
     name?: string,
     children?: ReactNode,
     required?: boolean,
+    type?: HTMLInputTypeAttribute,
     disabled?: boolean
 }) {
   return (
@@ -17,7 +19,7 @@ export function FormField({
       {children && (
         <label>{children}</label>
       )}
-      <Input required={required} disabled={disabled} name={name} />
+      <Input required={required} disabled={disabled} name={name} type={type} />
     </div>
   );
 }

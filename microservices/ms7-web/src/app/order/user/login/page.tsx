@@ -14,7 +14,7 @@ export default function LoginPage() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries((formData as any).entries());
-    alert(JSON.stringify(formJson));
+    // alert(JSON.stringify(formJson));
     window.location.href = formJson.idp;
   }
 
