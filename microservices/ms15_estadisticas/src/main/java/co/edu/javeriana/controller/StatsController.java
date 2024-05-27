@@ -8,6 +8,7 @@ import java.util.List;
 import co.edu.javeriana.model.Inventory;
 import co.edu.javeriana.services.StatsService;
 import co.edu.javeriana.model.Product;
+import co.edu.javeriana.model.Order;
 
 @Path("/stats")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -27,6 +28,12 @@ public class StatsController {
     @Path("/inventories")
     public List<Inventory> getInventories() {
         return statsService.fetchInventories();
+    }
+
+    @GET
+    @Path("/orders")
+    public List<Order> getOrders() {
+        return statsService.fetchOrders();
     }
 
 }
