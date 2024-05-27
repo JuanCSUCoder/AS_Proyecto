@@ -1,3 +1,5 @@
+"use client"
+
 import { FormBox } from "@/components/order/login/FormBox";
 import { FormField } from "@/components/order/login/FormField";
 import { BtnGroup } from "@/components/utils/BtnGroup";
