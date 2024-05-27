@@ -1,5 +1,6 @@
 package co.edu.javeriana;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.javeriana.model.Review;
@@ -7,6 +8,7 @@ import co.edu.javeriana.repositories.ProductRepository;
 import co.edu.javeriana.repositories.ReviewRepository;
 import co.edu.javeriana.repositories.UserRepository;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -29,9 +31,15 @@ public class ReviewsResource {
     @GET
     @Path("/scores")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Review> getScores(@QueryParam("prodId") String prodId) {
-        List<Review> reviews = repo.findByProductId(prodId);
-        return reviews;
+    public List<Review> getScores(@DefaultValue("undefined") @QueryParam("prodId") String prodId) {
+        if (prodId.equals("undefined")) {
+            List<Review> revs = new ArrayList<>();
+            repo.findAll().iterator().forEachRemaining(revs::add);
+            return revs;
+        } else {
+            List<Review> reviews = repo.findByProductId(prodId);
+            return reviews;
+        }
     }
 
     @PUT
