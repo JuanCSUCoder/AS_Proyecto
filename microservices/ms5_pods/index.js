@@ -11,11 +11,10 @@ import express from "express";
 const clientApplicationName = "solid-client-authn-node proyecto_as";
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 5006;
 
-const DEFAULT_OIDC_ISSUER = "https://login.inrupt.com/";
 // This is the endpoint our NodeJS demo app listens on to receive incoming login
-const REDIRECT_URL = "http://localhost:3001/redirect";
+const REDIRECT_URL = process.env.REDIRECT_URL || `http://localhost:${PORT}/redirect`;
 
 app.use(
   cookieSession({
@@ -26,8 +25,11 @@ app.use(
       "Required, but value not relevant for this demo - key2",
     ],
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    httpOnly: false
   })
 );
+
+app.use(express.json());
 
 app.get("/", async (req, res, next) => {
   const sessionIds = await getSessionIdFromStorageAll();
@@ -47,39 +49,36 @@ app.get("/", async (req, res, next) => {
   );
 });
 
+// /login?idp=url?callback=url
 app.get("/login", async (req, res, next) => {
   const session = new Session({ keepAlive: false });
   req.session.sessionId = session.info.sessionId;
   await session.login({
-    redirectUrl: REDIRECT_URL,
-    oidcIssuer: DEFAULT_OIDC_ISSUER,
+    redirectUrl: REDIRECT_URL + `/${req.query.callback}`,
+    oidcIssuer: req.query.idp,
     clientName: clientApplicationName,
     handleRedirect: (redirectUrl) => res.redirect(redirectUrl),
   });
   if (session.info.isLoggedIn) {
-    res.send(
-      `<p>Already logged in with WebID: <strong>[${session.info.webId}]</strong></p>`
-    );
+    res.redirect(req.query.callback);
   }
 });
 
-app.get("/redirect", async (req, res) => {
-  const session = await getSessionFromStorage(req.session.sessionId);
+app.get("/redirect/:callback", async (req, res) => {
+  const session = await getSessionFromStorage(req.body.sessionId);
   if (session === undefined) {
     res
       .status(400)
-      .send(`<p>No session stored for ID [${req.session.sessionId}]</p>`);
+      .redirect(req.params.callback);
   } else {
     await session.handleIncomingRedirect(getRequestFullUrl(req));
     if (session.info.isLoggedIn) {
       session.events.on("sessionExtended", () => {
         console.log("Extended session.");
       });
-      res.send(
-        `<p>Logged in as [<strong>${session.info.webId}</strong>] after redirect</p>`
-      );
+      res.redirect(req.params.callback);
     } else {
-      res.status(400).send(`<p>Not logged in after redirect</p>`);
+      res.status(400).redirect(req.params.callback);
     }
   }
   res.end();
@@ -104,14 +103,15 @@ app.get("/fetch", async (req, res, next) => {
   }
 });
 
+// /logout?callback=url
 app.get("/logout", async (req, res, next) => {
   const session = await getSessionFromStorage(req.session.sessionId);
   if (session) {
     const { webId } = session.info;
     session.logout();
-    res.send(`<p>Logged out of session with WebID [${webId}]</p>`);
+    res.redirect(req.query.callback);
   } else {
-    res.status(400).send(`<p>No active session to log out</p>`);
+    res.status(400).redirect(req.query.callback);
   }
 });
 
