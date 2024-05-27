@@ -20,7 +20,7 @@ import jakarta.ws.rs.core.Response;
 @ApplicationScoped
 public class OrderService {
 
-    private static final String BASE_URL = "http://localhost:5015";
+    private static final String BASE_URL = "http://ms14_datos_compra:8080";
 
     private Client client = ClientBuilder.newClient();
 
