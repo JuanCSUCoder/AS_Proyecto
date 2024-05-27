@@ -128,7 +128,7 @@ services:
       - 5006
   calificacion_logica:
     build:
-      context: ./microservices/ms11-calificacion-logica
+      context: ./microservices/ms10-calificacion-logica
       dockerfile: Dockerfile
     ports:
       - 5011:5265
