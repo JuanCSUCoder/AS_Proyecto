@@ -5,12 +5,15 @@ import { BtnGroup } from "@/components/utils/BtnGroup";
 import { DefaultContainer } from "@/components/utils/DefaultContainer";
 import { MainButton } from "@/components/utils/MainButton";
 import { APIProvider, Map, Marker, useMap, useMapsLibrary, useMarkerRef } from "@vis.gl/react-google-maps";
+import { redirect, useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 
 export default function ShipmentPage() {
   const map = useMap();
   const [markerRef, marker] = useMarkerRef();
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!map) return;
@@ -24,8 +27,11 @@ export default function ShipmentPage() {
   const precioTransporte = 10000;
   const distancia = 2.3;
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = (_e) => {
+  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
     setLoading(true);
+    router.replace("/order/confirm");
+
   }
 
   return (
