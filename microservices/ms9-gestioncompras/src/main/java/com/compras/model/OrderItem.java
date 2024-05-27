@@ -1,5 +1,8 @@
 package com.compras.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,11 +25,13 @@ public class OrderItem {
   String id;
 
   int quantity;
-
+  
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "orderId", referencedColumnName = "id")
   Order order;
 
+  
   @ManyToOne
   @JoinColumn(name = "productId", referencedColumnName = "id")
   Product product;
