@@ -127,5 +127,15 @@ services:
     expose:
       - 5006
 
+  estadisticas:
+    build:
+      context: ./microservices/ms15_estadisticas
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5016:8080
+    depends_on:
+      - cockroachdb
+      - adminer 
+
 volumes:
   grafana_data:
