@@ -39,7 +39,7 @@ public class OrderController  {
     public Response createOrder(Order order){
 
         Order order2= orderService.createOrder(order);
-        
+
         if(order2 == null){
             return Response.status(Response.Status.BAD_REQUEST)
             .entity("Algunos productos no están disponibles en el inventario.")
@@ -98,6 +98,14 @@ public class OrderController  {
     @Produces(MediaType.APPLICATION_JSON)
     public Order registerOrderDelivered(@QueryParam("orderid") String orderid){
         return orderService.registerOrderDelivered(orderid);
+    }
+
+    @PUT
+    @Path("/delivered")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Order update(Order order,@QueryParam("orderid") String orderid) throws IOException, TimeoutException{
+        return orderService.updateOrderStatus(order,orderid);
     }
 
 }

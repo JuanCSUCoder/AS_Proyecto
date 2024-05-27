@@ -71,12 +71,16 @@ public class OrderService {
         }
     }
 
-    public Order updateOrderStatus(Order order, String orderId) {
+    public Order updateOrderStatus(Order order, String orderId) throws IOException, TimeoutException {
+
+        ra.sendMessage(order);
         
         return null; // O manejar el caso de que no se encuentre el pedido
     }
 
     public List<Order> getAll() throws IOException, TimeoutException{
+
+       
         return null;
     }
 
