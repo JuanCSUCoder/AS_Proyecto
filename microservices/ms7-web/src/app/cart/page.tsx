@@ -9,8 +9,42 @@ import Link from "next/link";
 
 export default function CartPage() {
   const order: Order = {
-
-  }
+    id: "485629-458720-246524-246246",
+    status: "PENDING",
+    total: 148.08,
+    items: [
+      {
+        id: "1",
+        quantity: 3,
+        product: {
+          id: "1",
+          descr: "Descripcion producto",
+          name: "Cocacola",
+          price: 12.34,
+        },
+      },
+      {
+        id: "2",
+        quantity: 1,
+        product: {
+          id: "2",
+          descr: "Descripcion producto 2",
+          name: "Arduino Uno",
+          price: 12.34,
+        },
+      },
+      {
+        id: "3",
+        quantity: 8,
+        product: {
+          id: "3",
+          descr: "Descripcion producto 3",
+          name: "Avena",
+          price: 12.34,
+        },
+      },
+    ],
+  };
 
   return (
     <DefaultContainer>
