@@ -28,6 +28,7 @@ public class InventoryService{
     }
 
     public Inventory save(Inventory inventory) {
+        System.out.println("antes de guiardar");
         return inventoryRepository.save(inventory);
     }
 

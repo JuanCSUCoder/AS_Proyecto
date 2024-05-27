@@ -2,9 +2,12 @@ package com.compras.rest;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.compras.Services.OrderService;
+import com.compras.model.Inventory;
 import com.compras.model.Order;
 import com.compras.model.OrderItem;
 import com.compras.model.Product;
@@ -40,7 +43,25 @@ public class ComprasController {
         }
 
         //Actualizar el inventario
-        actualizarInventario(products);
+        Map<String, Integer> idCountMap = new HashMap<>();
+
+        // Contar la cantidad de veces que se repite cada ID
+        for (Product product : products) {
+            String id = product.getId();
+            idCountMap.put(id, idCountMap.getOrDefault(id, 0) + 1);
+        }
+
+
+        // Mostrar las ID y su cantidad de repeticiones
+        for (Map.Entry<String, Integer> entry : idCountMap.entrySet()) {
+            System.out.println("ID: " + entry.getKey() + ", Repeticiones: " + entry.getValue());
+            Inventory InvProd =  orderService.obtenerInventarioProducto(entry.getKey() );
+            System.out.println("inventario conseguido" + InvProd);
+            InvProd.setStock(InvProd.getStock()-entry.getValue());
+            System.out.println("Actualizar inventario" + InvProd);
+            orderService.actualizarInventario( entry.getKey(), InvProd);
+        }
+        
 
         //Crear la orden
         Order order = crearOrden(userId, products);
@@ -51,9 +72,13 @@ public class ComprasController {
 
     }
 
-    private boolean verificarProductosDisponibles(List<Product> products) {
-        // Lógica para verificar si todos los productos están disponibles en el inventario
-        return true; // Aquí deberías implementar la lógica adecuada
+   private static boolean verificarProductosDisponibles(List<Product> products) {
+        // Mapa para almacenar las IDs de los productos y su cantidad de repeticiones
+    
+        
+
+        // Aquí podrías implementar la lógica para verificar la disponibilidad de los productos
+        return true; // Por ahora, simplemente retornamos true
     }
 
     private void actualizarInventario(List<Product> products) {
