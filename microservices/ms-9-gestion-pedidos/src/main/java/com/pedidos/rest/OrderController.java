@@ -100,12 +100,5 @@ public class OrderController  {
         return orderService.registerOrderDelivered(orderid);
     }
 
-    @PUT
-    @Path("/delivered")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Order update(Order order,@QueryParam("orderid") String orderid) throws IOException, TimeoutException{
-        return orderService.updateOrderStatus(order,orderid);
-    }
 
 }
