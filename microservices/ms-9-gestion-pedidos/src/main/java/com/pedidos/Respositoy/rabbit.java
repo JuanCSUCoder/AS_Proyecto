@@ -16,7 +16,7 @@ import java.util.concurrent.TimeoutException;
 
 @ApplicationScoped
 public class rabbit {
-    private static final String QUEUE_NAME = "myQueue";
+    private static final String QUEUE_NAME = "cola-correo";
     private ConnectionFactory factory;
     private ObjectMapper objectMapper;
 
