@@ -4,16 +4,22 @@ import { ReactNode } from "react";
 
 export function MainButton({
   href,
+  type,
   children
 }: {
-    href: string,
+    href?: string,
+    type?: 'submit'
     children: ReactNode
 }) {
-  return (
+  return href ? (
     <Link href={href}>
-      <Button size="lg" variant="soft" color="success">
+      <Button size="lg" variant="soft" color="success" type={type}>
         {children}
       </Button>
     </Link>
+  ) : (
+    <Button size="lg" variant="soft" color="success" type={type}>
+      {children}
+    </Button>
   );
 }

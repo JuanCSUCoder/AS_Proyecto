@@ -1,9 +1,15 @@
+import { Stack } from "@mui/joy";
 import { ReactNode } from "react";
 
 export function BtnGroup({children}:{children: ReactNode}) {
   return (
-    <div className="my-5 flex flex-row gap-3">
+    <Stack
+      direction="row"
+      justifyContent="flex-start"
+      alignItems="baseline"
+      spacing={1}
+    >
       {children}
-    </div>
+    </Stack>
   )
 }
