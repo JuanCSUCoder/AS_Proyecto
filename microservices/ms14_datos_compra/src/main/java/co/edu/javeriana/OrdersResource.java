@@ -38,6 +38,7 @@ public class OrdersResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Order> getUserOrders(@DefaultValue("undefined") @QueryParam("userId") String userId) {
         if (userId.equals("undefined")) {
+            System.out.println("Retornando todos");
             List<Order> ordenes = new ArrayList<>();
             repo.findAll().iterator().forEachRemaining(ordenes::add);
             return ordenes;
