@@ -18,14 +18,6 @@ export interface CartHandlers {
 
 export const CartContext = React.createContext<CartHandlers | undefined>(undefined);
 
-function removeItemOnce(arr: any[], value: any) {
-  var index = arr.indexOf(value);
-  if (index > -1) {
-    arr.splice(index, 1);
-  }
-  return arr;
-}
-
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartState, setCart] = useState<CartState>({
     cart: {
@@ -54,7 +46,25 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
   
   const removeItem: ItemHandler = (item) => {
-    return false;
+    setCart((prevCart) => {
+      const existingItem = prevCart.cart.items?.findLast(
+        (i) => i.product?.id == item.id
+      );
+
+      if (existingItem && existingItem.quantity) {
+        if (existingItem.quantity <= 1) {
+          const index = prevCart.cart.items?.indexOf(existingItem);
+          if (index && index > -1) {
+            prevCart.cart.items?.splice(index, 1);
+          }
+        } else {
+          existingItem.quantity -= 1;
+        }
+      }
+
+      return prevCart;
+    });
+    return true;
   }
 
   return (
