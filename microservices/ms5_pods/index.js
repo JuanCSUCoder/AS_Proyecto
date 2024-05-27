@@ -193,7 +193,6 @@ app.put("/user", async (req, res) => {
         fetch: session.fetch,
       });
 
-      res.write(await writenFile.text());
       res.end();
     } else {
       console.log("Unauth");
@@ -218,6 +217,21 @@ app.get("/logout", async (req, res, next) => {
     res.status(400).redirect(req.query.callback);
   }
 });
+
+// /verify?token=dsivdsjn
+app.get("/verify", async (req, res) => {
+  const sessionId = req.query.token;
+  const session = await getSessionFromStorage(sessionId);
+  if (session) {
+    if (session.info.isLoggedIn) {
+      res.status(200).end();
+    } else {
+      res.status(401).end();
+    }
+  } else {
+    res.status(401).end();
+  }
+})
 
 app.listen(PORT, async () => {
   console.log(`Listening on [${PORT}]...`);
