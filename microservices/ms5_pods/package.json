@@ -9,6 +9,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@inrupt/solid-client": "^2.0.1",
     "@inrupt/solid-client-authn": "^0.0.6",
     "@inrupt/solid-client-authn-node": "^2.2.0",
     "@types/cookie-session": "^2.0.49",

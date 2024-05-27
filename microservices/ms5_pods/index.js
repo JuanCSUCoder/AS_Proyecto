@@ -1,3 +1,4 @@
+import { getPodUrlAll } from "@inrupt/solid-client";
 import {
   Session,
   getSessionFromStorage,
@@ -123,28 +124,29 @@ app.get('/view', (req, res) => {
   res.end();
 });
 
-app.get("/fetch", async (req, res, next) => {
-  const session = await getSessionFromStorage(req.session.sessionId);
-  if (!req.query.resource) {
-    res
-      .status(400)
-      .send(
-        "<p>Expected a 'resource' query param, for example <strong>http://localhost:3001/fetch?resource=https://pod.inrupt.com/MY_USERNAME/</strong> to fetch the resource at the root of your Pod (which, by default, only <strong>you</strong> will have access to).</p>"
-      );
-  } else {
-    const { fetch } = session ?? new Session();
-    res.send(
-      `<pre>${(await (await fetch(req.query.resource)).text()).replace(
-        /</g,
-        "&lt;"
-      )}</pre>`
-    );
-  }
+app.get("/user", async (req, res, next) => {
+  const cookies = new Cookies(req, res, cookiesOptions);
+  const sessionId = cookies.get("sessionId");
+  const session = await getSessionFromStorage(sessionId);
+  const pods = await getPodUrlAll(session.info.webId, {
+    fetch: fetch
+  });
+
+  const basePod = pods[0];
+
+  
+
+  res.write(
+    JSON.stringify(pods)
+  );
+  res.end();
 });
 
 // /logout?callback=url
 app.get("/logout", async (req, res, next) => {
-  const session = await getSessionFromStorage(req.session.sessionId);
+  const cookies = new Cookies(req, res, cookiesOptions);
+  const sessionId = cookies.get("sessionId");
+  const session = await getSessionFromStorage(sessionId);
   if (session) {
     const { webId } = session.info;
     session.logout();
