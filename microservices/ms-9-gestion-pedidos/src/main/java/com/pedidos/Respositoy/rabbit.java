@@ -16,14 +16,14 @@ import java.util.concurrent.TimeoutException;
 
 @ApplicationScoped
 public class rabbit {
-    private static final String QUEUE_NAME = "myQueue";
+    private static final String QUEUE_NAME = "cola-correo";
     private ConnectionFactory factory;
     private ObjectMapper objectMapper;
 
     @Inject
     public rabbit() {
         factory = new ConnectionFactory();
-        factory.setHost("localhost");  // Cambia esto según tu configuración
+        factory.setHost("localhost"); // Cambia esto según tu configuración
         factory.setUsername("user");
         factory.setPassword("password");
         objectMapper = new ObjectMapper();
@@ -32,21 +32,22 @@ public class rabbit {
     public void sendMessage(Order order) throws IOException, TimeoutException {
         String message = objectToJson(order);
         try (Connection connection = factory.newConnection();
-             Channel channel = connection.createChannel()) {
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+                Channel channel = connection.createChannel()) {
+            channel.queueDeclare(QUEUE_NAME, true, false, false, null);
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes(StandardCharsets.UTF_8));
         }
     }
 
     public void receiveMessage() throws IOException, TimeoutException {
         try (Connection connection = factory.newConnection();
-             Channel channel = connection.createChannel()) {
+                Channel channel = connection.createChannel()) {
             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
             channel.basicConsume(QUEUE_NAME, true, (consumerTag, delivery) -> {
                 String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
                 Order order = jsonToObject(message, Order.class);
                 System.out.println(" [x] Received '" + order + "'");
-            }, consumerTag -> { });
+            }, consumerTag -> {
+            });
         }
     }
 
