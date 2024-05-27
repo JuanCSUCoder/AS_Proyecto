@@ -10,9 +10,12 @@ import { useEffect, useState } from "react";
 
 export default function VerifyDataPage() {
   const [pod, setPod] = useState<Pod>({});
+  const [btnDisabled, setBtnDisabled] = useState(true);
 
   useEffect(() => {
-    
+    fetch(`${process.env.MS5_URL}/user`)
+      .then((res) => res.json())
+      .then((data) => setPod(data));
   }, []);
 
   const onSubmit = () => {
@@ -26,40 +29,40 @@ export default function VerifyDataPage() {
         <div className="flex flex-col md:flex-row gap-9 w-full">
           <div className="flex flex-col w-full md:w-1/2">
             <h3>Información Personal</h3>
-            <FormField required name="name">
+            <FormField required name="name" defaultValue={pod.name}>
               Nombre:
             </FormField>
-            <FormField type="email" required name="email">
+            <FormField type="email" required name="email" defaultValue={pod.email}>
               Email:
             </FormField>
           </div>
 
           <div className="flex flex-col w-full md:w-1/2">
             <h3>Información de Entrega</h3>
-            <FormField required name="address">
+            <FormField required name="address" defaultValue={pod.location?.description?.address}>
               Dirección:
             </FormField>
-            <FormField required name="city">
+            <FormField required name="city" defaultValue={pod.location?.description?.city}>
               Ciudad:
             </FormField>
-            <FormField required name="lat">
+            <FormField required name="lat" defaultValue={pod.location?.coordinates?.lat}>
               Latitud:
             </FormField>
-            <FormField required name="lng">
+            <FormField required name="lng" defaultValue={pod.location?.coordinates?.lng}>
               Longitud:
             </FormField>
           </div>
         </div>
 
         <h3>Información de Pago</h3>
-        <FormField required type="number" name="cardNumber">
+        <FormField required type="number" name="cardNumber" defaultValue={pod.private?.cardNumber}>
           Número de la Tarjeta:
         </FormField>
-        <FormField required type="number" name="cvv">
+        <FormField required type="password" name="cvv" defaultValue={pod.private?.cvv}>
           CVV:
         </FormField>
         <BtnGroup>
-          <MainButton href="/order/shipment">Confirmar Datos</MainButton>
+          <MainButton href="/order/shipment" disabled={btnDisabled}>Confirmar Datos</MainButton>
         </BtnGroup>
       </FormBox>
     </DefaultContainer>
