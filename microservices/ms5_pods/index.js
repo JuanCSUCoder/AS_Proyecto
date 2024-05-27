@@ -131,13 +131,13 @@ app.get("/user", async (req, res, next) => {
   const session = await getSessionFromStorage(sessionId);
   try {
     const pods = await getPodUrlAll(session.info.webId, {
-      fetch: fetch,
+      fetch: session.fetch,
     });
 
     const dataURL = pods[0] + "/superstore.json";
 
     const file = await getFile(dataURL, {
-      fetch: fetch,
+      fetch: session.fetch,
     });
 
     res.write(JSON.stringify(file.json()));
@@ -156,13 +156,13 @@ app.put("/user", async (req, res) => {
   try {
     if (session != undefined && session.info.isLoggedIn) {
       const pods = await getPodUrlAll(session.info.webId, {
-        fetch: fetch,
+        fetch: session.fetch,
       });
 
       const dataURL = pods[0] + "/superstore.json";
 
       const file = await getFile(dataURL, {
-        fetch: fetch,
+        fetch: session.fetch,
       });
 
       const data = file.json();
@@ -172,7 +172,7 @@ app.put("/user", async (req, res) => {
       const bufferedData = Buffer.from(JSON.stringify(mergedData));
 
       const writenFile = await overwriteFile(dataURL, bufferedData, {
-        fetch: fetch,
+        fetch: session.fetch,
       });
 
       res.write(JSON.stringify(file.json()));
