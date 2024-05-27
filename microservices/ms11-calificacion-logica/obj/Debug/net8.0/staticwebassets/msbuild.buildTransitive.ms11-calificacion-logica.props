@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\ms11-calificacion-logica.props" />
-</Project>

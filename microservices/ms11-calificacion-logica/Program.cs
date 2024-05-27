@@ -10,7 +10,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient<IReviewService, ReviewService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5013/"); 
+    client.BaseAddress = new Uri("http://ms12_datos_calificaciones:8080/"); 
 });
 
 var app = builder.Build();
