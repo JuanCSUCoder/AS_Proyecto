@@ -65,20 +65,21 @@ app.get("/login", async (req, res, next) => {
 });
 
 app.get("/redirect/:callback", async (req, res) => {
-  const session = await getSessionFromStorage(req.body.sessionId);
+  const session = await getSessionFromStorage(req.session.sessionId);
   if (session === undefined) {
-    res
-      .status(400)
-      .redirect(req.params.callback);
+    console.log("Session not found");
+    res.status(400).redirect(req.params.callback + "?success=false");
   } else {
     await session.handleIncomingRedirect(getRequestFullUrl(req));
     if (session.info.isLoggedIn) {
       session.events.on("sessionExtended", () => {
         console.log("Extended session.");
       });
-      res.redirect(req.params.callback);
+      console.log("Logged in successfully");
+      res.redirect(req.params.callback + "?success=true");
     } else {
-      res.status(400).redirect(req.params.callback);
+      console.log("Login failed");
+      res.status(400).redirect(req.params.callback + "?success=false");
     }
   }
   res.end();
