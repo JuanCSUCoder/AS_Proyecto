@@ -39,7 +39,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       } else {
         console.log("Not found creating...");
         newCart.cart.items?.push({
-          order: newCart.cart,
+          // order: newCart.cart, DONT ADD ORDER
           product: item,
           quantity: 1,
         });
