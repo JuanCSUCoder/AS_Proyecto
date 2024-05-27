@@ -63,4 +63,9 @@ public class InventoryService{
         return (List<Product>) productRepository.findAll();
     }
 
+    public Inventory getInventoryByProductId(String productId) {
+        return inventoryRepository.findByProductId(productId)
+                .orElseThrow(() -> new RuntimeException("Inventory not found for product with ID: " + productId));
+    }
+
 }
