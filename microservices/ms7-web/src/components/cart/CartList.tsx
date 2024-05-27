@@ -5,36 +5,43 @@ import { Order } from "@/model/Order";
 
 export function CartList() {
   const order: Order = {
-    id: "dsjuvbkj"
+    id: "dsjuvbkj",
+    status: "",
+    total: 31,
+    items: []
   }
 
   return (
-    <Sheet sx={{
-      width: '100%',
-      height: '100%',
-      overflow: 'auto'
-    }}>
-      <Table
-        size="lg"
-        stickyFooter
-        stickyHeader
-        variant="plain"
+    <div className="w-full md:w-2/3">
+      <Sheet
         sx={{
-          width: '100%'
+          width: "100%",
+          height: "100%",
+          overflow: "auto",
         }}
       >
-        <thead className="font-bold">
-          <tr>
-            <td>Nombre</td>
-            <td>Cantidad</td>
-            <td>Precio</td>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>
-          <CartItem orderItem={{id:"dvs"}} />
-        </tbody>
-      </Table>
-    </Sheet>
+        <Table
+          size="lg"
+          stickyFooter
+          stickyHeader
+          variant="plain"
+          sx={{
+            width: "100%",
+          }}
+        >
+          <thead className="font-bold">
+            <tr>
+              <td>Nombre</td>
+              <td>Cantidad</td>
+              <td>Precio</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <CartItem orderItem={{ id: "dvs" }} />
+          </tbody>
+        </Table>
+      </Sheet>
+    </div>
   );
 }
