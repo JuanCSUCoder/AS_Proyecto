@@ -30,7 +30,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addItem: ItemHandler = (item) => {
     console.log("Adding item")
     setCart((prevCart) => {
-      const newCart: CartState = JSON.parse(JSON.stringify(prevCart));
+      let newCart: CartState = JSON.parse(JSON.stringify(prevCart));
       const existingItem = newCart.cart.items?.findLast((i) => i.product?.id == item.id);
 
       if (existingItem && existingItem.quantity) {
@@ -51,7 +51,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   
   const removeItem: ItemHandler = (item) => {
     setCart((prevCart) => {
-      const newCart: CartState = JSON.parse(JSON.stringify(prevCart));
+      let newCart: CartState = JSON.parse(JSON.stringify(prevCart));
       const existingItem = newCart.cart.items?.findLast(
         (i) => i.product?.id == item.id
       );
@@ -62,7 +62,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         if (existingItem.quantity <= 1) {
           const index = newCart.cart.items?.indexOf(existingItem);
           console.log("Found for deleition at " + index);
-          if (index && index > -1) {
+          if (index != undefined && index > -1) {
             newCart.cart.items?.splice(index, 1);
           }
         } else {
