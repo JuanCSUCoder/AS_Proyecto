@@ -5,6 +5,7 @@ import {
 } from "@inrupt/solid-client-authn-node";
 
 import cookieSession from "cookie-session";
+import Cookies from "cookies";
 
 import express from "express";
 
@@ -21,20 +22,28 @@ function addDays(date, days) {
   return date;
 };
 
-app.use(
-  cookieSession({
-    name: "session",
-    // These keys are required by cookie-session to sign the cookies.
-    keys: [
-      "fsbhdxbnfdxbn",
-      "ghmgfg<sfcbnhzdg",
-    ],
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    httpOnly: false,
-    overwrite: true,
-    expires: addDays(new Date(), 5)
-  })
-);
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     // These keys are required by cookie-session to sign the cookies.
+//     keys: [
+//       "fsbhdxbnfdxbn",
+//       "ghmgfg<sfcbnhzdg",
+//     ],
+//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
+//     httpOnly: false,
+//     overwrite: true,
+//     expires: addDays(new Date(), 5)
+//   })
+// );
+
+const cookiesOptions = {
+  // keys: ["sxvsnvaiouash", "iuscbvjbaiu77483r87wedg"],
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  httpOnly: false,
+  overwrite: true,
+  expires: addDays(new Date(), 5)
+};
 
 app.use(express.json());
 
@@ -59,26 +68,38 @@ app.get("/", async (req, res, next) => {
 // /login?idp=url?callback=url
 app.get("/login", async (req, res, next) => {
   const session = new Session({ keepAlive: false });
-  req.session.sessionId = session.info.sessionId;
+  const cookies = new Cookies(req, res, cookiesOptions);
+  console.log("setting key")
+  cookies.set("sessionId", session.info.sessionId)
+  console.log("seted key");
+  
   await session.login({
     redirectUrl: REDIRECT_URL + `/${encodeURIComponent(req.query.callback)}`,
     oidcIssuer: req.query.idp,
     clientName: clientApplicationName,
     handleRedirect: (redirectUrl) => res.redirect(redirectUrl),
   });
+  console.log("logged");
   if (session.info.isLoggedIn) {
-    res.redirect(req.query.callback+ "?success=true");
+    console.log("already logged");
+    res.redirect(req.query.callback + "?success=true");
   }
+  console.log("reloged");
 });
 
 app.get("/redirect/:callback", async (req, res) => {
-  const session = await getSessionFromStorage(req.session.sessionId);
+  const cookies = new Cookies(req, res, cookiesOptions);
+  const sessionId = cookies.get("sessionId");
+  const session = await getSessionFromStorage(sessionId);
   if (session === undefined) {
     console.log("Session not found");
     res.status(400).redirect(req.params.callback + "?success=false");
   } else {
+    console.log("Session found");
     await session.handleIncomingRedirect(getRequestFullUrl(req));
+    console.log("logging");
     if (session.info.isLoggedIn) {
+      console.log("logged");
       session.events.on("sessionExtended", () => {
         console.log("Extended session.");
       });
@@ -89,11 +110,14 @@ app.get("/redirect/:callback", async (req, res) => {
       res.status(400).redirect(req.params.callback + "?success=false");
     }
   }
+  console.log("end");
   res.end();
 });
 
 app.get('/view', (req, res) => {
-  res.write(JSON.stringify(req.session));
+  const cookies = new Cookies(req, res, cookiesOptions);
+  const sessionId = cookies.get("sessionId");
+  res.write(JSON.stringify(sessionId));
   res.end();
 });
 

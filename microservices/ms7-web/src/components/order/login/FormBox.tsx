@@ -6,7 +6,11 @@ export function FormBox({ children, onSubmit }: {
   onSubmit: FormEventHandler<HTMLFormElement>
 }) {
   return (
-    <form className="w-full" onSubmit={onSubmit}>
+    <form className="w-full" onSubmit={(e) => {
+      e.preventDefault();
+      onSubmit(e);
+      return false;
+    }}>
       <Stack
         direction="column"
         justifyContent="flex-start"
