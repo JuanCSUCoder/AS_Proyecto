@@ -52,7 +52,7 @@ export default function CartPage() {
       <div className="flex flex-col md:flex-row justify-between items-center">
         <CartList order={order} />
         <div className="flex flex-col">
-          <PriceTag>1.000 TOTAL</PriceTag>
+          <PriceTag>{order.total} TOTAL</PriceTag>
           <BtnGroup>
             <MainButton href="/order/user/login">Realizar Pedido</MainButton>
           </BtnGroup>

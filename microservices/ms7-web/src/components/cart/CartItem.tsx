@@ -5,11 +5,13 @@ import { Button } from "@mui/joy";
 export function CartItem({ orderItem }: {
   orderItem: OrderItem
 }) {
+  const { product, quantity } = orderItem;
+
   return (
     <tr>
-      <td>Avena</td>
-      <td>1x</td>
-      <td>$ 1.000</td>
+      <td>{product?.name}</td>
+      <td>{quantity}x</td>
+      <td>$ {product?.price}</td>
       <td>
         <Button color="danger">
           <Delete />
