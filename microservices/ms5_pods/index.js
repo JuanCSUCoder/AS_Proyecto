@@ -161,17 +161,32 @@ app.put("/user", async (req, res) => {
 
       const dataURL = pods[0] + "/superstore.json";
 
-      const file = await getFile(dataURL, {
-        fetch: session.fetch,
-      });
-
-      const data = file.json();
+      let data = {};
+      try {
+        const file = await getFile(dataURL, {
+          fetch: session.fetch,
+        });
+        data = file.json();
+      } catch (error) {
+        console.log("Not Found, creating ...");
+        const filedata = Buffer.from(JSON.stringify({}));
+        await saveFileInContainer(
+          pods[0], // Container URL
+          filedata, // Buffer containing file data
+          {
+            slug: "superstore.json",
+            contentType: "application/json",
+            fetch: session.fetch,
+          }
+        );
+      }
 
       const mergedData = { ...data, ...req.body };
 
       const bufferedData = Buffer.from(JSON.stringify(mergedData));
 
       const writenFile = await overwriteFile(dataURL, bufferedData, {
+        contentType: "application/json",
         fetch: session.fetch,
       });
 
