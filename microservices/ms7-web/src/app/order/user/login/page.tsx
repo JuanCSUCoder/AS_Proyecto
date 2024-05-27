@@ -1,5 +1,6 @@
 "use client"
 
+import { FormBox } from "@/components/order/login/FormBox";
 import { FormField } from "@/components/order/login/FormField";
 import { LoginForm } from "@/components/order/login/LoginForm";
 import { MainButton } from "@/components/utils/MainButton";
@@ -17,15 +18,12 @@ export default function LoginPage() {
   return (
     <main className="flex w-full flex-col items-center justify-start">
       <h2>Inicio de Sesión</h2>
-      <form
-        className="w-full flex flex-col items-center justify-center"
-        onSubmit={onSubmit}
-      >
+      <FormBox onSubmit={onSubmit}>
         <FormField name="idp" required>
           Proveedor de Identidad SOLID:
         </FormField>
-        <MainButton type="submit">Ir al Proveedor de Identidad</MainButton>
-      </form>
+        <MainButton href="/order/user/verify" type="submit">Ir al Proveedor de Identidad</MainButton>
+      </FormBox>
     </main>
   );
 }
