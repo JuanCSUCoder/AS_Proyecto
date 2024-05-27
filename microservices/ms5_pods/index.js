@@ -140,7 +140,7 @@ app.get("/user", async (req, res, next) => {
       fetch: session.fetch,
     });
 
-    res.write(JSON.stringify(file.json()));
+    res.write(await file.text());
     res.end();
   } catch (e) {
     console.log(e);
@@ -167,7 +167,7 @@ app.put("/user", async (req, res) => {
         const file = await getFile(dataURL, {
           fetch: session.fetch,
         });
-        data = file.json();
+        data = JSON.parse(await file.text());
         console.log("Got file");
       } catch (error) {
         console.log("Not Found, creating ...");
@@ -193,7 +193,7 @@ app.put("/user", async (req, res) => {
         fetch: session.fetch,
       });
 
-      res.write(JSON.stringify(file.json()));
+      res.write(await writenFile.text());
       res.end();
     } else {
       console.log("Unauth");
