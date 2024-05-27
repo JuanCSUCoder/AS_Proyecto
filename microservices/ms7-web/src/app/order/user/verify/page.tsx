@@ -5,8 +5,16 @@ import { FormField } from "@/components/order/login/FormField";
 import { BtnGroup } from "@/components/utils/BtnGroup";
 import { DefaultContainer } from "@/components/utils/DefaultContainer";
 import { MainButton } from "@/components/utils/MainButton";
+import { Pod } from "@/model/Pod";
+import { useEffect, useState } from "react";
 
 export default function VerifyDataPage() {
+  const [pod, setPod] = useState<Pod>({});
+
+  useEffect(() => {
+    
+  }, []);
+
   const onSubmit = () => {
 
   }
