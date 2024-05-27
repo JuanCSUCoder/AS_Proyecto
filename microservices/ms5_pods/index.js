@@ -1,4 +1,4 @@
-import { getPodUrlAll } from "@inrupt/solid-client";
+import { getFile, getPodUrlAll, overwriteFile } from "@inrupt/solid-client";
 import {
   Session,
   getSessionFromStorage,
@@ -9,6 +9,7 @@ import cookieSession from "cookie-session";
 import Cookies from "cookies";
 
 import express from "express";
+import { readFile, readFileSync } from "fs";
 
 const clientApplicationName = "solid-client-authn-node proyecto_as";
 
@@ -128,19 +129,58 @@ app.get("/user", async (req, res, next) => {
   const cookies = new Cookies(req, res, cookiesOptions);
   const sessionId = cookies.get("sessionId");
   const session = await getSessionFromStorage(sessionId);
-  const pods = await getPodUrlAll(session.info.webId, {
-    fetch: fetch
-  });
+  try {
+    const pods = await getPodUrlAll(session.info.webId, {
+      fetch: fetch,
+    });
 
-  const basePod = pods[0];
+    const dataURL = pods[0] + "/superstore.json";
 
-  
+    const file = await getFile(dataURL, {
+      fetch: fetch,
+    });
 
-  res.write(
-    JSON.stringify(pods)
-  );
-  res.end();
+    res.write(JSON.stringify(file.json()));
+    res.end();
+  } catch (e) {
+    console.log(e);
+    res.write("{}");
+    res.end();
+  }
 });
+
+app.put("/user", async (req, res) => {
+  const cookies = new Cookies(req, res, cookiesOptions);
+  const sessionId = cookies.get("sessionId");
+  const session = await getSessionFromStorage(sessionId);
+  try {
+    const pods = await getPodUrlAll(session.info.webId, {
+      fetch: fetch,
+    });
+
+    const dataURL = pods[0] + "/superstore.json";
+
+    const file = await getFile(dataURL, {
+      fetch: fetch,
+    });
+
+    const data = file.json();
+
+    const mergedData = { ...data, ...(req.body) };
+
+    const bufferedData = Buffer.from(JSON.stringify(mergedData));
+
+    const writenFile = await overwriteFile(dataURL, bufferedData, {
+      fetch: fetch,
+    });
+
+    res.write(JSON.stringify(file.json()));
+    res.end();
+  } catch (e) {
+    console.log(e);
+    res.status(500).end();
+  }
+})
 
 // /logout?callback=url
 app.get("/logout", async (req, res, next) => {
