@@ -20,7 +20,7 @@ services:
     ports:
       - 5010:9080
     build:
-      context: ./microservices/mas-10-gestion-pedidos/
+      context: ./microservices/ms-9-gestion-pedidos/
       dockerfile: Dockerfile
   compras:
     ports:
