@@ -54,7 +54,7 @@ app.get("/login", async (req, res, next) => {
   const session = new Session({ keepAlive: false });
   req.session.sessionId = session.info.sessionId;
   await session.login({
-    redirectUrl: REDIRECT_URL + `/${req.query.callback}`,
+    redirectUrl: REDIRECT_URL + `/${encodeURIComponent(req.query.callback)}`,
     oidcIssuer: req.query.idp,
     clientName: clientApplicationName,
     handleRedirect: (redirectUrl) => res.redirect(redirectUrl),
