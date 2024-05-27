@@ -16,16 +16,23 @@ const PORT = process.env.PORT || 5006;
 // This is the endpoint our NodeJS demo app listens on to receive incoming login
 const REDIRECT_URL = process.env.REDIRECT_URL || `http://localhost:${PORT}/redirect`;
 
+function addDays(date, days) {
+  date.setDate(date.getDate() + days);
+  return date;
+};
+
 app.use(
   cookieSession({
     name: "session",
     // These keys are required by cookie-session to sign the cookies.
     keys: [
-      "Required, but value not relevant for this demo - key1",
-      "Required, but value not relevant for this demo - key2",
+      "fsbhdxbnfdxbn",
+      "ghmgfg<sfcbnhzdg",
     ],
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    httpOnly: false
+    httpOnly: false,
+    overwrite: true,
+    expires: addDays(new Date(), 5)
   })
 );
 
@@ -60,7 +67,7 @@ app.get("/login", async (req, res, next) => {
     handleRedirect: (redirectUrl) => res.redirect(redirectUrl),
   });
   if (session.info.isLoggedIn) {
-    res.redirect(req.query.callback);
+    res.redirect(req.query.callback+ "?success=true");
   }
 });
 
@@ -82,6 +89,11 @@ app.get("/redirect/:callback", async (req, res) => {
       res.status(400).redirect(req.params.callback + "?success=false");
     }
   }
+  res.end();
+});
+
+app.get('/view', (req, res) => {
+  res.write(JSON.stringify(req.session));
   res.end();
 });
 
