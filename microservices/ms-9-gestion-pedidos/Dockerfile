@@ -9,11 +9,11 @@ WORKDIR /usr/src/app
 # Construir la aplicación usando Maven
 RUN mvn clean package
 
-FROM icr.io/appcafe/open-liberty:kernel-slim-java17-openj9-ubi
+FROM openliberty/open-liberty
 
 COPY --from=build --chown=1001:0 /usr/src/app/src/main/liberty/config /config
 
-RUN features.sh
+# RUN features.sh
 
 COPY --from=build --chown=1001:0 /usr/src/app/target/*.war /config/apps
 
