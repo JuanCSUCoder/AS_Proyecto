@@ -33,6 +33,6 @@ public class Order {
   @JoinColumn(name = "userId", referencedColumnName = "id")
   User user;
 
-  @OneToMany
+  @OneToMany(mappedBy = "order")
   List<OrderItem> items;
 }

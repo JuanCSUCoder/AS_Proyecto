@@ -1,0 +1,6 @@
+@ms11_calificacion_logica_HostAddress = http://localhost:5265
+
+GET {{ms11_calificacion_logica_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

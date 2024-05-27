@@ -11,7 +11,7 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
-    restart:  always
+    restart: always
     volumes:
       - grafana_data:/var/lib/grafana
     ports:
@@ -54,15 +54,15 @@ services:
     command: start-single-node --insecure
     # volumes:
     #   - ./microservices/data_init/test_sql:/docker-entrypoint-initdb.d
-  # db_init:
-  #   build:
-  #     context: ./data_init
-  #     dockerfile: Dockerfile
-  #   restart: on-failure
-  #   environment:
-  #     - DATABASE_URL=postgresql://root@cockroachdb:26257/db
-  #   depends_on:
-  #     - cockroachdb
+    # db_init:
+    #   build:
+    #     context: ./data_init
+    #     dockerfile: Dockerfile
+    #   restart: on-failure
+    #   environment:
+    #     - DATABASE_URL=postgresql://root@cockroachdb:26257/db
+    #   depends_on:
+    #     - cockroachdb
   adminer:
     image: adminer
     ports:
@@ -84,6 +84,48 @@ services:
       - 5015:8080
     expose:
       - 8080
+
+  ms3_servcios_transporte:
+    build:
+      context: ./microservices/ms3_servicios_transporte
+      dockerfile: dockerfile
+    ports:
+      - 5003:5003
+    expose:
+      - 8080
+  ms11_gestion_usuarios:
+    build:
+      context: ./microservices/ms11_gestion_usuarios
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5012:8080
+    expose:
+      - 8080
+
+  ms4_recomendaciones_ia:
+    build:
+      context: ./microservices/ms4-recomendaciones-IA
+      dockerfile: Dockerfile
+    ports:
+      - 5004:5004
+
+  inventarios:
+    build:
+      context: ./microservices/ms13_gestion-inventarios
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5014:8080
+    depends_on:
+      - cockroachdb
+      - adminer
+  ms5_pods:
+    build:
+      context: ./microservices/ms5_pods
+      dockerfile: Dockerfile
+    ports:
+      - 5006:5006
+    expose:
+      - 5006
 
 volumes:
   grafana_data:
