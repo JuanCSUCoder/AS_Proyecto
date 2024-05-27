@@ -5,11 +5,12 @@ import { BtnGroup } from "@/components/utils/BtnGroup";
 import { DefaultContainer } from "@/components/utils/DefaultContainer";
 import { MainButton } from "@/components/utils/MainButton";
 import { APIProvider, Map, Marker, useMap, useMapsLibrary, useMarkerRef } from "@vis.gl/react-google-maps";
-import { useEffect, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 
 export default function ShipmentPage() {
   const map = useMap();
   const [markerRef, marker] = useMarkerRef();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!map) return;
@@ -23,6 +24,9 @@ export default function ShipmentPage() {
   const precioTransporte = 10000;
   const distancia = 2.3;
 
+  const onSubmit: FormEventHandler<HTMLFormElement> = (_e) => {
+    setLoading(true);
+  }
 
   return (
     <DefaultContainer>
@@ -41,7 +45,7 @@ export default function ShipmentPage() {
           <Directions />
         </Map>
       </APIProvider>
-      <FormBox onSubmit={(e) => {}}>
+      <FormBox onSubmit={onSubmit}>
         <p>
           <strong>Precio Transporte: </strong>
           {precioTransporte}
@@ -51,7 +55,7 @@ export default function ShipmentPage() {
           {distancia}
         </p>
         <BtnGroup>
-          <MainButton href="/order/payment">Realizar el Pago</MainButton>
+          <MainButton type="submit" loading={loading}>Realizar el Pago</MainButton>
         </BtnGroup>
       </FormBox>
     </DefaultContainer>
