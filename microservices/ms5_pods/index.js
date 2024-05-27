@@ -49,7 +49,14 @@ const cookiesOptions = {
   expires: addDays(new Date(), 5)
 };
 
-app.use(cors())
+const corsOptions = {
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Métodos HTTP permitidos
+  allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras permitidas
+  credentials: true, // Permitir cookies de origen cruzado
+};
+
+app.use(cors(corsOptions))
 
 app.use(express.json());
 
