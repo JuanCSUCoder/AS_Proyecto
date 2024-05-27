@@ -17,17 +17,23 @@ import java.util.Optional;
 @Stateless
 public class UserService {
 
-    private static final String BASE_URL = "http://localhost:5010/DatosUsuarios/api/usuarios";
+    private static final String BASE_URL = "http://ms11_gestion_usuarios:8080/userresource";
     private final Client client;
     private final WebTarget target;
+    private final WebTarget createUserTarget;
+    private final WebTarget updateUserTarget;
+    private final WebTarget deleteUserTarget;
 
     public UserService() {
         this.client = ClientBuilder.newClient();
         this.target = client.target(BASE_URL);
+        this.createUserTarget = target.path("/create_user");
+        this.updateUserTarget = target.path("/update_user");
+        this.deleteUserTarget = target.path("/delete_user");
     }
 
     public List<User> getAllUsers() {
-        Response response = target.request(MediaType.APPLICATION_JSON).get();
+        Response response = target.path("/users").request(MediaType.APPLICATION_JSON).get();
         if (response.getStatus() == 200) {
             User[] usersArray = response.readEntity(User[].class);
             return Arrays.asList(usersArray);
@@ -37,8 +43,8 @@ public class UserService {
     }
 
     public Optional<User> getUserById(String id) {
-        Response response = target.path("/{id}")
-                                  .resolveTemplate("id", id)
+        Response response = target.path("/user")
+                                  .queryParam("userId", id)
                                   .request(MediaType.APPLICATION_JSON)
                                   .get();
         if (response.getStatus() == 200) {
@@ -51,9 +57,11 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        Response response = target.request(MediaType.APPLICATION_JSON)
-                                  .post(Entity.entity(user, MediaType.APPLICATION_JSON));
-        if (response.getStatus() == 201) {
+        Response response = createUserTarget.request(MediaType.APPLICATION_JSON)
+                                            .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+        System.out.println("la resposne es "+response);
+        if (response.getStatus() == 200) {
             return response.readEntity(User.class);
         } else {
             throw new RuntimeException("Failed to create user, HTTP error code: " + response.getStatus());
@@ -61,10 +69,8 @@ public class UserService {
     }
 
     public User updateUser(String id, User user) {
-        Response response = target.path("/{id}")
-                                  .resolveTemplate("id", id)
-                                  .request(MediaType.APPLICATION_JSON)
-                                  .put(Entity.entity(user, MediaType.APPLICATION_JSON));
+        Response response = updateUserTarget.request(MediaType.APPLICATION_JSON)
+                                            .put(Entity.entity(user, MediaType.APPLICATION_JSON));
         if (response.getStatus() == 200) {
             return response.readEntity(User.class);
         } else {
@@ -73,11 +79,10 @@ public class UserService {
     }
 
     public void deleteUser(String id) {
-        Response response = target.path("/{id}")
-                                  .resolveTemplate("id", id)
-                                  .request(MediaType.APPLICATION_JSON)
-                                  .delete();
-        if (response.getStatus() != 204) {
+        Response response = deleteUserTarget.queryParam("userId", id)
+                                            .request()
+                                            .delete();
+        if (response.getStatus() != 204) { // 204 No Content is the expected response for successful deletion
             throw new RuntimeException("Failed to delete user, HTTP error code: " + response.getStatus());
         }
     }
