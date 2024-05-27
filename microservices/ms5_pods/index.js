@@ -1,4 +1,4 @@
-import { getFile, getPodUrlAll, overwriteFile } from "@inrupt/solid-client";
+import { getFile, getPodUrlAll, overwriteFile, saveFileInContainer } from "@inrupt/solid-client";
 import {
   Session,
   getSessionFromStorage,
@@ -134,7 +134,7 @@ app.get("/user", async (req, res, next) => {
       fetch: session.fetch,
     });
 
-    const dataURL = pods[0] + "/superstore.json";
+    const dataURL = pods[0] + "superstore.json";
 
     const file = await getFile(dataURL, {
       fetch: session.fetch,
@@ -159,14 +159,16 @@ app.put("/user", async (req, res) => {
         fetch: session.fetch,
       });
 
-      const dataURL = pods[0] + "/superstore.json";
+      const dataURL = pods[0] + "superstore.json";
 
       let data = {};
+      console.log("Trying to get file")
       try {
         const file = await getFile(dataURL, {
           fetch: session.fetch,
         });
         data = file.json();
+        console.log("Got file");
       } catch (error) {
         console.log("Not Found, creating ...");
         const filedata = Buffer.from(JSON.stringify({}));
@@ -185,6 +187,7 @@ app.put("/user", async (req, res) => {
 
       const bufferedData = Buffer.from(JSON.stringify(mergedData));
 
+      console.log("Got file");
       const writenFile = await overwriteFile(dataURL, bufferedData, {
         contentType: "application/json",
         fetch: session.fetch,
