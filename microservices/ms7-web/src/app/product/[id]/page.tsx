@@ -1,4 +1,5 @@
 import { PriceTag } from "@/components/products/PriceTag";
+import { ProductBtns } from "@/components/products/ProductBtns";
 import { BtnGroup } from "@/components/utils/BtnGroup";
 import { DefaultContainer } from "@/components/utils/DefaultContainer";
 import { Product } from "@/model/Product";
@@ -39,12 +40,7 @@ export default function ProductDetailsPage({ params }: {
         </div>
         <div className="flex w-full flex-col items-end md:mt-20">
           <PriceTag>{product.price}</PriceTag>
-          <BtnGroup>
-            <Button startDecorator={<Add />}>Agregar</Button>
-            <Button startDecorator={<Delete />} color="danger">
-              Eliminar
-            </Button>
-          </BtnGroup>
+          <ProductBtns product={product} />
         </div>
       </div>
     </DefaultContainer>
