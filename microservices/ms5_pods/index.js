@@ -240,7 +240,7 @@ app.get("/sessionid", async (req, res) => {
   const sessionId = req.query.token;
   const session = await getSessionFromStorage(sessionId);
 
-  res.write(JSON.stringify(session));
+  res.write(JSON.stringify(session.info));
   res.end();
 });
 
