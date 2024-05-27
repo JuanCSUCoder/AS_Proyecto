@@ -6,6 +6,7 @@ import { LoginForm } from "@/components/order/login/LoginForm";
 import { BtnGroup } from "@/components/utils/BtnGroup";
 import { MainButton } from "@/components/utils/MainButton";
 import { Input } from "@mui/joy";
+import { redirect } from "next/navigation";
 import { FormEventHandler } from "react";
 
 export default function LoginPage() {
@@ -14,6 +15,7 @@ export default function LoginPage() {
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries((formData as any).entries());
     alert(JSON.stringify(formJson));
+    window.location.href = formJson.idp;
   }
 
   return (
@@ -24,7 +26,7 @@ export default function LoginPage() {
           Proveedor de Identidad SOLID:
         </FormField>
         <BtnGroup>
-          <MainButton href="/order/user/verify" type="submit">
+          <MainButton type="submit">
             Ir al Proveedor de Identidad
           </MainButton>
         </BtnGroup>
