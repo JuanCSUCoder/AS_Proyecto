@@ -4,6 +4,7 @@ import { FormBox } from "@/components/order/login/FormBox";
 import { FormField } from "@/components/order/login/FormField";
 import { LoginForm } from "@/components/order/login/LoginForm";
 import { BtnGroup } from "@/components/utils/BtnGroup";
+import { DefaultContainer } from "@/components/utils/DefaultContainer";
 import { MainButton } from "@/components/utils/MainButton";
 import { Input } from "@mui/joy";
 import { redirect } from "next/navigation";
@@ -19,7 +20,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex w-full flex-col items-center justify-start">
+    <DefaultContainer>
       <h2>Inicio de Sesión</h2>
       <FormBox onSubmit={onSubmit}>
         <FormField name="idp" required>
@@ -31,6 +32,6 @@ export default function LoginPage() {
           </MainButton>
         </BtnGroup>
       </FormBox>
-    </main>
+    </DefaultContainer>
   );
 }
