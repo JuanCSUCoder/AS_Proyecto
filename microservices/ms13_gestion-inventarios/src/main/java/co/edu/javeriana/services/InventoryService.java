@@ -28,6 +28,7 @@ public class InventoryService{
     }
 
     public Inventory save(Inventory inventory) {
+        System.out.println("antes de guiardar");
         return inventoryRepository.save(inventory);
     }
 
@@ -61,6 +62,11 @@ public class InventoryService{
 
     public List<Product> listAllProducts() {
         return (List<Product>) productRepository.findAll();
+    }
+
+    public Inventory getInventoryByProductId(String productId) {
+        return inventoryRepository.findByProductId(productId)
+                .orElseThrow(() -> new RuntimeException("Inventory not found for product with ID: " + productId));
     }
 
 }

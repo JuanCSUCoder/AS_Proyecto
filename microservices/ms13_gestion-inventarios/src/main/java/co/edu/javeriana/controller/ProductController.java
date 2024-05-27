@@ -4,7 +4,10 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import java.util.List;
+
+import co.edu.javeriana.model.Inventory;
 import co.edu.javeriana.model.Product;
+import co.edu.javeriana.services.InventoryService;
 import co.edu.javeriana.services.ProductService;
 
 @Path("/products")
@@ -14,6 +17,9 @@ public class ProductController {
 
     @Inject
     ProductService productService;
+
+    @Inject
+    InventoryService inventoryService;
 
     @GET
     public List<Product> listAll() {
@@ -43,6 +49,11 @@ public class ProductController {
         return productService.getProductsByUserId(userId);
     }
 
+    @GET
+    @Path("/{productId}/inventory")
+    public Inventory getInventoryByProductId(@PathParam("productId") String productId) {
+        return inventoryService.getInventoryByProductId(productId);
+    }
     
 
     // Agrega más endpoints según sea necesario para la gestión de productos

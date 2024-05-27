@@ -36,6 +36,8 @@ public class InventoryController {
     @PUT
     @Path("/{id}")
     public Inventory update(@PathParam("id") String id, Inventory inventory) {
+        System.out.println("peticion con id " + id);
+        System.out.println("inventario " + inventory);
         inventory.setId(id);
         return inventoryService.save(inventory);
     }

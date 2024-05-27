@@ -25,32 +25,32 @@ public class UserController {
     // Crear un nuevo usuario
     @POST
     public Response createUser(User user) {
-        user.setId(java.util.UUID.randomUUID().toString());  // Generar un ID único
-        users.add(user);
-
-        // aqui se deberia comunicar con logica de datos
-
-        
-        
-        return Response.status(Response.Status.CREATED).entity(user).build();
+        try {
+            User createdUser = userService.createUser(user);
+            System.out.println("created user es "+createdUser);
+            return Response.status(Response.Status.CREATED).entity(createdUser).build();
+        } catch (RuntimeException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
     }
 
     // Obtener todos los usuarios
     @GET
     public Response getAllUsers() {
         //conseguir usuarios
-        //userService.getAllUsers();
+        List<User> AllUsers = userService.getAllUsers();
 
-        return Response.ok(users).build();
+        return Response.ok(AllUsers).build();
     }
 
     // Obtener un usuario por ID
     @GET
     @Path("/{id}")
     public Response getUserById(@PathParam("id") String id) {
-        Optional<User> userOpt = users.stream().filter(u -> u.getId().equals(id)).findFirst();
-        if (userOpt.isPresent()) {
-            return Response.ok(userOpt.get()).build();
+        Optional<User> usuarioById = userService.getUserById(id);
+
+        if (usuarioById.isPresent()) {
+            return Response.ok(usuarioById.get()).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -59,15 +59,12 @@ public class UserController {
     // Actualizar un usuario existente
     @PUT
     @Path("/{id}")
-    public Response updateUser(@PathParam("id") String id, User updatedUser) {
-        Optional<User> userOpt = users.stream().filter(u -> u.getId().equals(id)).findFirst();
-        if (userOpt.isPresent()) {
-            User existingUser = userOpt.get();
-            existingUser.setUserPod(updatedUser.getUserPod());
-            existingUser.setProviderUrl(updatedUser.getProviderUrl());
-            return Response.ok(existingUser).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
+    public Response updateUser(@PathParam("id") String id, User user) {
+        try {
+            User updatedUser = userService.updateUser(id, user);
+            return Response.ok(updatedUser).build();
+        } catch (RuntimeException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -75,12 +72,11 @@ public class UserController {
     @DELETE
     @Path("/{id}")
     public Response deleteUser(@PathParam("id") String id) {
-        Optional<User> userOpt = users.stream().filter(u -> u.getId().equals(id)).findFirst();
-        if (userOpt.isPresent()) {
-            users.remove(userOpt.get());
-            return Response.noContent().build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
+        try {
+            userService.deleteUser(id);
+            return Response.noContent().build(); // 204 No Content
+        } catch (RuntimeException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 

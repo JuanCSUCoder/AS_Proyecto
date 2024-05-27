@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "microservices", "microservices", "{1F1614CB-038A-4D54-9C7F-F555CDF664C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ms11-calificacion-logica", "microservices\ms11-calificacion-logica\ms11-calificacion-logica.csproj", "{D18D8411-E247-4922-8404-AF7037D26FC2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D18D8411-E247-4922-8404-AF7037D26FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D18D8411-E247-4922-8404-AF7037D26FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D18D8411-E247-4922-8404-AF7037D26FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D18D8411-E247-4922-8404-AF7037D26FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D18D8411-E247-4922-8404-AF7037D26FC2} = {1F1614CB-038A-4D54-9C7F-F555CDF664C1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A73889E0-80E2-4D37-BFA0-F136B5AD2F5E}
+	EndGlobalSection
+EndGlobal

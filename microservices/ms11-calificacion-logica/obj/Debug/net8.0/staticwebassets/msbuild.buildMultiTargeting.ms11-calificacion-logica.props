@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ms11-calificacion-logica.props" />
+</Project>
