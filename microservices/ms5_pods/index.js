@@ -11,6 +11,8 @@ import Cookies from "cookies";
 import express from "express";
 import { readFile, readFileSync } from "fs";
 
+import cors from "cors";
+
 const clientApplicationName = "solid-client-authn-node proyecto_as";
 
 const app = express();
@@ -46,6 +48,8 @@ const cookiesOptions = {
   overwrite: true,
   expires: addDays(new Date(), 5)
 };
+
+app.use(cors())
 
 app.use(express.json());
 
