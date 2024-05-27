@@ -20,6 +20,10 @@ export default function ShipmentPage() {
   }, [map]);
 
 
+  const precioTransporte = 10000;
+  const distancia = 2.3;
+
+
   return (
     <DefaultContainer>
       <APIProvider apiKey={process.env.API_KEY as string}>
@@ -38,6 +42,14 @@ export default function ShipmentPage() {
         </Map>
       </APIProvider>
       <FormBox onSubmit={(e) => {}}>
+        <p>
+          <strong>Precio Transporte: </strong>
+          {precioTransporte}
+        </p>
+        <p>
+          <strong>Distancia: </strong>
+          {distancia}
+        </p>
         <BtnGroup>
           <MainButton href="/order/payment">Realizar el Pago</MainButton>
         </BtnGroup>
