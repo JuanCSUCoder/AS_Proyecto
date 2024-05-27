@@ -18,6 +18,23 @@ export interface CartHandlers {
 
 export const CartContext = React.createContext<CartHandlers | undefined>(undefined);
 
+function calculateTotal(cartState: CartState) {
+  let total = 0.0;
+  if (cartState.cart.items != undefined) {
+    cartState.cart.items.forEach((item) => {
+      if (
+        item != undefined &&
+        item.quantity != undefined &&
+        item.product?.price != undefined
+      ) {
+        total += item.quantity * item.product?.price;
+      }
+    });
+  }
+
+  return total;
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartState, setCart] = useState<CartState>({
     cart: {
@@ -44,6 +61,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
           quantity: 1,
         });
       }
+
+      newCart.cart.total = calculateTotal(newCart);
       return newCart;
     })
     return true;
@@ -70,6 +89,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
       }
 
+      newCart.cart.total = calculateTotal(newCart);
       return newCart;
     });
     return true;
