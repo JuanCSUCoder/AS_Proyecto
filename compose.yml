@@ -118,8 +118,14 @@ services:
     depends_on:
       - cockroachdb
       - adminer
-
-
+  ms5_pods:
+    build:
+      context: ./microservices/ms5_pods
+      dockerfile: Dockerfile
+    ports:
+      - 5006:5006
+    expose:
+      - 5006
 
 volumes:
   grafana_data:
