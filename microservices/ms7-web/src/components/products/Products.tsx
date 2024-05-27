@@ -87,6 +87,12 @@ export function Products() {
     },
   ];
 
+  let idcount = 0;
+  products.forEach(product => {
+    product.id = idcount.toString();
+    idcount++;
+  });
+
   return (
     <div className="flex flex-row flex-wrap gap-3 items-center justify-center">
       {products.map((p, idx) => (
