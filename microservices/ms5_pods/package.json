@@ -1,0 +1,17 @@
+{
+  "name": "ms5_pods",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@inrupt/solid-client-authn": "^0.0.6",
+    "@inrupt/solid-client-authn-node": "^2.2.0",
+    "cookie-session": "^2.1.0",
+    "express": "^4.19.2"
+  }
+}
