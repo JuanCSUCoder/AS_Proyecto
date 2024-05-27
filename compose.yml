@@ -84,12 +84,20 @@ services:
       - 5015:8080
     expose:
       - 8080
-  ms3_servcio_transporte:
+  ms3_servcios_transporte:
     build:
-      context: ./microservices/ms3_servicio_transporte
+      context: ./microservices/ms3_servicios_transporte
       dockerfile: dockerfile
     ports:
-      - 5003:5002
+      - 5003:5003
+    expose:
+      - 8080
+  ms11_gestion_usuarios:
+    build:
+      context: ./microservices/ms11_gestion_usuarios
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5012:8080
     expose:
       - 8080
 
