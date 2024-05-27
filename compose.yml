@@ -20,7 +20,7 @@ services:
     ports:
       - 5010:9080
     build:
-      context: ./microservices/mas-10-gestion-pedidos/
+      context: ./microservices/ms-9-gestion-pedidos/
       dockerfile: Dockerfile
   compras:
     ports:
@@ -118,9 +118,17 @@ services:
     depends_on:
       - cockroachdb
       - adminer
+  ms5_pods:
+    build:
+      context: ./microservices/ms5_pods
+      dockerfile: Dockerfile
+    ports:
+      - 5006:5006
+    expose:
+      - 5006
   calificacion_logica:
     build:
-      context: ./microservices/ms11-calificacion-logica
+      context: ./microservices/ms10-calificacion-logica
       dockerfile: Dockerfile
     ports:
       - 5011:5265
