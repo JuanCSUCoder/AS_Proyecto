@@ -40,7 +40,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           quantity: 1,
         });
       }
-      return prevCart;
+      return {...prevCart};
     })
     return true;
   };
@@ -62,7 +62,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      return prevCart;
+      return {...prevCart};
     });
     return true;
   }
