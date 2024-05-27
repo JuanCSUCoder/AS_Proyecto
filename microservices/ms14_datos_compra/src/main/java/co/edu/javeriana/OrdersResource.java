@@ -1,5 +1,6 @@
 package co.edu.javeriana;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.javeriana.model.Order;
@@ -9,6 +10,7 @@ import co.edu.javeriana.repositories.OrderRepository;
 import co.edu.javeriana.repositories.ProductRepository;
 import co.edu.javeriana.repositories.UserRepository;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -34,8 +36,15 @@ public class OrdersResource {
     @GET
     @Path("/orders")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Order> getUserOrders(@QueryParam("userId") String userId) {
-        return repo.findByUserId(userId);
+    public List<Order> getUserOrders(@DefaultValue("undefined") @QueryParam("userId") String userId) {
+        if (userId.equals("undefined")) {
+            System.out.println("Retornando todos");
+            List<Order> ordenes = new ArrayList<>();
+            repo.findAll().iterator().forEachRemaining(ordenes::add);
+            return ordenes;
+        } else {
+            return repo.findByUserId(userId);
+        }
     }
 
     @GET

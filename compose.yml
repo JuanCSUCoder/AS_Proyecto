@@ -20,13 +20,13 @@ services:
     ports:
       - 5010:9080
     build:
-      context: ./microservices/mas-10-gestion-pedidos/
+      context: ./microservices/ms-9-gestion-pedidos/
       dockerfile: Dockerfile
   compras:
     ports:
-      - 5011:9080
+      - 5009:9080
     build:
-      context: ./microservices/ms9-gestioncompras/
+      context: ./microservices/ms8-gestioncompras/
       dockerfile: Dockerfile
   usuarios:
     ports:
@@ -84,6 +84,7 @@ services:
       - 5015:8080
     expose:
       - 8080
+
   ms3_servcios_transporte:
     build:
       context: ./microservices/ms3_servicios_transporte
@@ -101,5 +102,84 @@ services:
     expose:
       - 8080
 
+  ms4_recomendaciones_ia:
+    build:
+      context: ./microservices/ms4-recomendaciones-IA
+      dockerfile: Dockerfile
+    ports:
+      - 5004:5004
+
+  inventarios:
+    build:
+      context: ./microservices/ms13_gestion-inventarios
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5014:8080
+    depends_on:
+      - cockroachdb
+      - adminer
+  ms5_pods:
+    build:
+      context: ./microservices/ms5_pods
+      dockerfile: Dockerfile
+    ports:
+      - 5006:5006
+    expose:
+      - 5006
+  calificacion_logica:
+    build:
+      context: ./microservices/ms10-calificacion-logica
+      dockerfile: Dockerfile
+    ports:
+      - 5011:5265
+
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+  #   container_name: elasticsearch
+  #   environment:
+  #     - discovery.type=single-node
+  #     - bootstrap.memory_lock=true
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   volumes:
+  #     - esdata:/usr/share/elasticsearch/data
+  #   ports:
+  #     - 9200:9200
+
+  # logstash:
+  #   image: docker.elastic.co/logstash/logstash:7.15.2
+  #   container_name: logstash
+  #   volumes:
+  #     - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+  #   ports:
+  #     - 5044:5044
+  #   depends_on:
+  #     - elasticsearch
+
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:7.15.2
+  #   container_name: kibana
+  #   ports:
+  #     - 5601:5601
+  #   depends_on:
+  #     - elasticsearch
+
+  # filebeat:
+  #   image: docker.elastic.co/beats/filebeat:7.15.2
+  #   container_name: filebeat
+  #   user: root
+  #   volumes:
+  #     - ./filebeat.yaml:/usr/share/filebeat/filebeat.yaml
+  #     - /var/lib/docker/containers:/var/lib/docker/containers:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #   depends_on:
+  #     - logstash
+
+
 volumes:
   grafana_data:
+  # esdata:
+  #   driver: local

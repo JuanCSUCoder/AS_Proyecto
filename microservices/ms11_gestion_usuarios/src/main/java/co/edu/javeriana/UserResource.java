@@ -51,14 +51,14 @@ public class UserResource {
         return userRepo.findById(userId).get();
     }
 
-    @POST
+    @DELETE
     @Path("/delete_user")
     @Produces(MediaType.APPLICATION_JSON)
     public void deleteUser(@QueryParam("userId") String userId) {
         userRepo.deleteById(userId);
     }
 
-    @POST
+    @PUT
     @Path("/update_user")
     @Produces(MediaType.APPLICATION_JSON)
     public User updateUser(User user) {
