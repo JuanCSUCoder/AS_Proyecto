@@ -1,3 +1,24 @@
+//
+// Copyright 2022 Inrupt Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to use,
+// copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+// Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+// PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+// SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+
 import {
   Session,
   getSessionFromStorage,
@@ -5,47 +26,29 @@ import {
 } from "@inrupt/solid-client-authn-node";
 
 import cookieSession from "cookie-session";
-import Cookies from "cookies";
 
 import express from "express";
 
-const clientApplicationName = "solid-client-authn-node proyecto_as";
+const clientApplicationName = "solid-client-authn-node multi session demo";
 
 const app = express();
-const PORT = process.env.PORT || 5006;
+const PORT = 3001;
 
+const DEFAULT_OIDC_ISSUER = "https://login.inrupt.com/";
 // This is the endpoint our NodeJS demo app listens on to receive incoming login
-const REDIRECT_URL = process.env.REDIRECT_URL || `http://localhost:${PORT}/redirect`;
+const REDIRECT_URL = "http://localhost:3001/redirect";
 
-function addDays(date, days) {
-  date.setDate(date.getDate() + days);
-  return date;
-};
-
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     // These keys are required by cookie-session to sign the cookies.
-//     keys: [
-//       "fsbhdxbnfdxbn",
-//       "ghmgfg<sfcbnhzdg",
-//     ],
-//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-//     httpOnly: false,
-//     overwrite: true,
-//     expires: addDays(new Date(), 5)
-//   })
-// );
-
-const cookiesOptions = {
-  // keys: ["sxvsnvaiouash", "iuscbvjbaiu77483r87wedg"],
-  maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  httpOnly: false,
-  overwrite: true,
-  expires: addDays(new Date(), 5)
-};
-
-app.use(express.json());
+app.use(
+  cookieSession({
+    name: "session",
+    // These keys are required by cookie-session to sign the cookies.
+    keys: [
+      "Required, but value not relevant for this demo - key1",
+      "Required, but value not relevant for this demo - key2",
+    ],
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  })
+);
 
 app.get("/", async (req, res, next) => {
   const sessionIds = await getSessionIdFromStorageAll();
@@ -65,61 +68,41 @@ app.get("/", async (req, res, next) => {
   );
 });
 
-// /login?idp=url?callback=url
 app.get("/login", async (req, res, next) => {
   const session = new Session({ keepAlive: false });
-  const cookies = new Cookies(req, res, cookiesOptions);
-  console.log("setting key")
-  cookies.set("sessionId", session.info.sessionId)
-  console.log("seted key");
-  
+  req.session.sessionId = session.info.sessionId;
   await session.login({
-    redirectUrl: REDIRECT_URL + `/${encodeURIComponent(req.query.callback)}`,
-    oidcIssuer: req.query.idp,
+    redirectUrl: REDIRECT_URL,
+    oidcIssuer: DEFAULT_OIDC_ISSUER,
     clientName: clientApplicationName,
     handleRedirect: (redirectUrl) => res.redirect(redirectUrl),
   });
-  console.log("logged");
   if (session.info.isLoggedIn) {
-    console.log("already logged");
-    res.redirect(req.query.callback + "?success=true");
+    res.send(
+      `<p>Already logged in with WebID: <strong>[${session.info.webId}]</strong></p>`
+    );
   }
-  console.log("reloged");
 });
 
-app.get("/redirect/:callback", async (req, res) => {
-  const cookies = new Cookies(req, res, cookiesOptions);
-  const sessionId = cookies.get("sessionId");
-  const session = await getSessionFromStorage(sessionId);
+app.get("/redirect", async (req, res) => {
+  const session = await getSessionFromStorage(req.session.sessionId);
   if (session === undefined) {
-    console.log("Session not found");
-    res.status(400).redirect(req.params.callback + "?success=false");
+    res
+      .status(400)
+      .send(`<p>No session stored for ID [${req.session.sessionId}]</p>`);
   } else {
-    console.log("Session found");
-    const fullUrl = getRequestFullUrl(req);
-    console.log("Full URL: " + fullUrl)
-    await session.handleIncomingRedirect(fullUrl);
-    console.log("logging");
+    await session.handleIncomingRedirect(getRequestFullUrl(req));
     if (session.info.isLoggedIn) {
-      console.log("logged");
       session.events.on("sessionExtended", () => {
         console.log("Extended session.");
       });
-      console.log("Logged in successfully");
-      res.redirect(req.params.callback + "?success=true");
+      res.send(
+        `<p>Logged in as [<strong>${session.info.webId}</strong>] after redirect</p>`
+      );
     } else {
-      console.log("Login failed");
-      res.status(400).redirect(req.params.callback + "?success=false");
+      res.status(400).send(`<p>Not logged in after redirect</p>`);
     }
   }
-  console.log("end");
-  res.end();
-});
-
-app.get('/view', (req, res) => {
-  const cookies = new Cookies(req, res, cookiesOptions);
-  const sessionId = cookies.get("sessionId");
-  res.write(JSON.stringify(sessionId));
   res.end();
 });
 
@@ -142,15 +125,14 @@ app.get("/fetch", async (req, res, next) => {
   }
 });
 
-// /logout?callback=url
 app.get("/logout", async (req, res, next) => {
   const session = await getSessionFromStorage(req.session.sessionId);
   if (session) {
     const { webId } = session.info;
     session.logout();
-    res.redirect(req.query.callback);
+    res.send(`<p>Logged out of session with WebID [${webId}]</p>`);
   } else {
-    res.status(400).redirect(req.query.callback);
+    res.status(400).send(`<p>No active session to log out</p>`);
   }
 });
 
