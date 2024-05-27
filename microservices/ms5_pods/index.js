@@ -154,7 +154,7 @@ app.put("/user", async (req, res) => {
   const sessionId = cookies.get("sessionId");
   const session = await getSessionFromStorage(sessionId);
   try {
-    if (session.info.isLoggedIn) {
+    if (session != undefined && session.info.isLoggedIn) {
       const pods = await getPodUrlAll(session.info.webId, {
         fetch: fetch,
       });
