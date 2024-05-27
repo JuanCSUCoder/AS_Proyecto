@@ -154,28 +154,33 @@ app.put("/user", async (req, res) => {
   const sessionId = cookies.get("sessionId");
   const session = await getSessionFromStorage(sessionId);
   try {
-    const pods = await getPodUrlAll(session.info.webId, {
-      fetch: fetch,
-    });
+    if (session.info.isLoggedIn) {
+      const pods = await getPodUrlAll(session.info.webId, {
+        fetch: fetch,
+      });
 
-    const dataURL = pods[0] + "/superstore.json";
+      const dataURL = pods[0] + "/superstore.json";
 
-    const file = await getFile(dataURL, {
-      fetch: fetch,
-    });
+      const file = await getFile(dataURL, {
+        fetch: fetch,
+      });
 
-    const data = file.json();
+      const data = file.json();
 
-    const mergedData = { ...data, ...(req.body) };
+      const mergedData = { ...data, ...req.body };
 
-    const bufferedData = Buffer.from(JSON.stringify(mergedData));
+      const bufferedData = Buffer.from(JSON.stringify(mergedData));
 
-    const writenFile = await overwriteFile(dataURL, bufferedData, {
-      fetch: fetch,
-    });
+      const writenFile = await overwriteFile(dataURL, bufferedData, {
+        fetch: fetch,
+      });
 
-    res.write(JSON.stringify(file.json()));
-    res.end();
+      res.write(JSON.stringify(file.json()));
+      res.end();
+    } else {
+      console.log("Unauth");
+      res.status(500).end();
+    }
   } catch (e) {
     console.log(e);
     res.status(500).end();
