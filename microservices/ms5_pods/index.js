@@ -8,7 +8,7 @@ import cookieSession from "cookie-session";
 
 import express from "express";
 
-const clientApplicationName = "solid-client-authn-node multi session demo";
+const clientApplicationName = "solid-client-authn-node proyecto_as";
 
 const app = express();
 const PORT = 3001;
