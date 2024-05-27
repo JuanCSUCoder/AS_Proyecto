@@ -1,5 +1,7 @@
 package co.edu.javeriana.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -25,6 +28,8 @@ public class OrderItem {
 
   @ManyToOne
   @JoinColumn(name = "orderId", referencedColumnName = "id")
+  @JsonIgnore
+  @ToString.Exclude
   Order order;
 
   @ManyToOne
