@@ -84,6 +84,7 @@ services:
       - 5015:8080
     expose:
       - 8080
+
   ms3_servcios_transporte:
     build:
       context: ./microservices/ms3_servicios_transporte
@@ -100,6 +101,25 @@ services:
       - 5012:8080
     expose:
       - 8080
+
+  ms4_recomendaciones_ia:
+    build:
+      context: ./microservices/ms4-recomendaciones-IA
+      dockerfile: Dockerfile
+    ports:
+      - 5004:5004
+
+  inventarios:
+    build:
+      context: ./microservices/ms13_gestion-inventarios
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5014:8080
+    depends_on:
+      - cockroachdb
+      - adminer
+
+
 
 volumes:
   grafana_data:

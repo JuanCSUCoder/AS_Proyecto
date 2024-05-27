@@ -1,0 +1,24 @@
+# Utiliza una imagen base de Python
+FROM python:3.9-slim
+
+# Establece la variable de entorno GOOGLE_API_KEY
+ENV GOOGLE_API_KEY "AIzaSyC3mQeAQTPA6ZUeYbevCSx5_a5mG8rdup0"
+
+# Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copia el script Python y cualquier otro archivo necesario al contenedor
+COPY recomendacionesIA_Gemini.py /app/
+
+# Instala las dependencias necesarias utilizando pip
+RUN pip install google-generativeai flask flask-cors
+
+# Puerto que será expuesto
+EXPOSE 5004
+
+# Define el comando predeterminado para ejecutar el script Python
+CMD ["python", "recomendacionesIA_Gemini.py"]
+
+# Para correr sin docker compose
+# docker build -t recomendaciones_ia_gemini .
+# docker run -p 5004:5004 recomendaciones_ia_gemini
