@@ -12,7 +12,7 @@ export function CartList() {
   }
 
   return (
-    <div className="w-full md:w-2/3">
+    <div className="w-full md:w-2/3 md:mr-5">
       <Sheet
         sx={{
           width: "100%",

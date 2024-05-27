@@ -13,6 +13,7 @@ export function CartItem({ orderItem }: {
       <td>
         <Button color="danger">
           <Delete />
+          <span className="hidden lg:inline-block">Eliminar</span>
         </Button>
       </td>
     </tr>
