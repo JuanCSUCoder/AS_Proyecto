@@ -3,6 +3,7 @@
 import { FormBox } from "@/components/order/login/FormBox";
 import { FormField } from "@/components/order/login/FormField";
 import { LoginForm } from "@/components/order/login/LoginForm";
+import { BtnGroup } from "@/components/utils/BtnGroup";
 import { MainButton } from "@/components/utils/MainButton";
 import { Input } from "@mui/joy";
 import { FormEventHandler } from "react";
@@ -22,7 +23,11 @@ export default function LoginPage() {
         <FormField name="idp" required>
           Proveedor de Identidad SOLID:
         </FormField>
-        <MainButton href="/order/user/verify" type="submit">Ir al Proveedor de Identidad</MainButton>
+        <BtnGroup>
+          <MainButton href="/order/user/verify" type="submit">
+            Ir al Proveedor de Identidad
+          </MainButton>
+        </BtnGroup>
       </FormBox>
     </main>
   );
