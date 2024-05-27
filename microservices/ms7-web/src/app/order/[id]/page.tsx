@@ -72,7 +72,7 @@ export default function OrderDetailsPage({ params }: { params: { id: string } })
           />
         </Map>
       </APIProvider>
-      <CartList order={order} />
+      <CartList order={order} readonly />
     </DefaultContainer>
   );
 }

@@ -1,8 +1,9 @@
 import { OrderItem } from "@/model/OrderItem";
 import { ProductBtns } from "../products/ProductBtns";
 
-export function CartItem({ orderItem }: {
-  orderItem: OrderItem
+export function CartItem({ orderItem, readonly }: {
+  orderItem: OrderItem,
+  readonly?: boolean
 }) {
   const { product, quantity } = orderItem;
 
@@ -11,9 +12,11 @@ export function CartItem({ orderItem }: {
       <td>{product?.name}</td>
       <td>{quantity}x</td>
       <td>$ {product?.price}</td>
-      <td>
-        <ProductBtns product={product ? product : {}} />
-      </td>
+      {!readonly && (
+        <td>
+          <ProductBtns product={product ? product : {}} />
+        </td>
+      )}
     </tr>
   );
 }

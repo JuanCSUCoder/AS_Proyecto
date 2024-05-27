@@ -3,7 +3,7 @@ import Table from "@mui/joy/Table";
 import { CartItem } from "./CartItem";
 import { Order } from "@/model/Order";
 
-export function CartList({order}: {order: Order}) {
+export function CartList({order, readonly}: {order: Order, readonly?: boolean}) {
 
   return (
     <div className="w-full md:w-2/3 md:mr-5">
@@ -28,12 +28,16 @@ export function CartList({order}: {order: Order}) {
               <td>Nombre</td>
               <td>Cantidad</td>
               <td>Precio</td>
-              <td></td>
+              {!readonly && <td></td>}
             </tr>
           </thead>
           <tbody>
             {order.items?.map((item, idx) => (
-              <CartItem key={`${idx}-cart-item53436`} orderItem={item} />
+              <CartItem
+                key={`${idx}-cart-item53436`}
+                orderItem={item}
+                readonly={readonly}
+              />
             ))}
           </tbody>
         </Table>
