@@ -21,7 +21,7 @@ export default function LoginPage() {
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries((formData as any).entries());
     // alert(JSON.stringify(formJson));
-    window.location.href = `${test.api}/?idp=${formJson.idp}&&callback=${test.callback}`;
+    window.location.href = `${test.api}/login/?idp=${encodeURIComponent(formJson.idp)}&&callback=${encodeURIComponent(test.callback)}`;
   }
 
   return (
