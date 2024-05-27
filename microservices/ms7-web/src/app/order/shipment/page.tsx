@@ -36,34 +36,42 @@ export default function ShipmentPage() {
 
   return (
     <DefaultContainer>
-      <APIProvider apiKey={process.env.API_KEY as string}>
-        <Map
-          style={{ width: "80vw", height: "50vh" }}
-          defaultCenter={{ lat: 4.649189, lng: -74.103447 }}
-          defaultZoom={15}
-          gestureHandling={"greedy"}
-          disableDefaultUI={true}
-        >
-          <Marker
-            ref={markerRef}
-            position={{ lat: 4.649189, lng: -74.103447 }}
-          />
-          <Directions />
-        </Map>
-      </APIProvider>
-      <FormBox onSubmit={onSubmit}>
-        <p>
-          <strong>Precio Transporte: </strong>
-          {precioTransporte}
-        </p>
-        <p>
-          <strong>Distancia: </strong>
-          {distancia}
-        </p>
-        <BtnGroup>
-          <MainButton type="submit" loading={loading}>Realizar el Pago</MainButton>
-        </BtnGroup>
-      </FormBox>
+      <div className="flex w-full flex-col md:flex-row">
+        <div className="flex w-full md:w-2/3 flex-col">
+          <APIProvider apiKey={process.env.API_KEY as string}>
+            <Map
+              style={{ width: "100%", height: "50vh" }}
+              defaultCenter={{ lat: 4.649189, lng: -74.103447 }}
+              defaultZoom={15}
+              gestureHandling={"greedy"}
+              disableDefaultUI={true}
+            >
+              <Marker
+                ref={markerRef}
+                position={{ lat: 4.649189, lng: -74.103447 }}
+              />
+              <Directions />
+            </Map>
+          </APIProvider>
+        </div>
+        <div className="flex w-full md:w-1/3 flex-col">
+          <FormBox onSubmit={onSubmit}>
+            <p>
+              <strong>Precio Transporte: </strong>
+              {precioTransporte}
+            </p>
+            <p>
+              <strong>Distancia: </strong>
+              {distancia}
+            </p>
+            <BtnGroup>
+              <MainButton type="submit" loading={loading}>
+                Realizar el Pago
+              </MainButton>
+            </BtnGroup>
+          </FormBox>
+        </div>
+      </div>
     </DefaultContainer>
   );
 }
