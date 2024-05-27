@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0">
+  <persistence-unit name="co.edu.javeriana.model">
+    <description>
+      Descripcion
+    </description>
+
+    <class>co.edu.javeriana.model.Inventory</class>
+    <class>co.edu.javeriana.model.Order</class>
+    <class>co.edu.javeriana.model.OrderItem</class>
+    <class>co.edu.javeriana.model.Product</class>
+    <class>co.edu.javeriana.model.Review</class>
+    <class>co.edu.javeriana.model.User</class>
+
+    <properties>
+      <property name="jakarta.persistence.jdbc.url"
+        value="jdbc:postgresql://cockroachdb:26257/defaultdb" />
+      <property name="jakarta.persistence.jdbc.user" value="root" />
+      <property name="jakarta.persistence.jdbc.password" value="" />
+
+      <!-- Automatically export the schema -->
+      <property name="jakarta.persistence.schema-generation.database.action" value="create" />
+
+      <!-- Echo all executed SQL to console -->
+      <property name="hibernate.show_sql" value="true" />
+      <property name="hibernate.format_sql" value="true" />
+      <property name="hibernate.highlight_sql" value="true" />
+    </properties>
+  </persistence-unit>
+</persistence>
