@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ms11-calificacion-logica")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a446d88cee8d6c8885b897dfbe5672cf7c8626f5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4280bc7f567ee952c97feda45903fec87f756156")]
 [assembly: System.Reflection.AssemblyProductAttribute("ms11-calificacion-logica")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ms11-calificacion-logica")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
