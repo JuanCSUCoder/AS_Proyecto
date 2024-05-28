@@ -8,7 +8,7 @@ import { CartProvider } from "@/providers/CartProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SuperStore - Tu tienda descentralizada",
+  title: "MiPortal - Tu tienda descentralizada",
   description: "La única tienda en la que puedes comprar sin poner en riesgo tus datos personales",
 };
 
@@ -27,10 +27,10 @@ export default function RootLayout({
               "flex flex-col items-center justify-start p-5 min-h-screen"
             }
           >
-            <h1 className="text-center mt-0">SuperStore</h1>
+            <h1 className="text-center mt-0">MiPortal</h1>
             <h2 className="text-center mt-0">Tu Tienda tus Datos</h2>
             <p className="text-center">
-              En SuperStore no recolectamos información personal, todo se
+              En MiPortal no recolectamos información personal, todo se
               almacena en los pods que tu controlas!
             </p>
             <NavBar />

@@ -1,5 +1,7 @@
 "use client"
 
+import { useDBUser } from "@/app/hooks/useDBUser";
+import { usePodInfo } from "@/app/hooks/usePodInfo";
 import { FormBox } from "@/components/order/login/FormBox";
 import { FormField } from "@/components/order/login/FormField";
 import { PriceTag } from "@/components/products/PriceTag";
@@ -9,9 +11,11 @@ import { DefaultContainer } from "@/components/utils/DefaultContainer";
 import { MainButton } from "@/components/utils/MainButton";
 import { Product } from "@/model/Product";
 import { Review } from "@/model/Review";
+import { extractFormObject } from "@/utils/form";
 import { Add, Delete } from "@mui/icons-material";
 import { Button } from "@mui/joy";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ProductDetailsPage({ params }: {
@@ -26,6 +30,11 @@ export default function ProductDetailsPage({ params }: {
   //   imageURL:
   //     "https://electronilab.co/wp-content/uploads/2013/04/Arduino-Uno-R3-Compatible-1.jpg",
   // };
+
+  const podINfo = usePodInfo()
+  const dbUser = useDBUser(podINfo?.webId);
+
+  const router = useRouter();
 
   const [product, setProd] = useState<Product | undefined>(undefined);
   const [scores, setScores] = useState<Review[]>([]);
@@ -66,6 +75,26 @@ export default function ProductDetailsPage({ params }: {
           <FormBox
             onSubmit={(e) => {
               e.preventDefault();
+
+              const formv = extractFormObject(e);
+
+              const review: Review = {
+                product: product,
+                score: formv["score"],
+                user: {
+                  id: dbUser?.id
+                }
+              }
+
+              fetch("http://localhost:5013/score", {
+                method: "PUT",
+                body: JSON.stringify(review),
+                headers: {
+                  "Content-Type": "application/json"
+                }
+              }).then(res => {
+                router.refresh();
+              })
             }}
           >
             <FormField name="score" type="number">
