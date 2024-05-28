@@ -13,28 +13,28 @@ export function useDBUser(webId?:string) {
             userPod: webId,
             providerUrl: webId,
           }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
         })
           .then((res) => res.json())
           .then((res) => setUser(res));
       }
     }
 
-    try {
-      fetch(
-        "http://localhost:5007/gestionusuarios/api/users/search?userPod=" +
-          webId
-      )
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            createUser();
-          }
-        })
-        .then((res) => setUser(res));
-    } catch (error) {
-      createUser();
-    }
+    fetch(
+      "http://localhost:5007/gestionusuarios/api/users/search?userPod=" +
+      webId
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          createUser();
+        }
+      })
+      .then((res) => setUser(res))
+      .catch((err) => createUser());
   }, [webId])
 
   return user;
