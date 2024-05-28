@@ -48,4 +48,11 @@
         maxAge="60" />
 
     <mpMetrics authentication="false"/>
+
+    <cors domain="/api/*"
+    allowedOrigins="*"
+    allowedMethods="GET,POST,DELETE,PUT"
+    allowCredentials="true"
+    exposeHeaders="*"/>
+
 </server>

@@ -23,13 +23,14 @@ public class UserService {
     private final WebTarget createUserTarget;
     private final WebTarget updateUserTarget;
     private final WebTarget deleteUserTarget;
-
+    private final WebTarget SearchUserTarget;
     public UserService() {
         this.client = ClientBuilder.newClient();
         this.target = client.target(BASE_URL);
         this.createUserTarget = target.path("/create_user");
         this.updateUserTarget = target.path("/update_user");
         this.deleteUserTarget = target.path("/delete_user");
+        this.SearchUserTarget = target.path("/user_by_pod");
     }
 
     public List<User> getAllUsers() {
@@ -91,14 +92,13 @@ public class UserService {
         client.close();
     }
 
-    public List<User> searchUsersByUserPod(String userPod) {
-        Response response = target.path("/search")
+    public User searchUsersByUserPod(String userPod) {
+        Response response = SearchUserTarget
                                   .queryParam("userPod", userPod)
                                   .request(MediaType.APPLICATION_JSON)
                                   .get();
         if (response.getStatus() == 200) {
-            User[] usersArray = response.readEntity(User[].class);
-            return Arrays.asList(usersArray);
+            return response.readEntity(User.class);
         } else {
             throw new RuntimeException("Failed to search users, HTTP error code: " + response.getStatus());
         }
