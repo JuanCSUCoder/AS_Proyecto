@@ -8,6 +8,7 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
+      
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -16,24 +17,37 @@ services:
       - grafana_data:/var/lib/grafana
     ports:
       - 3000:3000
+
   pedidos:
     ports:
       - 5010:9080
     build:
       context: ./microservices/ms-9-gestion-pedidos/
       dockerfile: Dockerfile
+    depends_on:
+      - cockroachdb
+      - adminer
+
   compras:
     ports:
       - 5009:9080
     build:
       context: ./microservices/ms8-gestioncompras/
       dockerfile: Dockerfile
+    depends_on:
+      - cockroachdb
+      - adminer
+
   usuarios:
     ports:
       - 5007:9080
     build:
       context: ./microservices/ms7-gestionusuarios/
       dockerfile: Dockerfile
+    depends_on:
+      - cockroachdb
+      - adminer
+
   rabbitmq:
     image: rabbitmq:3-management
     restart: always
@@ -43,6 +57,7 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+
   cockroachdb:
     image: cockroachdb/cockroach
     restart: always
@@ -68,6 +83,7 @@ services:
     ports:
       - 8081:8080
     restart: always
+
   ms12_datos_calificaciones:
     build:
       context: ./microservices/ms12_calificaciones
@@ -76,6 +92,10 @@ services:
       - 5013:8080
     expose:
       - 8080
+    depends_on:
+      - cockroachdb
+      - adminer
+
   ms14_datos_compra:
     build:
       context: ./microservices/ms14_datos_compra
@@ -84,6 +104,9 @@ services:
       - 5015:8080
     expose:
       - 8080
+    depends_on:
+      - cockroachdb
+      - adminer
 
   ms3_servcios_transporte:
     build:
@@ -93,6 +116,10 @@ services:
       - 5003:5003
     expose:
       - 8080
+    depends_on:
+      - cockroachdb
+      - adminer
+
   ms11_gestion_usuarios:
     build:
       context: ./microservices/ms11_gestion_usuarios
@@ -101,6 +128,9 @@ services:
       - 5012:8080
     expose:
       - 8080
+    depends_on:
+      - cockroachdb
+      - adminer
 
   ms4_recomendaciones_ia:
     build:
@@ -108,7 +138,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5004:5004
-
+    depends_on:
+      - cockroachdb
+      - adminer
+      
   inventarios:
     build:
       context: ./microservices/ms13_gestion-inventarios
@@ -118,6 +151,7 @@ services:
     depends_on:
       - cockroachdb
       - adminer
+      
   ms5_pods:
     build:
       context: ./microservices/ms5_pods
@@ -126,12 +160,17 @@ services:
       - 5006:5006
     expose:
       - 5006
+    depends_on:
+      - cockroachdb
+      - adminer 
+
   calificacion_logica:
     build:
       context: ./microservices/ms10-calificacion-logica
       dockerfile: Dockerfile
     ports:
       - 5011:5265
+
   mail:
     build:
       context: ./microservices/ms18_mail
@@ -140,6 +179,11 @@ services:
       - 5018:8080
     expose:
       - 8080
+    depends_on:
+      - cockroachdb
+      - adminer 
+
+
   # elasticsearch:
   #   image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
   #   container_name: elasticsearch
@@ -185,6 +229,26 @@ services:
   #   depends_on:
   #     - logstash
 
+
+  estadisticas:
+    build:
+      context: ./microservices/ms15_estadisticas
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5016:8080
+    depends_on:
+      - cockroachdb
+      - adminer 
+
+  ms5.1_auth_admin:
+    build:
+      context: ./microservices/ms5.1_auth_admin
+      dockerfile: Dockerfile
+    ports:
+      - 5005:5005
+    depends_on:
+      - cockroachdb
+      - adminer 
 
 volumes:
   grafana_data:
