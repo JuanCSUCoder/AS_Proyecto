@@ -50,14 +50,18 @@ export default function ShipmentPage() {
       cantidadPaquetes: ctx?.cartState.cart.items?.length as number,
     };
 
-    fetch("http://localhost:5003/api/costo", {
-      method: 'POST',
-      body: JSON.stringify(datosPeticion),
-      headers: {
-        'Content-Type': "application/json"
-      }
-    }).then((res) => res.text())
-      .then((val) => setPrecio(+val));
+    try {
+      fetch("http://localhost:5003/api/costo", {
+        method: "POST",
+        body: JSON.stringify(datosPeticion),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.text())
+        .then((val) => setPrecio(+val));
+    } catch (_) {
+    }
   }, [])
 
   // defaultCenter={{ lat: 4.649189, lng: -74.103447 }}
