@@ -35,7 +35,25 @@ export default function VerifyDataPage() {
   }, []);
 
   const mapToPod: (formv: FormStructure) => Pod = (formv) => {
-    let podv: Pod = {};
+    let podv: Pod = {
+      name: formv.name,
+      email: formv.email,
+      location: {
+        description: {
+          address: formv.address,
+          city: formv.city,
+          countryCode: "COL",
+        },
+        coordinates: {
+          lat: +formv.lat,
+          lng: +formv.lng
+        }
+      },
+      private: {
+        cardNumber: formv.cardNumber,
+        cvv: +formv.cvv,
+      }
+    };
 
     return podv;
   }
@@ -47,6 +65,15 @@ export default function VerifyDataPage() {
     console.log(formv);
     const podv = mapToPod(formv);
     console.log(podv);
+
+    fetch(`${process.env.MS5_URL}/user`, {
+      credentials: "include",
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(podv),
+    }).then(() => alert("Datos cargados!"));
 
     // href="/order/shipment"
   }
