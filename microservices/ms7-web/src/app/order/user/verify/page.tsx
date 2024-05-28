@@ -1,5 +1,6 @@
 "use client"
 
+import { useUser } from "@/app/hooks/useUser";
 import { FormBox } from "@/components/order/login/FormBox";
 import { FormField } from "@/components/order/login/FormField";
 import { BtnGroup } from "@/components/utils/BtnGroup";
@@ -22,19 +23,14 @@ interface FormStructure {
 }
 
 export default function VerifyDataPage() {
-  const [pod, setPod] = useState<Pod>({});
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
+  const pod = useUser(() => {
     setBtnDisabled(false);
+  });
 
-    fetch(`${process.env.MS5_URL}/user`, {
-      credentials: "include"
-    })
-      .then((res) => res.json())
-      .then((data) => setPod(data));
-  }, []);
+  
 
   const mapToPod: (formv: FormStructure) => Pod = (formv) => {
     let podv: Pod = {
@@ -62,6 +58,7 @@ export default function VerifyDataPage() {
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const formv = extractFormObject(e) as FormStructure;
     console.log(formv);
@@ -122,7 +119,7 @@ export default function VerifyDataPage() {
           CVV:
         </FormField>
         <BtnGroup>
-          <MainButton disabled={btnDisabled}>Confirmar Datos</MainButton>
+          <MainButton disabled={btnDisabled} loading={loading}>Confirmar Datos</MainButton>
         </BtnGroup>
       </FormBox>
     </DefaultContainer>
