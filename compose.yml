@@ -158,6 +158,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5006:5006
+    restart: always
     expose:
       - 5006
     depends_on:

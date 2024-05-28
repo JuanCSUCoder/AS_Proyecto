@@ -83,7 +83,14 @@ public class UserController {
     @GET
     @Path("/search")
     public Response searchUsersByUserPod(@QueryParam("userPod") String userPod) {
-        List<User> users = userService.searchUsersByUserPod(userPod);
-        return Response.ok(users).build();
+
+        
+        
+        try {
+            User users = userService.searchUsersByUserPod(userPod);
+            return Response.ok(users).build(); 
+        } catch (RuntimeException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
     }
 }

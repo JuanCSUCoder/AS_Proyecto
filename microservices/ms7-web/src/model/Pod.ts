@@ -12,7 +12,7 @@ export interface Pod {
       lng?: number
     }
   },
-  private: {
+  private?: {
     cardNumber?: string,
     cvv?: number
   } 
