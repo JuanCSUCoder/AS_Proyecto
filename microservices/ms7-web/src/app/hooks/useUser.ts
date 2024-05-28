@@ -17,7 +17,7 @@ export function useUser(callback: (val: any) => void): Pod | undefined {
     } catch (error) {
       console.log(error);
     }
-  }, [callback]);
+  }, []);
 
   return pod;
 }

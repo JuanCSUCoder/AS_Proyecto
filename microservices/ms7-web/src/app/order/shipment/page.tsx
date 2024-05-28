@@ -37,12 +37,18 @@ export default function ShipmentPage() {
     e.preventDefault();
     setLoading(true);
 
+    let cart: Order = JSON.parse(JSON.stringify(ctx?.cartState.cart));
+    
+    cart.user = {
+      id: dbUser?.id,
+    };
+
     fetch("http://localhost:5010/gestionpedidos/api/orders/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(ctx?.cartState.cart)
+      body: JSON.stringify(cart)
     }).then(res => res.json())
       .then((res: Order) => {
         router.replace("/order/confirm?id=" + res.id);
@@ -83,7 +89,7 @@ export default function ShipmentPage() {
         });
     } catch (_) {
     }
-  }, [center.lat, center.lng, ctx, pod?.location?.coordinates?.lat])
+  }, [ctx, pod])
 
   // defaultCenter={{ lat: 4.649189, lng: -74.103447 }}
   return (
