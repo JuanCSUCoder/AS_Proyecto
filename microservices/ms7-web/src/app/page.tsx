@@ -1,3 +1,5 @@
+"use client"
+
 import { NavBar } from "@/components/NavBar";
 import { Products } from "@/components/products/Products";
 import Image from "next/image";

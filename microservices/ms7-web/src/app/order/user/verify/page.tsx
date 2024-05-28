@@ -1,5 +1,6 @@
 "use client"
 
+import { usePodInfo } from "@/app/hooks/usePodInfo";
 import { useUser } from "@/app/hooks/useUser";
 import { FormBox } from "@/components/order/login/FormBox";
 import { FormField } from "@/components/order/login/FormField";
@@ -29,8 +30,8 @@ export default function VerifyDataPage() {
   const pod = useUser(() => {
     setBtnDisabled(false);
   }) || {};
-
-  
+  const podInfo = usePodInfo();
+  console.log(podInfo)
 
   const mapToPod: (formv: FormStructure) => Pod = (formv) => {
     let podv: Pod = {
