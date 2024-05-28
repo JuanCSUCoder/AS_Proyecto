@@ -15,5 +15,4 @@ RUN pip install flask psycopg2-binary pyjwt
 EXPOSE 5005
 
 # Comando por defecto para ejecutar la aplicación
-CMD ["python", "orm_db_create_administrators.py"]
-CMD ["python", "auth_API.py"]
+CMD ["sh", "-c", "python orm_db_create_administrators.py && python auth_API.py"]

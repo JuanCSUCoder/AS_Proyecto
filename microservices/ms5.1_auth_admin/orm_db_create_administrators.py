@@ -1,6 +1,9 @@
 import psycopg2
 import time
 
+# Esperar 5 segundos
+time.sleep(5)
+
 # Información de conexión
 conn = psycopg2.connect(
     dbname='defaultdb',
@@ -9,9 +12,6 @@ conn = psycopg2.connect(
     host='cockroachdb',
     port='26257'
 )
-
-# Esperar 5 segundos
-time.sleep(5)
 
 # Crear la tabla administrators
 def create_tables():
