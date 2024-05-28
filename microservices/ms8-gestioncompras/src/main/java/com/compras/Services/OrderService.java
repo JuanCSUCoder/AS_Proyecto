@@ -25,13 +25,13 @@ public class OrderService {
     private static final String INVENTORY_URL = "http://inventarios:8080/products/{productId}/inventory";
     private static final String UPDATE_INVENTORY_URL = "http://inventarios:8080/inventories/{id}";
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
-    public Response createOrder(Order order) {
+    public Response createOrder(Order order, Cookie sessionId) {
         Client client = ClientBuilder.newClient();
         logger.info("try resonese rder: ");
         try {
             Response response = client
                 .target(ORDER_SERVICE_URL)
-                .request(MediaType.APPLICATION_JSON)
+                .request(MediaType.APPLICATION_JSON).cookie(sessionId)
                 .post(Entity.entity(order, MediaType.APPLICATION_JSON));
 
             return response;

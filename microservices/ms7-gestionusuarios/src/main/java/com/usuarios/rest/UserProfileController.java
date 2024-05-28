@@ -59,6 +59,22 @@ public class UserProfileController {
         }
     }
 
+    @GET
+    @Path("/email/{id}")
+    public Response getUserProfileByEmail(@PathParam("id") String id) {
+        Cookie sessionIdCookie = new Cookie("sessionId", id);
+        Optional<UserProfile> userProfileById = userProfileService.getUserProfileById(sessionIdCookie);
+
+        if (userProfileById.isPresent()) {
+            // Retrieve email from UserProfile
+            String email = userProfileById.get().getEmail();
+            // Return email in response
+            return Response.ok(email).type(MediaType.TEXT_PLAIN).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
     // Actualizar un perfil de usuario existente
     @PUT
     @Path("/{id}")
