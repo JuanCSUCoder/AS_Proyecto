@@ -1,10 +1,13 @@
 "use client"
 
+import { useDBUser } from "@/app/hooks/useDBUser";
+import { usePodInfo } from "@/app/hooks/usePodInfo";
 import { useUser } from "@/app/hooks/useUser";
 import { FormBox } from "@/components/order/login/FormBox";
 import { BtnGroup } from "@/components/utils/BtnGroup";
 import { DefaultContainer } from "@/components/utils/DefaultContainer";
 import { MainButton } from "@/components/utils/MainButton";
+import { Order } from "@/model/Order";
 import { CartContext } from "@/providers/CartProvider";
 import { APIProvider, Map, Marker, useMap, useMapsLibrary, useMarkerRef } from "@vis.gl/react-google-maps";
 import { redirect, useRouter } from "next/navigation";
@@ -15,6 +18,8 @@ export default function ShipmentPage() {
   const [markerRef, marker] = useMarkerRef();
   const [loading, setLoading] = useState(false);
   const ctx = useContext(CartContext);
+  const podUser = usePodInfo();
+  const dbUser = useDBUser(podUser?.webId);
 
   const router = useRouter();
 
@@ -30,7 +35,17 @@ export default function ShipmentPage() {
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     setLoading(true);
-    router.replace("/order/confirm");
+
+    fetch("http://localhost:5010/gestionpedidos/api/orders/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(ctx?.cartState.cart)
+    }).then(res => res.json())
+      .then((res: Order) => {
+        router.replace("/order/confirm?id=" + res.id);
+      });
   };
 
   const [disabled, setDisabled] = useState(true);
