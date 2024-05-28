@@ -24,7 +24,7 @@ export function OrdersList({ orders }: {
       >
         <thead className="font-bold">
           <tr>
-            <td>Fecha</td>
+            <td>ID</td>
             <td>Estado</td>
             <td>Detalles</td>
           </tr>
@@ -32,8 +32,8 @@ export function OrdersList({ orders }: {
         <tbody>
           {orders.map((order, idx) => (
             <tr key={`order-${idx}`}>
-              <td>Hoy</td>
-              <td>Pagada</td>
+              <td>{order.id}</td>
+              <td>{order.status}</td>
               <td>
                 <Link href={`/order/${order.id}`}>
                   <Button color="neutral" size="sm" sx={{

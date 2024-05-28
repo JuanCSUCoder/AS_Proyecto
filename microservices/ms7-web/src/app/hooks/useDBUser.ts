@@ -23,8 +23,8 @@ export function useDBUser(webId?:string) {
     }
 
     fetch(
-      "http://localhost:5007/gestionusuarios/api/users/search?userPod=" +
-      webId
+      "http://localhost:5012/userresource/user_by_pod?userPod=" +
+        encodeURIComponent(webId as string)
     )
       .then((res) => {
         if (res.ok) {

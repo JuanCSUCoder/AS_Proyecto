@@ -1,5 +1,5 @@
 import { Pod } from "@/model/Pod";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function useUser(callback: (val: any) => void): Pod | undefined {
   const [pod, setPod] = useState<Pod | undefined>(undefined);
@@ -17,7 +17,7 @@ export function useUser(callback: (val: any) => void): Pod | undefined {
     } catch (error) {
       console.log(error);
     }
-  }, [callback]);
+  }, []);
 
   return pod;
 }

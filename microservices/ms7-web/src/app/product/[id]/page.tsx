@@ -1,3 +1,5 @@
+"use client"
+
 import { PriceTag } from "@/components/products/PriceTag";
 import { ProductBtns } from "@/components/products/ProductBtns";
 import { BtnGroup } from "@/components/utils/BtnGroup";
@@ -6,19 +8,30 @@ import { Product } from "@/model/Product";
 import { Add, Delete } from "@mui/icons-material";
 import { Button } from "@mui/joy";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function ProductDetailsPage({ params }: {
   params: {id: string}
 }) {
-  const product: Product = {
-    id: params.id,
-    name: "Arduino Uno",
-    descr:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil unde cupiditate accusamus amet corrupti vel delectus nesciunt dolores a quaerat eligendi esse, aspernatur laudantium error. Porro nam dignissimos in fugit esse earum libero labore aliquid sapiente! Fugiat, consectetur aperiam assumenda aspernatur aliquid laudantium ipsa cum, officiis eveniet eum explicabo maiores obcaecati nisi voluptas tempora eius ullam qui non culpa atque ex rem doloremque accusantium hic! Inventore vel officia odit quam animi deleniti obcaecati, dolorem aperiam voluptates dolores repellat non blanditiis repudiandae. Maiores labore voluptatum optio nostrum corrupti magni hic reprehenderit deleniti nam provident est, vero officia, ipsam veritatis delectus numquam.",
-    price: 12.34,
-    imageURL:
-      "https://electronilab.co/wp-content/uploads/2013/04/Arduino-Uno-R3-Compatible-1.jpg",
-  };
+  // const product: Product = {
+  //   id: params.id,
+  //   name: "Arduino Uno",
+  //   descr:
+  //     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil unde cupiditate accusamus amet corrupti vel delectus nesciunt dolores a quaerat eligendi esse, aspernatur laudantium error. Porro nam dignissimos in fugit esse earum libero labore aliquid sapiente! Fugiat, consectetur aperiam assumenda aspernatur aliquid laudantium ipsa cum, officiis eveniet eum explicabo maiores obcaecati nisi voluptas tempora eius ullam qui non culpa atque ex rem doloremque accusantium hic! Inventore vel officia odit quam animi deleniti obcaecati, dolorem aperiam voluptates dolores repellat non blanditiis repudiandae. Maiores labore voluptatum optio nostrum corrupti magni hic reprehenderit deleniti nam provident est, vero officia, ipsam veritatis delectus numquam.",
+  //   price: 12.34,
+  //   imageURL:
+  //     "https://electronilab.co/wp-content/uploads/2013/04/Arduino-Uno-R3-Compatible-1.jpg",
+  // };
+
+  const [product, setProd] = useState<Product | undefined>(undefined);
+
+  useEffect(() => {
+    fetch("http://localhost:5014/products/" + params.id)
+      .then(res => res.json())
+      .then(res => setProd(res));
+  }, [params.id])
+
+  if (!product) return (<p>Cargando ...</p>);
 
   return (
     <DefaultContainer>
