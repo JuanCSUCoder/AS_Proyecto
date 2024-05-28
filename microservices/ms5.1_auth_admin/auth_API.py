@@ -3,10 +3,15 @@ import jwt
 from flask import Flask, request, jsonify
 import time
 
+from flask_cors import CORS, cross_origin
+
 # Clave secreta para firmar el token JWT
 SECRET_KEY = "claveeeee_secretaaaa"
 
 app = Flask(__name__)
+
+cors = CORS(app)
+app.config["CORS_HEADERS"] = "origin,content-type,accept,authorization"
 
 # Función para establecer la conexión a la base de datos
 def get_db_connection():
@@ -21,6 +26,7 @@ def get_db_connection():
 
 # Endpoint para la autenticación y la generación del token JWT
 @app.route('/loginAdmin', methods=['POST'])
+@cross_origin()
 def loginAdmin():
     data = request.get_json()
     username = data.get('username')

@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <main className="flex w-full flex-col items-center justify-start">
-      <p>{ suggestion }</p>
+      {/* <p>{ suggestion }</p> */}
       <Products products={products} />
     </main>
   );
