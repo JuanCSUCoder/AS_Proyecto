@@ -10,7 +10,14 @@ import { extractFormObject } from "@/utils/form";
 import { FormEventHandler, useEffect, useState } from "react";
 
 interface FormStructure {
-
+  address: string;
+  cardNumber: string;
+  city: string;
+  cvv: string;
+  email: string;
+  lat: string;
+  lng: string;
+  name: string;
 }
 
 export default function VerifyDataPage() {
@@ -36,8 +43,10 @@ export default function VerifyDataPage() {
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    const formv = extractFormObject(e);
+    const formv = extractFormObject(e) as FormStructure;
     console.log(formv);
+    const podv = mapToPod(formv);
+    console.log(podv);
 
     // href="/order/shipment"
   }
