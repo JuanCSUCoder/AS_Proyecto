@@ -3,12 +3,19 @@
 import { OrdersList } from "@/components/orders/OrdersList";
 import { Order } from "@/model/Order";
 import { useEffect, useState } from "react";
+import { useDBUser } from "../hooks/useDBUser";
+import { usePodInfo } from "../hooks/usePodInfo";
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
+  const podInfo = usePodInfo();
+  const dbUser = useDBUser(podInfo?.webId);
 
   useEffect(() => {
-    fetch("http://localhost:5010/gestionpedidos/api/orders/all").then(res => res.json()).then(res => setOrders(res)).catch();
+    fetch("http://localhost:5010/gestionpedidos/api/orders/productos/cliente/" + dbUser?.id)
+      .then((res) => res.json())
+      .then((res) => setOrders(res))
+      .catch();
   }, [])
 
   return (
