@@ -19,7 +19,10 @@ export function ProductCard({ product }: {
         <CardOverflow>
           <AspectRatio ratio={2}>
             <Image
-              src={product.imageURL}
+              src={
+                product.imageURL ||
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3UjUfU9qgE6R-8L4EohqinbIoaG_-4AjyEqMYrQG9xA&s"
+              }
               alt="Product image"
               sizes="100%"
               fill
