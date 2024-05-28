@@ -1,6 +1,7 @@
 "use client"
 
 import { DefaultContainer } from "@/components/utils/DefaultContainer";
+import { Sheet, Table } from "@mui/joy";
 import { useEffect, useState } from "react";
 
 interface Stats {
@@ -15,6 +16,12 @@ interface Stats {
   cheapestOrder: number;
 }
 
+interface Almacen {
+  id: string;
+  location: string;
+  stock: number;
+};
+
 export default function DashboardPage() {
   const [stats, setStats] = useState<Stats | undefined>(undefined);
 
@@ -22,11 +29,20 @@ export default function DashboardPage() {
     fetch("http://localhost:5016/stats")
       .then(res => res.json())
       .then(res => setStats(res));
-  }, [])
+  }, []);
+
+  const [almacenes, setAlma] = useState<Almacen[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5016/stats/inventories")
+      .then(res => res.json())
+      .then(res => setAlma(res))
+  })
 
   return (
     <DefaultContainer>
       <h2>Dashboard</h2>
+      <h3>Estadísticas Generales</h3>
       <div className="flex flex-col items-start justify-start">
         <p>
           <strong>Total de Usuarios:</strong>
@@ -73,6 +89,30 @@ export default function DashboardPage() {
 
           {stats?.cheapestOrder}
         </p>
+
+        <h3>Almacenes</h3>
+        <Sheet>
+          <Table>
+            <thead>
+              <tr>
+                <td>ID</td>
+                <td>Almacen</td>
+                <td>Inventario</td>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                almacenes.map((almacen, idx) => (
+                  <tr key={`almacen-${idx}`}>
+                    <td>{almacen.id}</td>
+                    <td>{almacen.location}</td>
+                    <td>{almacen.stock}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </Table>
+        </Sheet>
       </div>
     </DefaultContainer>
   );
