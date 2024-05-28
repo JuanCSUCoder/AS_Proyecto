@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 "use client"
 
 import { useDBUser } from "@/app/hooks/useDBUser";
@@ -45,6 +46,8 @@ export default function ShipmentPage() {
     }).then(res => res.json())
       .then((res: Order) => {
         router.replace("/order/confirm?id=" + res.id);
+      }).catch((e) => {
+        // router.replace("/order/confirm");
       });
   };
 
@@ -95,7 +98,15 @@ export default function ShipmentPage() {
               gestureHandling={"greedy"}
               disableDefaultUI={true}
             >
-              <Directions origin="Pontificia Universidad Javeriana, Bogotá, Colombia" destination={pod?.location?.description?.address + ", " + pod?.location?.description?.city + ", Colombia"} />
+              <Directions
+                origin="Pontificia Universidad Javeriana, Bogotá, Colombia"
+                destination={
+                  pod?.location?.description?.address +
+                  ", " +
+                  pod?.location?.description?.city +
+                  ", Colombia"
+                }
+              />
             </Map>
           </APIProvider>
         </div>
