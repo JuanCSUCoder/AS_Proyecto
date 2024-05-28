@@ -6,7 +6,6 @@ import java.util.Properties;
 public class Mail {
 
     static void send_mail(JsonObject contenido) {
-        System.out.println("Enviando email...");
         final String username = "malbororitual@gmail.com";
         final String password = "faiy wzau slgq wedn";
 
@@ -45,20 +44,23 @@ public class Mail {
             double productPrice = product.getDouble("price");
             String email = contenido.getString("email");
 
-            // Crear el mensaje del email con la información extraída
-            String emailContent = "Orden ID: " + orderId + "\n" +
-                    "Estado: " + status + "\n" +
-                    "Total: $" + total + "\n" +
-                    "Usuario ID: " + userId + "\n" +
-                    "User Pod: " + userPod + "\n" +
-                    "Provider URL: " + providerUrl + "\n" +
-                    "Item ID: " + itemId + "\n" +
-                    "Cantidad: " + quantity + "\n" +
-                    "Producto ID: " + productId + "\n" +
-                    "Nombre del Producto: " + productName + "\n" +
-                    "Descripción del Producto: " + productDescr + "\n" +
-                    "URL de la Imagen: " + productImageURL + "\n" +
-                    "Precio del Producto: $" + productPrice;
+            // Crear el contenido del email en HTML
+            String emailContent = "<h1>Detalles de la Orden</h1>" +
+                    "<p><strong>Orden ID:</strong> " + orderId + "</p>" +
+                    "<p><strong>Estado:</strong> " + status + "</p>" +
+                    "<p><strong>Total:</strong> $" + total + "</p>" +
+                    "<h2>Detalles del Usuario</h2>" +
+                    "<p><strong>Usuario ID:</strong> " + userId + "</p>" +
+                    "<p><strong>User Pod:</strong> " + userPod + "</p>" +
+                    "<p><strong>Provider URL:</strong> " + providerUrl + "</p>" +
+                    "<h2>Detalles del Producto</h2>" +
+                    "<p><strong>Item ID:</strong> " + itemId + "</p>" +
+                    "<p><strong>Cantidad:</strong> " + quantity + "</p>" +
+                    "<p><strong>Producto ID:</strong> " + productId + "</p>" +
+                    "<p><strong>Nombre del Producto:</strong> " + productName + "</p>" +
+                    "<p><strong>Descripción del Producto:</strong> " + productDescr + "</p>" +
+                    "<p><strong>Precio del Producto:</strong> $" + productPrice + "</p>" +
+                    "<img src=\"" + productImageURL + "\" alt=\"" + productName + "\" />";
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("malbororitual@gmail.com"));
@@ -66,15 +68,16 @@ public class Mail {
                     Message.RecipientType.TO,
                     InternetAddress.parse(email)); // Usar el email del JSON
             message.setSubject("Envio Realizado Orden: " + orderId); // Usar el ID de la orden en el asunto
-            message.setText(emailContent); // Usar el contenido del email
+
+            // Configurar el contenido del mensaje como HTML
+            message.setContent(emailContent, "text/html; charset=utf-8");
 
             Transport.send(message);
 
-            System.out.println("Done");
+            // System.out.println("Done");
 
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
-
 }
