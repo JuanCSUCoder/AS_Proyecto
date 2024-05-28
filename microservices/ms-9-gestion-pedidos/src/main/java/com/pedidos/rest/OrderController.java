@@ -22,7 +22,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+
 import jakarta.ws.rs.core.Cookie;
+
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -38,7 +40,9 @@ public class OrderController  {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+
     public Response createOrder(Order order,@CookieParam("sessionId") String sessionId){
+
 
         Cookie sessionIdCookie = new Cookie("sessionId", sessionId);
         Order order2= orderService.createOrder(order);
@@ -101,7 +105,10 @@ public class OrderController  {
     @Produces(MediaType.APPLICATION_JSON)
     public Order registerOrderDelivered(@QueryParam("orderid") String orderid){
         return orderService.registerOrderDelivered(orderid);
+
     }
+
+
 
 
 }

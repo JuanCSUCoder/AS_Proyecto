@@ -23,7 +23,7 @@ public class rabbit {
     @Inject
     public rabbit() {
         factory = new ConnectionFactory();
-        factory.setHost("localhost");  // Cambia esto según tu configuración
+        factory.setHost("localhost"); // Cambia esto según tu configuración
         factory.setUsername("user");
         factory.setPassword("password");
         objectMapper = new ObjectMapper();
