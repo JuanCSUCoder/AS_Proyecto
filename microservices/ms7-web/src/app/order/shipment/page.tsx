@@ -46,10 +46,7 @@ export default function ShipmentPage() {
               gestureHandling={"greedy"}
               disableDefaultUI={true}
             >
-              <Marker
-                ref={markerRef}
-                position={{ lat: 4.649189, lng: -74.103447 }}
-              />
+              
               <Directions />
             </Map>
           </APIProvider>

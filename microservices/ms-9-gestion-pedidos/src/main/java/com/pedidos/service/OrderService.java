@@ -16,7 +16,7 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
+import jakarta.ws.rs.core.Cookie;
 @ApplicationScoped
 public class OrderService {
 
@@ -28,7 +28,7 @@ public class OrderService {
     @Inject
     private rabbit ra;
 
-    public Order createOrder(Order order) {
+    public Order createOrder(Order order,String cookie) throws IOException, TimeoutException {
         
         Response response = client.target(BASE_URL)
         .path("/order")
@@ -36,6 +36,7 @@ public class OrderService {
         .post(Entity.entity(order, MediaType.APPLICATION_JSON));
 
         if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+            ra.sendMessage(order, cookie);
             return response.readEntity(Order.class);
         } else {
             throw new RuntimeException("Failed to create order");
@@ -69,13 +70,6 @@ public class OrderService {
         } else {
             throw new RuntimeException("Failed to fetch orders for user");
         }
-    }
-
-    public Order updateOrderStatus(Order order, String orderId) throws IOException, TimeoutException {
-
-        ra.sendMessage(order);
-        
-        return null; // O manejar el caso de que no se encuentre el pedido
     }
 
     public List<Order> getAll() throws IOException, TimeoutException{

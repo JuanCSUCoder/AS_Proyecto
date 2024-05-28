@@ -1,21 +1,22 @@
 import { OrderItem } from "@/model/OrderItem";
-import { Delete } from "@mui/icons-material";
-import { Button } from "@mui/joy";
+import { ProductBtns } from "../products/ProductBtns";
 
-export function CartItem({ orderItem }: {
-  orderItem: OrderItem
+export function CartItem({ orderItem, readonly }: {
+  orderItem: OrderItem,
+  readonly?: boolean
 }) {
+  const { product, quantity } = orderItem;
+
   return (
     <tr>
-      <td>Avena</td>
-      <td>1x</td>
-      <td>$ 1.000</td>
-      <td>
-        <Button color="danger">
-          <Delete />
-          <span className="hidden lg:inline-block">Eliminar</span>
-        </Button>
-      </td>
+      <td>{product?.name}</td>
+      <td>{quantity}x</td>
+      <td>$ {product?.price}</td>
+      {!readonly && (
+        <td>
+          <ProductBtns product={product ? product : {}} />
+        </td>
+      )}
     </tr>
   );
 }
