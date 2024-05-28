@@ -22,7 +22,7 @@ import java.util.concurrent.TimeoutException;
 
 @ApplicationScoped
 public class rabbit {
-    private static final String BASE_URL = "http://localhost:5007";
+    private static final String BASE_URL = "http://usuarios:9080/gestionusuarios/api/userprofiles/email";
 
     private Client client = ClientBuilder.newClient();
     private static final String QUEUE_NAME = "cola-correo";
@@ -32,7 +32,7 @@ public class rabbit {
     @Inject
     public rabbit() {
         factory = new ConnectionFactory();
-        factory.setHost("localhost");  // Cambia esto según tu configuración
+        factory.setHost("rabbitmq");  // Cambia esto según tu configuración
         factory.setUsername("user");
         factory.setPassword("password");
         objectMapper = new ObjectMapper();
@@ -72,11 +72,10 @@ public class rabbit {
     }
 
     public String getUserProfileByEmail(String id) {
-        String apiUrl = BASE_URL + "/email/" + id;
-        Cookie sessionIdCookie = new Cookie("sessionId", id);
+        String apiUrl = BASE_URL + "/" + id;
+        
     
         Response response = client.target(apiUrl)
-                .queryParam("id",id)
                 .request(MediaType.TEXT_PLAIN)
                 .get();
     

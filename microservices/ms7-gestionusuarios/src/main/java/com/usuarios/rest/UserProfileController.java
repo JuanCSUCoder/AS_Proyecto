@@ -61,6 +61,7 @@ public class UserProfileController {
 
     @GET
     @Path("/email/{id}")
+    @Produces("text/plain")
     public Response getUserProfileByEmail(@PathParam("id") String id) {
         Cookie sessionIdCookie = new Cookie("sessionId", id);
         Optional<UserProfile> userProfileById = userProfileService.getUserProfileById(sessionIdCookie);
@@ -68,6 +69,7 @@ public class UserProfileController {
         if (userProfileById.isPresent()) {
             // Retrieve email from UserProfile
             String email = userProfileById.get().getEmail();
+            System.out.println(email);
             // Return email in response
             return Response.ok(email).type(MediaType.TEXT_PLAIN).build();
         } else {
