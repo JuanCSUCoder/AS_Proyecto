@@ -32,7 +32,9 @@ public class rabbit {
     @Inject
     public rabbit() {
         factory = new ConnectionFactory();
+
         factory.setHost("rabbitmq");  // Cambia esto según tu configuración
+        // Cambia esto según tu configuración
         factory.setUsername("user");
         factory.setPassword("password");
         objectMapper = new ObjectMapper();
