@@ -189,6 +189,13 @@ services:
       - cockroachdb
       - adminer 
 
+  ms5.1_auth_admin:
+    build:
+      context: ./microservices/ms5.1_auth_admin
+      dockerfile: Dockerfile
+    ports:
+      - 5005:5005
+
 volumes:
   grafana_data:
   # esdata:

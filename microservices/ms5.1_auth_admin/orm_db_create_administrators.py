@@ -6,7 +6,7 @@ conn = psycopg2.connect(
     dbname='defaultdb',
     user='root',
     password='',
-    host='localhost', # Cambiar a cockroachdb
+    host='cockroachdb',
     port='26257'
 )
 
