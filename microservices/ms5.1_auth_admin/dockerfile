@@ -9,7 +9,7 @@ COPY auth_API.py .
 COPY orm_db_create_administrators.py .
 
 # Instalamos las dependencias necesarias
-RUN pip install flask psycopg2-binary pyjwt
+RUN pip install flask flask_cors psycopg2-binary pyjwt
 
 # Exponemos el puerto 5005
 EXPOSE 5005

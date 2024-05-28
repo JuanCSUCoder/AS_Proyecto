@@ -1,10 +1,14 @@
 "use client"
 
+import { FormBox } from "@/components/order/login/FormBox";
+import { FormField } from "@/components/order/login/FormField";
 import { PriceTag } from "@/components/products/PriceTag";
 import { ProductBtns } from "@/components/products/ProductBtns";
 import { BtnGroup } from "@/components/utils/BtnGroup";
 import { DefaultContainer } from "@/components/utils/DefaultContainer";
+import { MainButton } from "@/components/utils/MainButton";
 import { Product } from "@/model/Product";
+import { Review } from "@/model/Review";
 import { Add, Delete } from "@mui/icons-material";
 import { Button } from "@mui/joy";
 import Image from "next/image";
@@ -24,11 +28,16 @@ export default function ProductDetailsPage({ params }: {
   // };
 
   const [product, setProd] = useState<Product | undefined>(undefined);
+  const [scores, setScores] = useState<Review[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:5014/products/" + params.id)
       .then(res => res.json())
       .then(res => setProd(res));
+    
+    fetch("http://localhost:5013/scores?prodId=" + params.id)
+      .then(res => res.json())
+      .then(res => setScores(res));
   }, [params.id])
 
   if (!product) return (<p>Cargando ...</p>);
@@ -54,6 +63,30 @@ export default function ProductDetailsPage({ params }: {
         <div className="flex w-full flex-col items-end md:mt-20">
           <PriceTag>{product.price}</PriceTag>
           <ProductBtns product={product} />
+          <FormBox
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <FormField name="score" type="number">
+              Puntuación 0 a 5:
+            </FormField>
+            <MainButton type="submit">Puntuar</MainButton>
+          </FormBox>
+          <div className="w-full">
+            {scores.map((score, idx) => (
+              <div key={'score-'+idx} className="flex flex-row justify-between m-3 p-3 bg-slate-300 rounded-md">
+                <p className="w-1/3">
+                  <strong>Usuario: </strong>
+                  {score.id}
+                </p>
+                <p className="w-1/3 text-right">
+                  <strong>Calificación: </strong>
+                  {score.score}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </DefaultContainer>
