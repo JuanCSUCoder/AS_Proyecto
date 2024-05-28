@@ -22,8 +22,7 @@ export default function AdminLoginPage() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(formv),
-      credentials: "include"
+      body: JSON.stringify(formv)
     }).then(res => res.json())
       .then(res => {
         if (res.token) {
