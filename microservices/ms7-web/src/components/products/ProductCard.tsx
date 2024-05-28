@@ -1,8 +1,13 @@
 import { Product } from "@/model/Product";
 import { AspectRatio, Button, Card, CardOverflow } from "@mui/joy";
 import { PriceTag } from "./PriceTag";
-import { Add } from "@mui/icons-material";
+import { Add, Delete, Info } from "@mui/icons-material";
 import Image from "next/image";
+import { BtnGroup } from "../utils/BtnGroup";
+import Link from "next/link";
+import { useContext } from "react";
+import { CartContext } from "@/providers/CartProvider";
+import { ProductBtns } from "./ProductBtns";
 
 export function ProductCard({ product }: {
   product: Product
@@ -28,7 +33,7 @@ export function ProductCard({ product }: {
       <PriceTag>{product.price}</PriceTag>
       <p className="my-1">{product.descr}</p>
 
-      <Button startDecorator={<Add />}>Agregar</Button>
+      <ProductBtns product={product} />
     </Card>
   );
 }

@@ -12,6 +12,7 @@
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@inrupt/solid-client-authn": "^0.0.6",
     "@inrupt/solid-client-authn-browser": "^2.2.0",
     "@mui/icons-material": "^5.15.18",

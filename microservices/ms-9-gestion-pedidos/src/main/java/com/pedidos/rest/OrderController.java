@@ -14,6 +14,7 @@ import com.pedidos.service.OrderService;
 import jakarta.inject.Inject;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -21,6 +22,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+
+import jakarta.ws.rs.core.Cookie;
+
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -36,8 +40,11 @@ public class OrderController  {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createOrder(Order order){
 
+    public Response createOrder(Order order,@CookieParam("sessionId") String sessionId){
+
+
+        Cookie sessionIdCookie = new Cookie("sessionId", sessionId);
         Order order2= orderService.createOrder(order);
 
         if(order2 == null){
@@ -98,14 +105,10 @@ public class OrderController  {
     @Produces(MediaType.APPLICATION_JSON)
     public Order registerOrderDelivered(@QueryParam("orderid") String orderid){
         return orderService.registerOrderDelivered(orderid);
+
     }
 
-    @PUT
-    @Path("/delivered")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Order update(Order order,@QueryParam("orderid") String orderid) throws IOException, TimeoutException{
-        return orderService.updateOrderStatus(order,orderid);
-    }
+
+
 
 }
