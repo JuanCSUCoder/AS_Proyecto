@@ -16,7 +16,7 @@ export default function OrdersPage() {
       .then((res) => res.json())
       .then((res) => setOrders(res))
       .catch();
-  }, [])
+  }, [dbUser])
 
   return (
     <main className="flex w-full flex-col items-center justify-start">
