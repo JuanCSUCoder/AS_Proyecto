@@ -15,10 +15,12 @@ import com.compras.model.User;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -32,10 +34,11 @@ public class ComprasController {
     @Path("/realizar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response  realizarCompra(@QueryParam("userId") String userId, List<Product> products) {
+    public Response  realizarCompra(@QueryParam("userId") String userId,@CookieParam("sessionId") String sessionId, List<Product> products) {
         // Verificar los productos de la compra
         boolean productosDisponibles = verificarProductosDisponibles(products);
-        
+        Cookie sessionIdCookie = new Cookie("sessionId", sessionId);
+
         if (!productosDisponibles) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Algunos productos no están disponibles en el inventario.")
@@ -66,7 +69,7 @@ public class ComprasController {
         //Crear la orden
         Order order = crearOrden(userId, products);
 
-        Response orderResp =orderService.createOrder(order);
+        Response orderResp =orderService.createOrder(order,sessionIdCookie);
         // Aquí podrías almacenar la orden en la base de datos u otro sistema de almacenamiento
         return orderResp;
 

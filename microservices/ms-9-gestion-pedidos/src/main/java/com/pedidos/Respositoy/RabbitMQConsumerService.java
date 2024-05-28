@@ -18,7 +18,7 @@ import java.util.concurrent.TimeoutException;
 @ApplicationScoped
 public class RabbitMQConsumerService {
 
-    private static final String QUEUE_NAME = "myQueue";
+    private static final String QUEUE_NAME = "cola-correo";
     private ConnectionFactory factory;
     private Connection connection;
     private Channel channel;

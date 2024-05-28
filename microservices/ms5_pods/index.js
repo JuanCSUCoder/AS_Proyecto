@@ -11,6 +11,8 @@ import Cookies from "cookies";
 import express from "express";
 import { readFile, readFileSync } from "fs";
 
+import cors from "cors";
+
 const clientApplicationName = "solid-client-authn-node proyecto_as";
 
 const app = express();
@@ -46,6 +48,18 @@ const cookiesOptions = {
   overwrite: true,
   expires: addDays(new Date(), 5)
 };
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    callback(null, origin);
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Métodos HTTP permitidos
+  allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras permitidas
+  credentials: true, // Permitir cookies de origen cruzado
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 

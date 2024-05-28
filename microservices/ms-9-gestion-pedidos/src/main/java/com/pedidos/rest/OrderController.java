@@ -14,12 +14,17 @@ import com.pedidos.service.OrderService;
 import jakarta.inject.Inject;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+
+import jakarta.ws.rs.core.Cookie;
+
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -35,11 +40,14 @@ public class OrderController  {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createOrder(Order order){
-        logger.info("Creating order: ");
-        logger.info("Creating order: {}", order);
 
-        Order order2= orderService.createOrder(order);
+
+
+
+    public Response createOrder(Order order,@CookieParam("sessionId") String sessionId) throws IOException, TimeoutException{
+        Cookie sessionIdCookie = new Cookie("sessionId", sessionId);
+        Order order2= orderService.createOrder(order,sessionId);
+
         if(order2 == null){
             return Response.status(Response.Status.BAD_REQUEST)
             .entity("Algunos productos no están disponibles en el inventario.")
@@ -57,15 +65,8 @@ public class OrderController  {
     @Produces(MediaType.APPLICATION_JSON)
     public Order getOrder(@PathParam("orderId") String orderId) {
         
-        Order order = orderService.getOrderById(orderId);
+        return  orderService.getOrderById(orderId);
         
-        if (order != null) {
-            
-            return order;
-        } else {
-            
-            return null;
-        }
     }
 
     @GET
@@ -76,13 +77,12 @@ public class OrderController  {
         return orders;
     }
 
-    @PUT
-    @Path("/update/{orderId}")
-    @Consumes(MediaType.APPLICATION_JSON)
+
+    @POST
+    @Path("/payorder")
     @Produces(MediaType.APPLICATION_JSON)
-    public Order cambiarEstado(Order order, @PathParam("orderId") String orderId){
-        return orderService.updateOrderStatus(order, orderId);
-        
+    public Order registerOrderPayment(@QueryParam("orderid") String orderid){
+        return orderService.registerOrderPayment(orderid);
     }
 
     @GET
@@ -90,7 +90,26 @@ public class OrderController  {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Order> getAllClientesOrdenes(@PathParam("clienteId") String clientID){
 
-        return orderService.ordenesDeCliente(clientID);
+        return orderService.getOrdersByUserId(clientID);
     }
+
+    @POST
+    @Path("/ondeliver")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Order registerOrderOnDelivery(@QueryParam("orderid") String orderid){
+
+        return orderService.registerOrderOnDelivery(orderid);
+    }
+
+    @POST
+    @Path("/delivered")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Order registerOrderDelivered(@QueryParam("orderid") String orderid){
+        return orderService.registerOrderDelivered(orderid);
+
+    }
+
+
+
 
 }

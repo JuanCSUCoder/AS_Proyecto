@@ -6,11 +6,13 @@ export function MainButton({
   href,
   type,
   loading,
+  disabled,
   children
 }: {
     href?: string,
     type?: 'submit',
     loading?: boolean,
+    disabled?: boolean
     children: ReactNode
 }) {
   return href ? (
@@ -21,6 +23,7 @@ export function MainButton({
         color="success"
         type={type}
         loading={loading}
+        disabled={disabled}
       >
         {children}
       </Button>
@@ -32,6 +35,7 @@ export function MainButton({
       color="success"
       type={type}
       loading={loading}
+      disabled={disabled}
     >
       {children}
     </Button>
