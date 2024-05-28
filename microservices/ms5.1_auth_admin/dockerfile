@@ -1,0 +1,18 @@
+# Utilizamos la imagen oficial de Python
+FROM python:3.8
+
+# Establecemos el directorio de trabajo en /app
+WORKDIR /app
+
+# Copiamos los archivos necesarios al contenedor
+COPY auth_API.py .
+COPY orm_db_create_administrators.py .
+
+# Instalamos las dependencias necesarias
+RUN pip install flask psycopg2-binary pyjwt
+
+# Exponemos el puerto 5005
+EXPOSE 5005
+
+# Comando por defecto para ejecutar la aplicación
+CMD ["sh", "-c", "python orm_db_create_administrators.py && python auth_API.py"]
