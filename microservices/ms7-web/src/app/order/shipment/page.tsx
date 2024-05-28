@@ -65,7 +65,7 @@ export default function ShipmentPage() {
         });
     } catch (_) {
     }
-  }, [])
+  }, [center.lat, center.lng, ctx, pod?.location?.coordinates?.lat])
 
   // defaultCenter={{ lat: 4.649189, lng: -74.103447 }}
   return (

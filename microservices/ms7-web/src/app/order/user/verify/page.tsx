@@ -1,5 +1,6 @@
 "use client"
 
+import { useDBUser } from "@/app/hooks/useDBUser";
 import { usePodInfo } from "@/app/hooks/usePodInfo";
 import { useUser } from "@/app/hooks/useUser";
 import { FormBox } from "@/components/order/login/FormBox";
@@ -31,7 +32,7 @@ export default function VerifyDataPage() {
     setBtnDisabled(false);
   }) || {};
   const podInfo = usePodInfo();
-  console.log(podInfo)
+  const dbUser = useDBUser(podInfo?.webId);
 
   const mapToPod: (formv: FormStructure) => Pod = (formv) => {
     let podv: Pod = {
