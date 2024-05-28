@@ -1,5 +1,6 @@
 "use client"
 
+import { useUser } from "@/app/hooks/useUser";
 import { FormBox } from "@/components/order/login/FormBox";
 import { BtnGroup } from "@/components/utils/BtnGroup";
 import { DefaultContainer } from "@/components/utils/DefaultContainer";
@@ -18,11 +19,8 @@ export default function ShipmentPage() {
   useEffect(() => {
     if (!map) return;
 
-    
-
     // here you can interact with the imperative maps API
   }, [map]);
-
 
   const precioTransporte = 10000;
   const distancia = 2.3;
@@ -31,9 +29,16 @@ export default function ShipmentPage() {
     e.preventDefault();
     setLoading(true);
     router.replace("/order/confirm");
+  };
 
-  }
+  const [disabled, setDisabled] = useState(true);
+  const pod = useUser(() => {
+    setDisabled(false);
+  });
 
+  const center = { lat: 4.649189, lng: -74.103447 };
+
+  // defaultCenter={{ lat: 4.649189, lng: -74.103447 }}
   return (
     <DefaultContainer>
       <div className="flex w-full flex-col md:flex-row">
@@ -41,13 +46,12 @@ export default function ShipmentPage() {
           <APIProvider apiKey={process.env.API_KEY as string}>
             <Map
               style={{ width: "100%", height: "50vh" }}
-              defaultCenter={{ lat: 4.649189, lng: -74.103447 }}
+              defaultCenter={center}
               defaultZoom={15}
               gestureHandling={"greedy"}
               disableDefaultUI={true}
             >
-              
-              <Directions />
+              <Directions origin="Pontificia Universidad Javeriana, Bogotá, Colombia" destination={pod?.location?.description?.address + ", " + pod?.location?.description?.city + ", Colombia"} />
             </Map>
           </APIProvider>
         </div>
@@ -62,7 +66,7 @@ export default function ShipmentPage() {
               {distancia}
             </p>
             <BtnGroup>
-              <MainButton type="submit" loading={loading}>
+              <MainButton type="submit" loading={loading} disabled={disabled}>
                 Realizar el Pago
               </MainButton>
             </BtnGroup>
@@ -73,7 +77,10 @@ export default function ShipmentPage() {
   );
 }
 
-function Directions() {
+function Directions({ origin, destination }: {
+  origin: string,
+  destination: string
+}) {
   const map = useMap();
   const routesLibrary = useMapsLibrary("routes");
   const [dirServ, setDirServ] = useState<google.maps.DirectionsService>();
@@ -90,15 +97,15 @@ function Directions() {
     if (!dirServ || !dirRender) return;
 
     dirServ.route({
-      origin: "Cr 58C #147-81, Bogotá, Colombia",
-      destination: "Pontificia Universidad Javeriana, Bogota Colombia",
+      origin: origin,
+      destination: destination,
       travelMode: google.maps.TravelMode.DRIVING,
       provideRouteAlternatives: true,
     }).then((res) => {
       dirRender.setDirections(res);
       setRoutes(res.routes);
     })
-  }, [dirServ, dirRender]);
+  }, [dirServ, dirRender, origin, destination]);
 
   return null;
 }
