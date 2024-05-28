@@ -5,57 +5,30 @@ import { DefaultContainer } from "@/components/utils/DefaultContainer";
 import { Order } from "@/model/Order";
 import { faTruck } from "@fortawesome/free-solid-svg-icons";
 import { APIProvider, Map, Marker, useMap, useMarkerRef } from "@vis.gl/react-google-maps";
+import { useEffect, useState } from "react";
 
 export default function OrderDetailsPage({ params }: { params: { id: string } }) {
   const map = useMap();
   const [markerRef, marker] = useMarkerRef();
 
-  const order: Order = {
-    id: "485629-458720-246524-246246",
-    status: "ONDELIVERY",
-    total: 148.08,
-    items: [
-      {
-        id: "1",
-        quantity: 3,
-        product: {
-          id: "1",
-          descr: "Descripcion producto",
-          name: "Cocacola",
-          price: 12.34,
-        },
-      },
-      {
-        id: "2",
-        quantity: 1,
-        product: {
-          id: "2",
-          descr: "Descripcion producto 2",
-          name: "Arduino Uno",
-          price: 12.34,
-        },
-      },
-      {
-        id: "3",
-        quantity: 8,
-        product: {
-          id: "3",
-          descr: "Descripcion producto 3",
-          name: "Avena",
-          price: 12.34,
-        },
-      },
-    ],
-  };
+  const [order, setOrder] = useState<Order | undefined>(undefined);
+
+  useEffect(() => {
+    fetch("http://localhost:5010/gestionpedidos/api/orders/" + encodeURIComponent(params.id))
+      .then(res => res.json())
+      .then(res => setOrder(res));
+  }, [params.id])
+
+  if (!order) return (<p>Loading {params.id} ...</p>);
 
   return (
     <DefaultContainer>
       <h2>Seguimiento Pedido</h2>
       <p>
-        <strong># de Orden:</strong> {order.id}
+        <strong># de Orden:</strong> {order?.id}
       </p>
       <p>
-        <strong>Estado:</strong> {order.status}
+        <strong>Estado:</strong> {order?.status}
       </p>
       <APIProvider apiKey={process.env.API_KEY as string}>
         <Map
