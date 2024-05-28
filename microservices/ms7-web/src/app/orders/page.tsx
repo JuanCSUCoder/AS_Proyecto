@@ -5,6 +5,7 @@ import { Order } from "@/model/Order";
 import { useEffect, useState } from "react";
 import { useDBUser } from "../hooks/useDBUser";
 import { usePodInfo } from "../hooks/usePodInfo";
+import { DefaultContainer } from "@/components/utils/DefaultContainer";
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -12,16 +13,21 @@ export default function OrdersPage() {
   const dbUser = useDBUser(podInfo?.webId);
 
   useEffect(() => {
-    fetch("http://localhost:5010/gestionpedidos/api/orders/productos/cliente/" + dbUser?.id)
-      .then((res) => res.json())
-      .then((res) => setOrders(res))
-      .catch();
+    if (dbUser?.id) {
+      fetch(
+        "http://localhost:5010/gestionpedidos/api/orders/productos/cliente/" +
+          dbUser?.id
+      )
+        .then((res) => res.json())
+        .then((res) => setOrders(res))
+        .catch();
+    }
   }, [dbUser])
 
   return (
-    <main className="flex w-full flex-col items-center justify-start">
+    <DefaultContainer>
       <h2>Historial de Pedidos</h2>
       <OrdersList orders={orders} />
-    </main>
+    </DefaultContainer>
   );
 }
