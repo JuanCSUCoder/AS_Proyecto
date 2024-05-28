@@ -45,47 +45,47 @@ export default function DashboardPage() {
       <h3>Estadísticas Generales</h3>
       <div className="flex flex-col items-start justify-start">
         <p>
-          <strong>Total de Usuarios:</strong>
+          <strong>Total de Usuarios: </strong>
 
           {stats?.totalUsers}
         </p>
         <p>
-          <strong>Producto con Mayor Inventario:</strong>
+          <strong>Producto con Mayor Inventario: </strong>
 
           {stats?.maxStockProductName}
         </p>
         <p>
-          <strong>Producto con Menor Inventario:</strong>
+          <strong>Producto con Menor Inventario: </strong>
 
           {stats?.minStockProductName}
         </p>
         <p>
-          <strong>Total de Productos:</strong>
+          <strong>Total de Productos: </strong>
 
           {stats?.totalProducts}
         </p>
         <p>
-          <strong>Promedio de Productos por Pedido:</strong>
+          <strong>Promedio de Productos por Pedido: </strong>
 
           {stats?.averageProductsPerOrder}
         </p>
         <p>
-          <strong>Valor Total de las Pedidos:</strong>
+          <strong>Valor Total de las Pedidos: </strong>
 
           {stats?.totalOrderValue}
         </p>
         <p>
-          <strong>Cantidad de Pedidos:</strong>
+          <strong>Cantidad de Pedidos: </strong>
 
           {stats?.totalOrders}
         </p>
         <p>
-          <strong>Pedido Más Caro:</strong>
+          <strong>Pedido Más Caro: </strong>
 
           {stats?.mostExpensiveOrder}
         </p>
         <p>
-          <strong>Pedido Más Barato:</strong>
+          <strong>Pedido Más Barato: </strong>
 
           {stats?.cheapestOrder}
         </p>
