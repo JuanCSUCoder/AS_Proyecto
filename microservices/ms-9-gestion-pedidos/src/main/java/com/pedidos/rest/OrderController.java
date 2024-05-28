@@ -45,8 +45,6 @@ public class OrderController  {
 
 
     public Response createOrder(Order order,@CookieParam("sessionId") String sessionId) throws IOException, TimeoutException{
-
-
         Cookie sessionIdCookie = new Cookie("sessionId", sessionId);
         Order order2= orderService.createOrder(order,sessionId);
 
