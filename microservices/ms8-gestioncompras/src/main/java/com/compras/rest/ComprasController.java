@@ -21,7 +21,9 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.CookieParam;
 
+import jakarta.ws.rs.core.Cookie;
 @Path("/compras")
 public class ComprasController {
 

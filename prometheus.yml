@@ -10,7 +10,7 @@ scrape_configs:
       - targets: ['host.docker.internal:5010']
   - job_name: 'compras'
     static_configs:
-      - targets: ['host.docker.internal:5011']
+      - targets: ['host.docker.internal:5009']
   - job_name: 'usuarios'
     static_configs:
       - targets: ['host.docker.internal:5007']
@@ -34,3 +34,11 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     static_configs:
       - targets: ['host.docker.internal:5003']
+  - job_name: 'Estadisticas'
+    metrics_path: '/q/metrics'
+    static_configs:
+      - targets: ['host.docker.internal:5016']
+  - job_name: 'clasificaciones'
+    metrics_path: '/q/metrics'
+    static_configs:
+      - targets: ['host.docker.internal:5013']

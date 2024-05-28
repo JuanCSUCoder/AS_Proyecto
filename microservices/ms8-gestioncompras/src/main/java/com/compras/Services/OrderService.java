@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.compras.model.Inventory;
 import com.compras.model.Order;
 import com.compras.model.Product;
-
+import jakarta.ws.rs.core.Cookie;
 @Stateless
 public class OrderService {
 
