@@ -6,20 +6,40 @@ import { BtnGroup } from "@/components/utils/BtnGroup";
 import { DefaultContainer } from "@/components/utils/DefaultContainer";
 import { MainButton } from "@/components/utils/MainButton";
 import { Pod } from "@/model/Pod";
-import { useEffect, useState } from "react";
+import { extractFormObject } from "@/utils/form";
+import { FormEventHandler, useEffect, useState } from "react";
+
+interface FormStructure {
+
+}
 
 export default function VerifyDataPage() {
   const [pod, setPod] = useState<Pod>({});
   const [btnDisabled, setBtnDisabled] = useState(true);
 
   useEffect(() => {
-    fetch(`${process.env.MS5_URL}/user`)
+    setBtnDisabled(false);
+
+    fetch(`${process.env.MS5_URL}/user`, {
+      credentials: "include"
+    })
       .then((res) => res.json())
       .then((data) => setPod(data));
   }, []);
 
-  const onSubmit = () => {
+  const mapToPod: (formv: FormStructure) => Pod = (formv) => {
+    let podv: Pod = {};
 
+    return podv;
+  }
+
+  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+
+    const formv = extractFormObject(e);
+    console.log(formv);
+
+    // href="/order/shipment"
   }
 
   return (
@@ -62,7 +82,7 @@ export default function VerifyDataPage() {
           CVV:
         </FormField>
         <BtnGroup>
-          <MainButton href="/order/shipment" disabled={btnDisabled}>Confirmar Datos</MainButton>
+          <MainButton disabled={btnDisabled}>Confirmar Datos</MainButton>
         </BtnGroup>
       </FormBox>
     </DefaultContainer>

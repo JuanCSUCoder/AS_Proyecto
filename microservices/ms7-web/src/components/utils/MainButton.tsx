@@ -23,6 +23,7 @@ export function MainButton({
         color="success"
         type={type}
         loading={loading}
+        disabled={disabled}
       >
         {children}
       </Button>
@@ -33,8 +34,8 @@ export function MainButton({
       variant="soft"
       color="success"
       type={type}
-        loading={loading}
-        disabled={disabled}
+      loading={loading}
+      disabled={disabled}
     >
       {children}
     </Button>
