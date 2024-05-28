@@ -71,7 +71,7 @@ export default function ShipmentPage() {
       longitudSalida: center.lng,
       latitudLlegada: pod?.location?.coordinates?.lat as number,
       longitudLlegada: pod?.location?.coordinates?.lat as number,
-      cantidadPaquetes: ctx?.cartState.cart.items?.length as number,
+      cantidadPaquetes: 4 as number,
     };
 
     try {
