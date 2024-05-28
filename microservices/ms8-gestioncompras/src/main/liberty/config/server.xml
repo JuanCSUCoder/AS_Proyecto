@@ -41,5 +41,13 @@
     <!-- Default SSL configuration enables trust for default certificates from the Java runtime -->
     <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
 
+    
+    <cors domain="/"
+        allowedOrigins="*"
+        allowedMethods="GET, PUT, POST, DELETE, OPTIONS"
+        allowedHeaders="Origin, Content-Type, Accept, Authorization, Cache-Control"
+        exposeHeaders="Origin, Content-Type, Accept, Authorization, Cache-Control"
+        maxAge="60" />
+        
     <mpMetrics authentication="false"/>
 </server>
