@@ -63,15 +63,29 @@ export default function ProductDetailsPage({ params }: {
         <div className="flex w-full flex-col items-end md:mt-20">
           <PriceTag>{product.price}</PriceTag>
           <ProductBtns product={product} />
-          <FormBox onSubmit={(e) => {
-            e.preventDefault();
-          }}>
-            <FormField name="comment">Comentario</FormField>
-            <FormField name="score" type="number">Puntuación 0 a 5:</FormField>
-            <MainButton type="submit">Enviar Comentario</MainButton>
+          <FormBox
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <FormField name="score" type="number">
+              Puntuación 0 a 5:
+            </FormField>
+            <MainButton type="submit">Puntuar</MainButton>
           </FormBox>
-          <div>
-
+          <div className="w-full">
+            {scores.map((score, idx) => (
+              <div key={'score-'+idx} className="flex flex-row justify-between m-3 p-3 bg-slate-300 rounded-md">
+                <p className="w-1/3">
+                  <strong>Usuario: </strong>
+                  {score.id}
+                </p>
+                <p className="w-1/3 text-right">
+                  <strong>Calificación: </strong>
+                  {score.score}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
