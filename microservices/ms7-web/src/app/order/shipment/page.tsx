@@ -5,14 +5,16 @@ import { FormBox } from "@/components/order/login/FormBox";
 import { BtnGroup } from "@/components/utils/BtnGroup";
 import { DefaultContainer } from "@/components/utils/DefaultContainer";
 import { MainButton } from "@/components/utils/MainButton";
+import { CartContext } from "@/providers/CartProvider";
 import { APIProvider, Map, Marker, useMap, useMapsLibrary, useMarkerRef } from "@vis.gl/react-google-maps";
 import { redirect, useRouter } from "next/navigation";
-import { FormEventHandler, useEffect, useState } from "react";
+import { FormEventHandler, useContext, useEffect, useState } from "react";
 
 export default function ShipmentPage() {
   const map = useMap();
   const [markerRef, marker] = useMarkerRef();
   const [loading, setLoading] = useState(false);
+  const ctx = useContext(CartContext);
 
   const router = useRouter();
 
@@ -22,7 +24,7 @@ export default function ShipmentPage() {
     // here you can interact with the imperative maps API
   }, [map]);
 
-  const precioTransporte = 10000;
+  const [precioTransporte, setPrecio] = useState(0);
   const distancia = 2.3;
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -38,6 +40,25 @@ export default function ShipmentPage() {
 
   const center = { lat: 4.6284928, lng: -74.0672394 };
   const destinationCenter = [4.6465453, -74.1272909];
+
+  useEffect(() => {
+    const datosPeticion = {
+      latitudSalida: center.lat,
+      longitudSalida: center.lng,
+      latitudLlegada: pod?.location?.coordinates?.lat as number,
+      longitudLlegada: pod?.location?.coordinates?.lat as number,
+      cantidadPaquetes: ctx?.cartState.cart.items?.length as number,
+    };
+
+    fetch("http://localhost:5003/api/costo", {
+      method: 'POST',
+      body: JSON.stringify(datosPeticion),
+      headers: {
+        'Content-Type': "application/json"
+      }
+    }).then((res) => res.text())
+      .then((val) => setPrecio(+val));
+  }, [])
 
   // defaultCenter={{ lat: 4.649189, lng: -74.103447 }}
   return (
