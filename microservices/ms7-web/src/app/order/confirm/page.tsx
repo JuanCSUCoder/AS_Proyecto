@@ -1,11 +1,18 @@
+"use client"
+
 import { DefaultContainer } from "@/components/utils/DefaultContainer";
+import { useSearchParams } from "next/navigation";
 
 export default function ConfirmPage() {
+  const searchParams = useSearchParams();
+
+  const id = searchParams.get("id");
+
   return (
     <DefaultContainer>
       <p>
         Su pedido a quedado confirmado con el código de orden
-        61fc608d-94b4-4499-a535-693d6776066b
+        {' ' + id}
       </p>
     </DefaultContainer>
   );
