@@ -7,6 +7,7 @@ import { DefaultContainer } from "@/components/utils/DefaultContainer";
 import { MainButton } from "@/components/utils/MainButton";
 import { Pod } from "@/model/Pod";
 import { extractFormObject } from "@/utils/form";
+import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 
 interface FormStructure {
@@ -23,6 +24,7 @@ interface FormStructure {
 export default function VerifyDataPage() {
   const [pod, setPod] = useState<Pod>({});
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     setBtnDisabled(false);
@@ -73,7 +75,9 @@ export default function VerifyDataPage() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(podv),
-    }).then(() => alert("Datos cargados!"));
+    }).then(() => {
+      router.push("/order/shipment");
+    });
 
     // href="/order/shipment"
   }
