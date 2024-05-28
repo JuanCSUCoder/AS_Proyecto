@@ -36,7 +36,8 @@ export default function ShipmentPage() {
     setDisabled(false);
   });
 
-  const center = { lat: 4.649189, lng: -74.103447 };
+  const center = { lat: 4.6284928, lng: -74.0672394 };
+  const destinationCenter = [4.6465453, -74.1272909];
 
   // defaultCenter={{ lat: 4.649189, lng: -74.103447 }}
   return (
