@@ -28,7 +28,7 @@ export default function VerifyDataPage() {
   const router = useRouter();
   const pod = useUser(() => {
     setBtnDisabled(false);
-  });
+  }) || {};
 
   
 
