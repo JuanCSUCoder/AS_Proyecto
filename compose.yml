@@ -170,9 +170,19 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5011:5265
+
+  mail:
+    build:
+      context: ./microservices/ms18_mail
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    ports:
+      - 5018:8080
+    expose:
+      - 8080
     depends_on:
       - cockroachdb
       - adminer 
+
 
   # elasticsearch:
   #   image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
@@ -242,5 +252,5 @@ services:
 
 volumes:
   grafana_data:
-  # esdata:
-  #   driver: local
+    # esdata:
+    #   driver: local

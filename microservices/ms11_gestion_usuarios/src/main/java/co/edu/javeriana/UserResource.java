@@ -19,6 +19,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
 
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Response;
 
 @Path("/userresource")
 public class UserResource {
@@ -42,6 +43,18 @@ public class UserResource {
         List<User> usersList = new ArrayList<>();
         usersIterable.forEach(usersList::add);
         return usersList;
+    }
+
+    @GET
+    @Path("/user_by_pod")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserByUserPod(@QueryParam("userPod") String userPod) {
+        User user = userRepo.findByUserPod(userPod);
+        if (user != null) {
+            return Response.ok(user).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @GET
