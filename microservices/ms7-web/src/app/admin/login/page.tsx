@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
         <FormField name="username" required>Usuario:</FormField>
         <FormField name="password" required type="password">Contraseña:</FormField>
         <BtnGroup>
-          <MainButton type="submit" href="/admin/dashboard">Iniciar Sesión</MainButton>
+          <MainButton type="submit">Iniciar Sesión</MainButton>
         </BtnGroup>
       </FormBox>
     </DefaultContainer>
