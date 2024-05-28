@@ -5,7 +5,8 @@ import { Product } from "@/model/Product";
 import React, { ReactNode, useState } from "react";
 
 export interface CartState {
-  cart: Order
+  cart: Order;
+  shipmentPrice: number;
 }
 
 type ItemHandler = (item: Product) => boolean;
@@ -14,6 +15,7 @@ export interface CartHandlers {
   cartState: CartState;
   addItem: ItemHandler;
   removeItem: ItemHandler;
+  setShipPrice: (price: number) => void;
 }
 
 export const CartContext = React.createContext<CartHandlers | undefined>(undefined);
@@ -41,7 +43,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
       total: 0.0,
       status: "CART",
       items: []
-    }
+    },
+    shipmentPrice: 0.0,
   });
 
   const addItem: ItemHandler = (item) => {
@@ -95,11 +98,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return true;
   }
 
+  const setShipPrice = (price: number) => {
+    setCart((prevCart) => {
+      let newCart: CartState = JSON.parse(JSON.stringify(prevCart));
+      newCart.shipmentPrice = price;
+      return newCart;
+    })
+  }
+
   return (
     <CartContext.Provider value={{
       cartState,
       addItem,
-      removeItem
+      removeItem,
+      setShipPrice
     }}>
       {children}
     </CartContext.Provider>

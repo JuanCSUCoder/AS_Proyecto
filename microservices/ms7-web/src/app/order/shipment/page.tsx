@@ -59,7 +59,10 @@ export default function ShipmentPage() {
         },
       })
         .then((res) => res.text())
-        .then((val) => setPrecio(+val));
+        .then((val) => {
+          setPrecio(+val);
+          ctx?.setShipPrice(+val);
+        });
     } catch (_) {
     }
   }, [])
