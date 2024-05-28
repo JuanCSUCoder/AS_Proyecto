@@ -38,10 +38,10 @@ public class OrderController  {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createOrder(Order order,@CookieParam("sessionId") String sessionId){
+    public Response createOrder(Order order,@CookieParam("sessionId") String sessionId) throws IOException, TimeoutException{
 
         Cookie sessionIdCookie = new Cookie("sessionId", sessionId);
-        Order order2= orderService.createOrder(order);
+        Order order2= orderService.createOrder(order,sessionId);
 
         if(order2 == null){
             return Response.status(Response.Status.BAD_REQUEST)
