@@ -37,7 +37,7 @@ export default function DashboardPage() {
     fetch("http://localhost:5016/stats/inventories")
       .then(res => res.json())
       .then(res => setAlma(res))
-  })
+  }, []);
 
   return (
     <DefaultContainer>
