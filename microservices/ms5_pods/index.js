@@ -50,13 +50,16 @@ const cookiesOptions = {
 };
 
 const corsOptions = {
-  origin: "*",
+  origin: (origin, callback) => {
+    callback(null, origin);
+  },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Métodos HTTP permitidos
   allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras permitidas
   credentials: true, // Permitir cookies de origen cruzado
 };
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
