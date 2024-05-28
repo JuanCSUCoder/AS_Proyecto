@@ -41,4 +41,11 @@
     <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
 
     <mpMetrics authentication="false"/>
+
+    <cors domain="/api/*"
+    allowedOrigins="*"
+    allowedMethods="GET,POST,DELETE,PUT"
+    allowCredentials="true"
+    exposeHeaders="*"/>
+
 </server>
